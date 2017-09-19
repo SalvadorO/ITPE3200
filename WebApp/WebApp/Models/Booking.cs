@@ -20,5 +20,6 @@ namespace WebApp.Models
         public int adult { get; set; }
         public int child { get; set; }
         public bool oneWay { get; set; }
+        public virtual List<Customer> Customers { get; set; }
     }
 }

@@ -12,5 +12,8 @@ namespace WebApp.Models
         {
             Database.CreateIfNotExists();
         }
+
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }

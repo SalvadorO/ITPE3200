@@ -13,5 +13,8 @@ namespace WebApp.Models
         public int bId { get; set; }
         public String firstName { get; set; }
         public String lastName { get; set; }
+        public virtual Booking Booking { get; set; }
     }
+    
+
 }
