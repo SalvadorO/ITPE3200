@@ -16,9 +16,15 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult moveFlight(Booking inFlight)
+        public ActionResult Registration(Booking inFlight)
         {
-            return View(inFlight);
+            var db = new DBWebApp();
+            bool OK = db.flight(inFlight);
+            if (OK)
+            {
+                return View(inFlight);
+            }
+            return View();
         }
     }
 }
