@@ -8,24 +8,18 @@ namespace WebApp
 {
     public class DBWebApp
     {
-        public bool flight(Booking inFlight)
+        public Booking flightRegistration(Booking inFlightBooking)
         {
-            try
-            {
                 var newBooking = new Booking();
-                newBooking.adult = inFlight.adult;
-                newBooking.child = inFlight.child;
-                newBooking.classType = inFlight.classType;
-                newBooking.departure = inFlight.departure;
-                newBooking.destination = inFlight.destination;
-                newBooking.oneWay = inFlight.oneWay;
-                newBooking.travelDate = inFlight.travelDate;
-                newBooking.returnDate = inFlight.returnDate;
-                return true;
-            }
-            catch (Exception error) {
-                return false;
-            }
+                newBooking.adult = inFlightBooking.adult;
+                newBooking.child = inFlightBooking.child;
+                newBooking.classType = inFlightBooking.classType;
+                newBooking.departure = inFlightBooking.departure;
+                newBooking.destination = inFlightBooking.destination;
+                newBooking.oneWay = inFlightBooking.oneWay;
+                newBooking.travelDate = inFlightBooking.travelDate;
+                newBooking.returnDate = inFlightBooking.returnDate;
+                return newBooking;
         }
     }
 }

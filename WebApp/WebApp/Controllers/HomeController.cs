@@ -14,17 +14,12 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        public ActionResult Registration(Booking inBooking)
+        public ActionResult Registration(Booking newFlightBooking)
         {
-            var db = new DBWebApp();
-            bool OK = db.flight(inBooking);
-            if (OK)
-            {
+                var db = new DBWebApp();
                 FinalBooking finalBooking = new FinalBooking();
-                finalBooking.booking = inBooking;
+                finalBooking.booking = db.flightRegistration(newFlightBooking);
                 return View(finalBooking);
-            }
-            return View();
         }
     }
 }
