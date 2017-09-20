@@ -6,22 +6,39 @@
 
 <h2>Confirmation</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.booking.adult)
+        </dt>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+        <dd>
+            @Html.DisplayFor(model => model.booking.adult)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.customers[0].eMail)
+        </dt>
 
-</table>
+        <dd>
+            @Html.DisplayFor(model => model.customers[0].eMail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.customers[0].firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customers[0].firstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customers[0].lastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customers[0].lastName)
+        </dd>
+
+    </dl>
+</div>

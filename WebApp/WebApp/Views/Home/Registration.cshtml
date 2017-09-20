@@ -7,141 +7,40 @@
 <h2>Registration</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-
-    <div>
-        <h4>Flight</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.adult)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.adult)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.child)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.child)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.classType)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.classType)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.departure)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.departure)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.destination)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.destination)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.oneWay)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.oneWay)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.returnDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.returnDate)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.booking.travelDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.booking.travelDate)
-            </dd>
-
-        </dl>
+    <div class="form-group">
+        @Html.AntiForgeryToken()
+        @Html.DisplayNameFor(model => model.booking.adult)
+        @Html.DisplayFor(model => model.booking.adult)
+        <br />
+        @Html.DisplayNameFor(model => model.booking.child)
+        @Html.DisplayFor(model => model.booking.child)
+        <br />
+        @Html.DisplayNameFor(model => model.booking.classType)
+        @Html.DisplayFor(model => model.booking.classType)
+        <br />
+        @Html.DisplayNameFor(model => model.booking.departure)
+        @Html.DisplayFor(model => model.booking.departure)
+        <br />
+        @Html.DisplayNameFor(model => model.booking.destination)
+        @Html.DisplayFor(model => model.booking.destination)
+        <br />
+        @Html.DisplayNameFor(model => model.booking.oneWay)
+        @Html.DisplayFor(model => model.booking.oneWay)
+        <br />
+        @Html.DisplayNameFor(model => model.booking.travelDate)
+        @Html.DisplayFor(model => model.booking.travelDate)
+        <br />
+        @Html.DisplayNameFor(model => model.booking.returnDate)
+        @Html.DisplayFor(model => model.booking.returnDate)
+        <br />
     </div>
-
-
-    <div class="form-horizontal">
-        <h4>ContactPerson</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.customers[0].bId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.customers[0].bId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.customers[0].bId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.customers[0].firstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.customers[0].firstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.customers[0].firstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.customers[0].lastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.customers[0].lastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.customers[0].lastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.booking.eMail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.booking.eMail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.booking.eMail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.booking.phoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.booking.phoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.booking.phoneNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-        //FOR-LØKKE (Antall medpassasjerer)
     <div class="form-horizontal">
         <h4>Customer</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.customers[0].bId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.customers[0].bId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.customers[0].bId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.customers[0].firstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.customers[0].firstName, new { htmlAttributes = new { @class = "form-control" } })
@@ -154,6 +53,22 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.customers[0].lastName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.customers[0].lastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.customers[0].phoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.customers[0].phoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.customers[0].phoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.customers[0].eMail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.customers[0].eMail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.customers[0].eMail, "", new { @class = "text-danger" })
             </div>
         </div>
 

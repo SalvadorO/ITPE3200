@@ -22,9 +22,12 @@ namespace WebApp
                 return newBooking;
         }
 
-        public FinalBooking finalRegistration(FinalBooking inFinalBooking)
+        public void customerList(List<Customer> inList)
         {
-            return inFinalBooking;
+            inList = new List<Customer>();
+            //For-løkke
+            var newCustomer = new Customer();
+            inList.Add(newCustomer);
         }
     }
 }

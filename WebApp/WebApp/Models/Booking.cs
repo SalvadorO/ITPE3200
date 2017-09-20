@@ -15,8 +15,6 @@ namespace WebApp.Models
         public String travelDate { get; set; }
         public String returnDate { get; set; }
         public String classType { get; set; }
-        public String phoneNumber { get; set; }
-        public String eMail { get; set; }
         public int adult { get; set; }
         public int child { get; set; }
         public bool oneWay { get; set; }
