@@ -21,5 +21,19 @@ namespace WebApp.Controllers
                 finalBooking.booking = db.flightRegistration(newFlightBooking);
                 return View(finalBooking);
         }
+
+        public ActionResult Confirmation(FinalBooking inFinalBooking)
+        {
+            var db = new DBWebApp();
+
+            return View(inFinalBooking);
+        }
+
+        //Pusher alt til database
+        [HttpPost]
+        public ActionResult Confirmation()
+        {
+            return View();
+        }
     }
 }

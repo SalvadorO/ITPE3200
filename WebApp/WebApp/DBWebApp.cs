@@ -21,5 +21,10 @@ namespace WebApp
                 newBooking.returnDate = inFlightBooking.returnDate;
                 return newBooking;
         }
+
+        public FinalBooking finalRegistration(FinalBooking inFinalBooking)
+        {
+            return inFinalBooking;
+        }
     }
 }
