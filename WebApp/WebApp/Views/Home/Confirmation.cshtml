@@ -7,16 +7,28 @@
 <h2>Confirmation</h2>
 
 <div>
-    <h4>Customer</h4>
+    <h4>Reise</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.booking.adult)
+            @Html.DisplayNameFor(model => model.booking.destination)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.booking.adult)
+            @Html.DisplayFor(model => model.booking.destination)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.booking.departure)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.booking.departure)
+        </dd>
+
+        </dl>
+    <h4>Kontaktperson</h4>
+    <hr />
+    <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.customers[0].eMail)
         </dt>
@@ -39,6 +51,38 @@
         <dd>
             @Html.DisplayFor(model => model.customers[0].lastName)
         </dd>
-
     </dl>
+    @if (Model.booking.travelers > 1)
+    {
+        for (int i = 1; i < Model.booking.travelers; i++)
+        {
+            <h4>Medpassasjer</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.customers[i].eMail)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.customers[i].eMail)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.customers[i].firstName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.customers[i].firstName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.customers[i].lastName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.customers[i].lastName)
+                </dd>
+            </dl>
+        }
+    }
 </div>
+@Html.ActionLink("Lagre", "pushDatabase", new { empty = "" }, new { @class = "btn btn-primary" })

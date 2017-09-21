@@ -13,13 +13,12 @@ namespace WebApp.Controllers
         // GET: Home
         public ActionResult Flight()
         {
+            new WebAppContext();
             return View();
         }
         [HttpPost]
         public ActionResult Flight(Booking inFlightBooking)
         {
-            //var db = new DBWebApp();
-            //var newFlightBooking = db.flightRegistration(inFlightBooking);
             TempData["flightBooking"] = inFlightBooking;
             return RedirectToAction("Registration");
         }
@@ -35,8 +34,6 @@ namespace WebApp.Controllers
         public ActionResult Registration(FinalBooking finalBooking)
         {
             finalBooking.booking = (Booking)TempData["flightBooking"];
-            //var db = new DBWebApp();
-            //db.customerList(finalBooking.customers);
             TempData["finalBooking"] = finalBooking;
             return RedirectToAction("Confirmation");
         }
@@ -47,11 +44,18 @@ namespace WebApp.Controllers
             TempData["toDataBase"] = finalView;
             return View(finalView);
         }
-        [HttpPost]
-        public ActionResult Confirmation(FinalBooking toDataBase)
+ 
+        public ActionResult pushDatabase()
         {
-            toDataBase = (FinalBooking)TempData["toDataBase"];
-            //Legger inn i database
+            if (ModelState.IsValid)
+            {
+                var db = new DBWebApp();
+                bool pushOK = db.pushToDataBase((FinalBooking)TempData["toDataBase"]);
+                if (pushOK)
+                {
+                    return RedirectToAction("FinishedBooking");
+                }
+            }
             return View();
         }
         

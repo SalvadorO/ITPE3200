@@ -10,14 +10,30 @@ namespace WebApp.Models
     {
         [Key]
         public int bId { get; set; }
-        public String departure { get; set; }
-        public String destination { get; set; }
-        public String travelDate { get; set; }
-        public String returnDate { get; set; }
-        public String classType { get; set; }
-        public int adult { get; set; }
-        public int child { get; set; }
         public bool oneWay { get; set; }
-        public virtual List<Customer> Customers { get; set; }
+
+        [Display(Name = "Fly fra")]
+        [Required(ErrorMessage = "Fly fra må oppgis")]
+        public String departure { get; set; }
+
+        [Display(Name = "Fly til")]
+        [Required(ErrorMessage = "Fly til må oppgis")]
+        public String destination { get; set; }
+
+        [Display(Name = "Utreise")]
+        [Required(ErrorMessage = "Utreise må oppgis")]
+        public String travelDate { get; set; }
+
+        [Display(Name = "Retur")]
+        [Required(ErrorMessage = "Retur må oppgis")]
+        public String returnDate { get; set; }
+
+        [Display(Name = "Klasse")]
+        [Required(ErrorMessage = "Klasse må oppgis")]
+        public String classType { get; set; }
+
+        [Display(Name = "Reisende")]
+        [Required(ErrorMessage = "Reisende må oppgis")]
+        public int travelers { get; set; }
     }
 }
