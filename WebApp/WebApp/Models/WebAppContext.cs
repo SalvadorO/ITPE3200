@@ -16,12 +16,14 @@ namespace WebApp.Models
 
         public DbSet<Bookings> Bookings { get; set; }
         public DbSet<Customers> Customers { get; set; }
+        public DbSet<Airports> Airports { get; set; }
+        public DbSet<Flights> Flights { get; set; }
     }
     public class Customers
     {
         [Key]
-        public int CID { get; set; }
-        public int BID { get; set; }
+        public int ID { get; set; }
+        public int BookingID { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
         public String PhoneNumber { get; set; }
@@ -33,15 +35,42 @@ namespace WebApp.Models
     public class Bookings
     {
         [Key]
-        public int BID { get; set; }
-        public String Departure { get; set; }
-        public String Destination { get; set; }
-        public String TravelDate { get; set; }
-        public String ReturnDate { get; set; }
-        public String ClassType { get; set; }
+        public int ID { get; set; }
+        public int FlightID { get; set; }
+        public int ReturnFlightID { get; set; }
         public int Travelers { get; set; }
         public bool OneWay { get; set; }
+
         public virtual List<Customers> Customers { get; set; }
+        public virtual Flights Flight { get; set; }
+    }
+
+    public class Airports
+    {
+        [Key]
+        public int ID { get; set; }
+        public String Name { get; set; }
+    }
+
+    public class Flights
+    {
+        [Key]
+        public int ID { get; set; }
+        public String Departure { get; set; }
+
+        public String DepartureTime { get; set; }
+
+        public String Destination { get; set; }
+
+        public String DestinationTime { get; set; }
+
+        public String TravelDate { get; set; }
+
+        public String ReturnDate { get; set; }
+
+        public String ClassType { get; set; }
+
+        public virtual List<Bookings> Bookings { get; set; }
     }
 
     /*public class Cities

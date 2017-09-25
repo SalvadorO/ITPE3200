@@ -8,22 +8,49 @@ namespace WebApp
 {
     public class DBWebApp
     {
+        public List<Flight> searchFlights(SearchBooking search)
+        {
+            var db = new WebAppContext();
+            /*List<Flight> searchHit = db.Flights
+                .Where(s => s.Departure == search.flight.departure && s.Destination == search.flight.departure)
+                .Select(h => new Flight()
+                {
+                   id = h.ID,
+                     departureTime = h.DepartureTime,
+                     departure = h.Departure,
+                     destinationTime = h.DestinationTime,
+                     destination = h.Destination,
+                     travelDate = h.TravelDate,
+                     returnDate = h.ReturnDate,
+                     classType = h.ClassType
+                }).ToList();*/
+            List<Flight> searchHit = new List<Flight>()
+            {
+                new Flight
+                {
+                    departureTime = "TIDUT",
+                    departure = "UT",
+                    destinationTime = "TIDLAND",
+                    destination = "LAND",
+                    travelDate = "DATOUT",
+                    returnDate = "DATOHJEM",
+                    classType = "Luxus"
+                }
+            };
+            return searchHit;
+        }
         public bool pushToDataBase(FinalBooking final)
         {
             var newBooking = new Bookings()
             {
-                Departure = final.booking.departure,
-                Destination = final.booking.destination,
-                TravelDate = final.booking.travelDate,
-                ReturnDate = final.booking.returnDate,
-                ClassType = final.booking.classType,
                 Travelers = final.booking.travelers,
-                OneWay = final.booking.oneWay
+                OneWay = final.booking.oneWay,
+                FlightID = final.booking.flightId
             };
 
             var contactPerson = new Customers()
             {
-                BID = newBooking.BID,
+                BookingID = newBooking.ID,
                 FirstName = final.customers[0].firstName,
                 LastName = final.customers[0].lastName,
                 PhoneNumber = final.customers[0].phoneNumber,
@@ -43,7 +70,7 @@ namespace WebApp
                     {
                         var customer = new Customers()
                         {
-                            BID = contactPerson.BID,
+                            BookingID = contactPerson.BookingID,
                             FirstName = final.customers[i].firstName,
                             LastName = final.customers[i].lastName,
                             PhoneNumber = final.customers[i].phoneNumber,

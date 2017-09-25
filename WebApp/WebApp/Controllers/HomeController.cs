@@ -10,17 +10,34 @@ namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
-        public ActionResult Flight()
+        // View med søk
+        public ActionResult ChooseFlight()
         {
-            new WebAppContext();
             return View();
         }
+
+        //Finner og lister treff etter søk presentert i partial view.
         [HttpPost]
-        public ActionResult Flight(Booking inFlightBooking)
+        public ActionResult ChooseFlight(SearchBooking searchFlight)
         {
-            TempData["flightBooking"] = inFlightBooking;
-            return RedirectToAction("Registration");
+            if (ModelState.IsValid)
+            {
+                var db = new DBWebApp();
+                SearchBooking search = new SearchBooking();
+                search.flights = db.searchFlights(searchFlight);
+                return View(search);
+            }
+            return View();
+        }
+
+        //Finner mulige flyplasser i Airport-databasen.
+        [HttpPost]
+        public JsonResult FindAirport(String Prefix)
+        {
+            System.Diagnostics.Debug.WriteLine("HALLLLLLOOOOOOO");
+            var db = new WebAppContext();
+            var FoundAirport = (from f in db.Airports where f.Name.StartsWith(Prefix) select new { f.Name });
+            return Json(FoundAirport, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Registration()

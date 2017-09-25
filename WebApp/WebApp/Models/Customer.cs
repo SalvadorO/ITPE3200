@@ -9,8 +9,8 @@ namespace WebApp.Models
     public class Customer
     {
         [Key]
-        public int cId { get; set; }
-        public int bId { get; set; }
+        public int id { get; set; }
+        public int bookingId { get; set; }
         public bool contactPerson { get; set; }
 
         [Display(Name = "Fornavn")]

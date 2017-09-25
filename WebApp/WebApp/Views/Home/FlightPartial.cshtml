@@ -1,0 +1,59 @@
+﻿@model WebApp.Models.Flight
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.departureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.destinationTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.departure)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.travelDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.returnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.classType)
+        </th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.departureTime)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.destinationTime)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.departure)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.destination)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.travelDate)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.returnDate)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.classType)
+        </td>
+        <td>
+            @Html.ActionLink("Choose", "Flight", new { id=Model.id })
+        </td>
+    </tr>
+
+</table>
