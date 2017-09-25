@@ -10,7 +10,9 @@ namespace WebApp.Models
     {
         [Key]
         public int id { get; set; }
+        [Display(Name = "Fra tid")]
         public String departureTime { get; set; }
+        [Display(Name = "Til tid")]
         public String destinationTime { get; set; }
 
         [Display(Name = "Fra")]

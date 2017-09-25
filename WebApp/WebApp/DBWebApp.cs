@@ -11,33 +11,54 @@ namespace WebApp
         public List<Flight> searchFlights(SearchBooking search)
         {
             var db = new WebAppContext();
-            /*List<Flight> searchHit = db.Flights
-                .Where(s => s.Departure == search.flight.departure && s.Destination == search.flight.departure)
-                .Select(h => new Flight()
+
+            String depName = search.flight.departure;
+            String destName = search.flight.destination;
+            int depID = db.Airports.Where(a => a.Name.Equals(depName) ).Select(a => a.ID).FirstOrDefault();
+            int destID = db.Airports.Where(a => a.Name.Equals(destName)).Select(a => a.ID).FirstOrDefault();
+
+            List<Flight> searchHit = db.Flights
+                .Where(w => w.Departure == depID && w.Destination == destID)
+                .Select(s => new Flight()
                 {
-                   id = h.ID,
-                     departureTime = h.DepartureTime,
-                     departure = h.Departure,
-                     destinationTime = h.DestinationTime,
-                     destination = h.Destination,
-                     travelDate = h.TravelDate,
-                     returnDate = h.ReturnDate,
-                     classType = h.ClassType
-                }).ToList();*/
-            List<Flight> searchHit = new List<Flight>()
-            {
-                new Flight
-                {
-                    departureTime = "TIDUT",
-                    departure = "UT",
-                    destinationTime = "TIDLAND",
-                    destination = "LAND",
-                    travelDate = "DATOUT",
-                    returnDate = "DATOHJEM",
-                    classType = "Luxus"
-                }
-            };
+                    id = s.ID,
+                    departure = depName,
+                    departureTime = s.DepartureTime,
+                    destination = destName,
+                    destinationTime = s.DestinationTime,
+                    travelDate = s.TravelDate,
+                    classType = s.ClassType
+                }).ToList();
+                
             return searchHit;
+        }
+
+        public Flight getFlight(int id)
+        {
+            var db = new WebAppContext();
+            var oneFlight = db.Flights.Find(id);
+
+            if(oneFlight == null)
+            {
+                return null;
+            }
+            else
+            {
+                String depName = db.Airports.Where(a => a.ID == oneFlight.Departure).Select(a => a.Name).FirstOrDefault();
+                String destName = db.Airports.Where(a => a.ID == oneFlight.Destination).Select(a => a.Name).FirstOrDefault();
+                var returnFlight = new Flight()
+                {
+                    id = oneFlight.ID,
+                    departure = depName,
+                    departureTime = oneFlight.DepartureTime,
+                    destination = destName,
+                    destinationTime = oneFlight.DestinationTime,
+                    travelDate = oneFlight.TravelDate,
+                    classType = oneFlight.ClassType
+                };
+                return returnFlight;
+            }
+
         }
         public bool pushToDataBase(FinalBooking final)
         {

@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Registration";
 }
-
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
 <h2>Registration</h2>
 
 
@@ -14,23 +15,23 @@
         @Html.DisplayNameFor(model => model.booking.travelers)
         @Html.DisplayFor(model => model.booking.travelers)
         <br />
-        @Html.DisplayNameFor(model => model.booking.classType)
-        @Html.DisplayFor(model => model.booking.classType)
+        @Html.DisplayNameFor(model => model.flight.classType)
+        @Html.DisplayFor(model => model.flight.classType)
         <br />
-        @Html.DisplayNameFor(model => model.booking.departure)
-        @Html.DisplayFor(model => model.booking.departure)
+        @Html.DisplayNameFor(model => model.flight.departure)
+        @Html.DisplayFor(model => model.flight.departure)
         <br />
-        @Html.DisplayNameFor(model => model.booking.destination)
-        @Html.DisplayFor(model => model.booking.destination)
+        @Html.DisplayNameFor(model => model.flight.destination)
+        @Html.DisplayFor(model => model.flight.destination)
         <br />
         @Html.DisplayNameFor(model => model.booking.oneWay)
         @Html.DisplayFor(model => model.booking.oneWay)
         <br />
-        @Html.DisplayNameFor(model => model.booking.travelDate)
-        @Html.DisplayFor(model => model.booking.travelDate)
+        @Html.DisplayNameFor(model => model.flight.travelDate)
+        @Html.DisplayFor(model => model.flight.travelDate)
         <br />
-        @Html.DisplayNameFor(model => model.booking.returnDate)
-        @Html.DisplayFor(model => model.booking.returnDate)
+        @Html.DisplayNameFor(model => model.flight.returnDate)
+        @Html.DisplayFor(model => model.flight.returnDate)
         <br />
     </div>
     <div class="form-horizontal">
@@ -123,7 +124,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

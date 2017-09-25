@@ -56,17 +56,17 @@ namespace WebApp.Models
     {
         [Key]
         public int ID { get; set; }
-        public String Departure { get; set; }
+        public int Departure { get; set; }
 
         public String DepartureTime { get; set; }
 
-        public String Destination { get; set; }
+        public int Destination { get; set; }
 
         public String DestinationTime { get; set; }
 
         public String TravelDate { get; set; }
 
-        public String ReturnDate { get; set; }
+        //public String ReturnDate { get; set; }
 
         public String ClassType { get; set; }
 
