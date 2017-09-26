@@ -8,7 +8,6 @@ namespace WebApp.Models
 {
     public class Booking
     {
-        [Key]
         public int id { get; set; }
         public int flightId { get; set; }
         public int returnFlightId { get; set; }

@@ -1,59 +1,52 @@
-﻿@model WebApp.Models.Flight
-
+﻿@model List<WebApp.Models.Flight>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.departureTime)
+            @Html.DisplayNameFor(model => model[0].departureTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.destinationTime)
+            @Html.DisplayNameFor(model => model[0].destinationTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.departure)
+            @Html.DisplayNameFor(model => model[0].departure)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.destination)
+            @Html.DisplayNameFor(model => model[0].destination)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.travelDate)
+            @Html.DisplayNameFor(model => model[0].travelDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.returnDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.classType)
+            @Html.DisplayNameFor(model => model[0].classType)
         </th>
         <th></th>
     </tr>
 
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.departureTime)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.destinationTime)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.departure)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.destination)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.travelDate)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.returnDate)
-        </td>
-        <td>
-            @Html.DisplayFor(model => model.classType)
-        </td>
-        <td>
-            @Html.ActionLink("Choose", "Registration", new { id=Model.id })
-        </td>
-    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.departureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.destinationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.departure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.travelDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.classType)
+            </td>
+        </tr>
+    }
 
 </table>

@@ -9,6 +9,6 @@ namespace WebApp.Models
     {
         public Flight flight { get; set; }
         public Booking booking { get; set; }
-        public List<Flight> flights { get; set; }
+        public List<List<Flight>> flights { get; set; }
     }
 }

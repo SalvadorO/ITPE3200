@@ -13,32 +13,29 @@ namespace WebApp.Controllers
         // View med søk
         public ActionResult ChooseFlight()
         {
-           /* List<Airports> air = new List<Airports>()
-            {
-                new Airports{Name = "Oslo"},
-                new Airports{Name = "Barcelona"},
-                new Airports{Name = "Las Vegas"},
-                new Airports{Name = "Paris"},
-                new Airports{Name = "Bardufoss"},
-                new Airports{Name = "Svalbard"},
-            };
+             
+             var db =  new WebAppContext();
+            /*
+             List<Airports> air = new List<Airports>()
+             {
+                 new Airports{Name = "Oslo"},
+                 new Airports{Name = "Barcelona"}
+             };
+             foreach(var item in air){
+                 db.Airports.Add(item);
+             }
 
-            List<Flights> flight = new List<Flights>()
-            {
-                new Flights{DepartureTime = "00:00", Departure = 1, Destination = 2, DestinationTime = "04:00", TravelDate = "10/10/10", ClassType = "Luxus" },
-                new Flights{DepartureTime = "00:00", Departure = 2, Destination = 1, DestinationTime = "04:00", TravelDate = "14/10/10", ClassType = "Luxus" },
-                new Flights{DepartureTime = "00:00", Departure = 4, Destination = 5, DestinationTime = "04:00", TravelDate = "15/10/10", ClassType = "Luxus" },
-                new Flights{DepartureTime = "00:00", Departure = 5, Destination = 4, DestinationTime = "04:00", TravelDate = "18/10/10", ClassType = "Luxus" }
-            };
-            var db =  new WebAppContext();
-            foreach(var item in air){
-                db.Airports.Add(item);
-            }
-            foreach(var item in flight)
-            {
-                db.Flights.Add(item);
-            }
-            db.SaveChanges();*/
+             List<Flights> flight = new List<Flights>()
+             {
+                 new Flights{DepartureTime = "18:00", Departure = 1, Destination = 2, DestinationTime = "22:00", TravelDate = "10/10/10", ClassType = "Luxus" },
+                 new Flights{DepartureTime = "00:00", Departure = 2, Destination = 1, DestinationTime = "04:00", TravelDate = "14/10/10", ClassType = "Luxus" }
+             };
+
+             foreach(var item in flight)
+             {
+                 db.Flights.Add(item);
+             }
+             db.SaveChanges();*/
 
             return View();
         }

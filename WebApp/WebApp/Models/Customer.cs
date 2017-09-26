@@ -8,7 +8,6 @@ namespace WebApp.Models
 {
     public class Customer
     {
-        [Key]
         public int id { get; set; }
         public int bookingId { get; set; }
         public bool contactPerson { get; set; }
@@ -24,6 +23,18 @@ namespace WebApp.Models
         [Display(Name = "Telefonnummer")]
         [Required(ErrorMessage = "Telefonnummer må oppgis")]
         public String phoneNumber { get; set; }
+
+        [Display(Name = "Adresse")]
+        [Required(ErrorMessage = "Adresse må oppgis")]
+        public String address { get; set; }
+
+        [Display(Name = "Postnummer")]
+        [Required(ErrorMessage = "Postnummer må oppgis")]
+        public String zipCode { get; set; }
+
+        [Display(Name = "Poststed")]
+        [Required(ErrorMessage = "Poststed må oppgis")]
+        public String city { get; set; }
 
         [Display(Name = "E-Post")]
         [Required(ErrorMessage = "E-Post må oppgis")]

@@ -8,28 +8,62 @@ namespace WebApp
 {
     public class DBWebApp
     {
-        public List<Flight> searchFlights(SearchBooking search)
+        public List<List<Flight>> searchFlights(SearchBooking search)
         {
             var db = new WebAppContext();
-
             String depName = search.flight.departure;
             String destName = search.flight.destination;
             int depID = db.Airports.Where(a => a.Name.Equals(depName) ).Select(a => a.ID).FirstOrDefault();
             int destID = db.Airports.Where(a => a.Name.Equals(destName)).Select(a => a.ID).FirstOrDefault();
+            List<List<Flight>> searchHit = new List<List<Flight>>();
 
-            List<Flight> searchHit = db.Flights
-                .Where(w => w.Departure == depID && w.Destination == destID)
-                .Select(s => new Flight()
-                {
-                    id = s.ID,
-                    departure = depName,
-                    departureTime = s.DepartureTime,
-                    destination = destName,
-                    destinationTime = s.DestinationTime,
-                    travelDate = s.TravelDate,
-                    classType = s.ClassType
-                }).ToList();
-                
+            List<Flight> directRoute = db.Flights.Where(w => w.Departure == depID
+            && w.Destination == destID
+            && w.TravelDate.Equals(search.flight.travelDate)
+            && w.ClassType.Equals(search.flight.classType))
+            .Select(s => new Flight()
+            {
+                id = s.ID,
+                travelDate = s.TravelDate,
+                departure = depName,
+                departureTime = s.DepartureTime,
+                destination = destName,
+                destinationTime = s.DestinationTime,
+                classType = s.ClassType
+            }).ToList();
+
+            if(directRoute != null)
+            {
+                searchHit.Insert(0,directRoute);
+            }
+            else
+            {
+
+            }
+
+            List<Flight> directReturnRoute = db.Flights.Where(w => w.Departure == destID
+            && w.Destination == depID
+            && w.TravelDate.Equals(search.flight.returnDate)
+            && w.ClassType.Equals(search.flight.classType))
+            .Select(s => new Flight()
+            {
+                id = s.ID,
+                travelDate = s.TravelDate,
+                departure = depName,
+                departureTime = s.DepartureTime,
+                destination = destName,
+                destinationTime = s.DestinationTime,
+                classType = s.ClassType
+            }).ToList();
+
+            if (directReturnRoute != null)
+            {
+                searchHit.Insert(1, directReturnRoute);
+            }
+            else
+            {
+
+            }
             return searchHit;
         }
 
@@ -53,7 +87,6 @@ namespace WebApp
                     departureTime = oneFlight.DepartureTime,
                     destination = destName,
                     destinationTime = oneFlight.DestinationTime,
-                    travelDate = oneFlight.TravelDate,
                     classType = oneFlight.ClassType
                 };
                 return returnFlight;
@@ -66,12 +99,12 @@ namespace WebApp
             {
                 Travelers = final.booking.travelers,
                 OneWay = final.booking.oneWay,
-                FlightID = final.booking.flightId
+                TravelFlightID = final.booking.flightId
             };
 
             var contactPerson = new Customers()
             {
-                BookingID = newBooking.ID,
+                BookingsID = newBooking.ID,
                 FirstName = final.customers[0].firstName,
                 LastName = final.customers[0].lastName,
                 PhoneNumber = final.customers[0].phoneNumber,
@@ -91,7 +124,7 @@ namespace WebApp
                     {
                         var customer = new Customers()
                         {
-                            BookingID = contactPerson.BookingID,
+                            BookingsID = contactPerson.BookingsID,
                             FirstName = final.customers[i].firstName,
                             LastName = final.customers[i].lastName,
                             PhoneNumber = final.customers[i].phoneNumber,

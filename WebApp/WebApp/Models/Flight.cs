@@ -8,7 +8,6 @@ namespace WebApp.Models
 {
     public class Flight
     {
-        [Key]
         public int id { get; set; }
         [Display(Name = "Fra tid")]
         public String departureTime { get; set; }

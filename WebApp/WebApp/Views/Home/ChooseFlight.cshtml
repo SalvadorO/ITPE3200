@@ -86,9 +86,15 @@
 }
     @if (Model != null)
     {
-        foreach (var kunde in Model.flights)
+        if (Model.flights.ElementAtOrDefault(0) != null)
         {
-            @Html.Partial("FlightPartial", kunde)
+        <h4>Tur</h4>
+            @Html.Partial("FlightPartial", Model.flights.ElementAt(0))
+        }
+        if (Model.flights.ElementAtOrDefault(1) != null)
+        {
+        <h4>Retur</h4>
+                @Html.Partial("FlightPartial", Model.flights.ElementAt(1))
         }
     }
 <div>
