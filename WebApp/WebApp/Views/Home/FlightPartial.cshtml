@@ -1,31 +1,31 @@
-﻿@model List<WebApp.Models.Flight>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+﻿@model List<List<WebApp.Models.Flight>>
+@if (Model.ElementAtOrDefault(0) != null)
+{
+    <h5>Tur</h5>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model[0].departureTime)
+            @Html.DisplayNameFor(model => model.ElementAt(0).ElementAt(0).departure)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].destinationTime)
+            @Html.DisplayNameFor(model => model.ElementAt(0).ElementAt(0).destinationTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].departure)
+            @Html.DisplayNameFor(model => model.ElementAt(0).ElementAt(0).departure)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].destination)
+            @Html.DisplayNameFor(model => model.ElementAt(0).ElementAt(0).destination)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].travelDate)
+            @Html.DisplayNameFor(model => model.ElementAt(0).ElementAt(0).travelDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].classType)
+            @Html.DisplayNameFor(model => model.ElementAt(0).ElementAt(0).classType)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.ElementAt(0))
     {
         <tr>
             <td>
@@ -50,3 +50,57 @@
     }
 
 </table>
+}
+
+@if (Model.ElementAtOrDefault(1) != null)
+{
+    <h5>Retur</h5>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(1).ElementAt(0).departure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(1).ElementAt(0).destinationTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(1).ElementAt(0).departure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(1).ElementAt(0).destination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(1).ElementAt(0).travelDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElementAt(1).ElementAt(0).classType)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.ElementAt(1))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.departureTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.destinationTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.departure)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.travelDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.classType)
+                </td>
+            </tr>
+        }
+
+    </table>
+}

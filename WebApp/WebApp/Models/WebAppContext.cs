@@ -50,7 +50,7 @@ namespace WebApp.Models
         public int TravelFlightID { get; set; }
         public int ReturnFlightID { get; set; }
         public int Travelers { get; set; }
-        public bool OneWay { get; set; }
+        public bool RoundTrip { get; set; }
 
         public virtual List<Customers> Customers { get; set; }
         public virtual FlightRoutes FlightRoutes { get; set; }

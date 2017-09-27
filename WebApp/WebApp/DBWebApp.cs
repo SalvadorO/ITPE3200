@@ -8,7 +8,7 @@ namespace WebApp
 {
     public class DBWebApp
     {
-        public List<List<Flight>> searchFlights(SearchBooking search)
+        public List<List<Flight>> searchFlights(ViewModel search)
         {
             var db = new WebAppContext();
             String depName = search.flight.departure;
@@ -40,29 +40,31 @@ namespace WebApp
             {
 
             }
-
-            List<Flight> directReturnRoute = db.Flights.Where(w => w.Departure == destID
-            && w.Destination == depID
-            && w.TravelDate.Equals(search.flight.returnDate)
-            && w.ClassType.Equals(search.flight.classType))
-            .Select(s => new Flight()
+            if (search.booking.roundTrip)
             {
-                id = s.ID,
-                travelDate = s.TravelDate,
-                departure = depName,
-                departureTime = s.DepartureTime,
-                destination = destName,
-                destinationTime = s.DestinationTime,
-                classType = s.ClassType
-            }).ToList();
+                List<Flight> directReturnRoute = db.Flights.Where(w => w.Departure == destID
+                && w.Destination == depID
+                && w.TravelDate.Equals(search.flight.returnDate)
+                && w.ClassType.Equals(search.flight.classType))
+                .Select(s => new Flight()
+                {
+                    id = s.ID,
+                    travelDate = s.TravelDate,
+                    departure = depName,
+                    departureTime = s.DepartureTime,
+                    destination = destName,
+                    destinationTime = s.DestinationTime,
+                    classType = s.ClassType
+                }).ToList();
 
-            if (directReturnRoute != null)
-            {
-                searchHit.Insert(1, directReturnRoute);
-            }
-            else
-            {
+                if (directReturnRoute != null)
+                {
+                    searchHit.Insert(1, directReturnRoute);
+                }
+                else
+                {
 
+                }
             }
             return searchHit;
         }
@@ -93,12 +95,12 @@ namespace WebApp
             }
 
         }
-        public bool pushToDataBase(FinalBooking final)
+        public bool pushToDataBase(ViewModel final)
         {
             var newBooking = new Bookings()
             {
                 Travelers = final.booking.travelers,
-                OneWay = final.booking.oneWay,
+                RoundTrip = final.booking.roundTrip,
                 TravelFlightID = final.booking.flightId
             };
 

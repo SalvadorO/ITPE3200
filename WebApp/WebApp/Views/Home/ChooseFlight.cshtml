@@ -1,11 +1,11 @@
-﻿@model WebApp.Models.SearchBooking
+﻿@model WebApp.Models.ViewModel
 
 @{
     ViewBag.Title = "Choose Flight";
 }
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryunobtrusive")
     @Styles.Render("~/Content/themes/base/css")
    @* @RenderBody()
     @RenderSection("scripts", required: false)*@
@@ -22,7 +22,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.flight.departure, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.departure, new { htmlAttributes = new { @class = "form-control", @id = "searchDep"} })
+                @Html.EditorFor(model => model.flight.departure, new { htmlAttributes = new { @class = "form-control", @id = "searchdep"} })
                 @Html.ValidationMessageFor(model => model.flight.departure, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.flight.destination, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.destination, new { htmlAttributes = new { @class = "form-control", @id = "searchDest" } })
+                @Html.EditorFor(model => model.flight.destination, new { htmlAttributes = new { @class = "form-control", @id = "searchdest" } })
                 @Html.ValidationMessageFor(model => model.flight.destination, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group", id="returndate">
             @Html.LabelFor(model => model.flight.returnDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.flight.returnDate, new { htmlAttributes = new { @class = "form-control" } })
@@ -68,11 +68,11 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.booking.oneWay, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.booking.roundTrip, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.booking.oneWay)
-                    @Html.ValidationMessageFor(model => model.booking.oneWay, "", new { @class = "text-danger" })
+                    @Html.CheckBoxFor(model => model.booking.roundTrip, new { @checked = true, @id = "roundtripbox" })
+                    @Html.ValidationMessageFor(model => model.booking.roundTrip, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -84,26 +84,29 @@
         </div>
     </div>
 }
-    @if (Model != null)
+<div id="partialview">
+   @* @if (Model != null)
     {
         if (Model.flights.ElementAtOrDefault(0) != null)
         {
-        <h4>Tur</h4>
+            <h4>Tur</h4>
             @Html.Partial("FlightPartial", Model.flights.ElementAt(0))
         }
         if (Model.flights.ElementAtOrDefault(1) != null)
         {
-        <h4>Retur</h4>
-                @Html.Partial("FlightPartial", Model.flights.ElementAt(1))
+            <h4>Retur</h4>
+            @Html.Partial("FlightPartial", Model.flights.ElementAt(1))
         }
-    }
+    }*@
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#searchDep").autocomplete({
+
+        $("#searchdep, #searchdest").autocomplete({
             source: function (request, response) {
                 $.ajax({
                     url: "/Home/FindAirport",
@@ -121,23 +124,28 @@
                 })
             }
         });
-        $("#searchDest").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/Home/FindAirport",
-                    type: "POST",
-                    dataType: "json",
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        if (!data.length) { var result = [{ label: "Ingen resultat", value: response.term }]; response(result); }
-                        else {
-                            response($.map(data, function (item) {
-                                return { label: item.Name, value: item.Name };
-                            }))
-                        }
-                    }
-                })
+
+        $("#roundtripbox").change(function () {
+            if (this.checked) {
+                $("#returndate").fadeIn("slow");
+            } else {
+                $("#returndate").fadeOut("slow");
             }
         });
-    })
+
+        $("form").submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $("#partialview").html(result);
+                    }
+                });
+            }
+            return false;
+        });
+
+    });
 </script>

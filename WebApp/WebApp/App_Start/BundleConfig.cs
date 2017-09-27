@@ -22,6 +22,8 @@ namespace WebApp.App_Start
                 .Include("~/Scripts/jquery-ui-{version}.min.js",
                 "~/Scripts/jquery-ui-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryunobtrusive")
+                .Include("~/Scripts/jquery.unobtrusive*"));
 
             //Styles
             bundles.Add(new StyleBundle("~/Content/css")

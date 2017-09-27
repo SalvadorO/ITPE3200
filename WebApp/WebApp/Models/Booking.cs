@@ -11,7 +11,9 @@ namespace WebApp.Models
         public int id { get; set; }
         public int flightId { get; set; }
         public int returnFlightId { get; set; }
-        public bool oneWay { get; set; }
+
+        [Display(Name = "Tur/Retur")]
+        public bool roundTrip { get; set; }
 
         [Display(Name = "Antall reisende")]
         [Required(ErrorMessage = "Antall reisende må oppgis")]

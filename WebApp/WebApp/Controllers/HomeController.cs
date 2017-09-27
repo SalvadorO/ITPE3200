@@ -14,8 +14,8 @@ namespace WebApp.Controllers
         public ActionResult ChooseFlight()
         {
              
-             var db =  new WebAppContext();
-            /*
+             /*var db =  new WebAppContext();
+            
              List<Airports> air = new List<Airports>()
              {
                  new Airports{Name = "Oslo"},
@@ -27,6 +27,7 @@ namespace WebApp.Controllers
 
              List<Flights> flight = new List<Flights>()
              {
+                 new Flights{DepartureTime = "03:00", Departure = 1, Destination = 2, DestinationTime = "07:00", TravelDate = "10/10/10", ClassType = "Luxus" },
                  new Flights{DepartureTime = "18:00", Departure = 1, Destination = 2, DestinationTime = "22:00", TravelDate = "10/10/10", ClassType = "Luxus" },
                  new Flights{DepartureTime = "00:00", Departure = 2, Destination = 1, DestinationTime = "04:00", TravelDate = "14/10/10", ClassType = "Luxus" }
              };
@@ -42,15 +43,15 @@ namespace WebApp.Controllers
 
         //Finner og lister treff etter søk presentert i partial view.
         [HttpPost]
-        public ActionResult ChooseFlight(SearchBooking searchFlight)
+        public ActionResult ChooseFlight(ViewModel searchFlight)
         {
             if (ModelState.IsValid)
             {
                 var db = new DBWebApp();
                 TempData["booking"] = searchFlight.booking;
-                SearchBooking search = new SearchBooking();
+                ViewModel search = new ViewModel();
                 search.flights = db.searchFlights(searchFlight);
-                return View(search);
+                return PartialView("FlightPartial",search.flights);
             }
             return View();
         }
@@ -67,7 +68,7 @@ namespace WebApp.Controllers
         public ActionResult Registration(int id)
         {
             var db = new DBWebApp();
-            FinalBooking finalBooking = new FinalBooking();
+            ViewModel finalBooking = new ViewModel();
             finalBooking.flight = db.getFlight(id);
             finalBooking.booking = (Booking)TempData["booking"];
             finalBooking.booking.flightId = id;
@@ -75,7 +76,7 @@ namespace WebApp.Controllers
             return View(finalBooking);
         }
         [HttpPost]
-        public ActionResult Registration(FinalBooking finalBooking)
+        public ActionResult Registration(ViewModel finalBooking)
         {
                 finalBooking.booking = (Booking)TempData["newbooking"];
                 TempData["finalBooking"] = finalBooking;
@@ -84,7 +85,7 @@ namespace WebApp.Controllers
 
         public ActionResult Confirmation()
         {
-            var finalView = (FinalBooking)TempData["finalBooking"];
+            var finalView = (ViewModel)TempData["finalBooking"];
             var db = new DBWebApp();
             finalView.flight = db.getFlight(finalView.booking.flightId);
             TempData["toDataBase"] = finalView;
@@ -97,7 +98,7 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var db = new DBWebApp();
-                bool pushOK = db.pushToDataBase((FinalBooking)TempData["toDataBase"]);
+                bool pushOK = db.pushToDataBase((ViewModel)TempData["toDataBase"]);
                 if (pushOK)
                 {
                     return RedirectToAction("FinishedBooking");

@@ -193,10 +193,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Booking.cs" />
-    <Compile Include="Models\FinalBooking.cs" />
+    <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Flight.cs" />
-    <Compile Include="Models\SearchBooking.cs" />
     <Compile Include="Models\WebAppContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
