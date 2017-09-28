@@ -27,9 +27,9 @@ namespace WebApp.Controllers
 
              List<Flights> flight = new List<Flights>()
              {
-                 new Flights{DepartureTime = "03:00", Departure = 1, Destination = 2, DestinationTime = "07:00", TravelDate = "10/10/10", ClassType = "Luxus" },
-                 new Flights{DepartureTime = "18:00", Departure = 1, Destination = 2, DestinationTime = "22:00", TravelDate = "10/10/10", ClassType = "Luxus" },
-                 new Flights{DepartureTime = "00:00", Departure = 2, Destination = 1, DestinationTime = "04:00", TravelDate = "14/10/10", ClassType = "Luxus" }
+                 new Flights{DepartureTime = "03:00", Departure = 1, Destination = 2, DestinationTime = "07:00", TravelDate = "10/10/2000", ClassType = "Luxus" },
+                 new Flights{DepartureTime = "18:00", Departure = 1, Destination = 2, DestinationTime = "22:00", TravelDate = "18/10/2000", ClassType = "Luxus" },
+                 new Flights{DepartureTime = "00:00", Departure = 2, Destination = 1, DestinationTime = "04:00", TravelDate = "14/10/2000", ClassType = "Luxus" }
              };
 
              foreach(var item in flight)

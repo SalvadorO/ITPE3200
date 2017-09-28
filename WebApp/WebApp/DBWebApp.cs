@@ -40,6 +40,9 @@ namespace WebApp
             {
 
             }
+            System.Diagnostics.Debug.WriteLine("Bool " + search.booking.roundTrip);
+            System.Diagnostics.Debug.WriteLine("Return " + search.flight.returnDate);
+
             if (search.booking.roundTrip)
             {
                 List<Flight> directReturnRoute = db.Flights.Where(w => w.Departure == destID

@@ -3,9 +3,13 @@
 @{
     ViewBag.Title = "Choose Flight";
 }
+    @Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/moment.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryunobtrusive")
+    @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/css")
    @* @RenderBody()
     @RenderSection("scripts", required: false)*@
@@ -38,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.flight.travelDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.travelDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.flight.travelDate, new { htmlAttributes = new { @class = "form-control", @id = "travelfield" } })
                 @Html.ValidationMessageFor(model => model.flight.travelDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -46,7 +50,7 @@
         <div class="form-group", id="returndate">
             @Html.LabelFor(model => model.flight.returnDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.returnDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.flight.returnDate, new { htmlAttributes = new { @class = "form-control", @id = "returnfield" } })
                 @Html.ValidationMessageFor(model => model.flight.returnDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -85,24 +89,10 @@
     </div>
 }
 <div id="partialview">
-   @* @if (Model != null)
-    {
-        if (Model.flights.ElementAtOrDefault(0) != null)
-        {
-            <h4>Tur</h4>
-            @Html.Partial("FlightPartial", Model.flights.ElementAt(0))
-        }
-        if (Model.flights.ElementAtOrDefault(1) != null)
-        {
-            <h4>Retur</h4>
-            @Html.Partial("FlightPartial", Model.flights.ElementAt(1))
-        }
-    }*@
 </div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -125,8 +115,16 @@
             }
         });
 
+        $(function () {
+           $("#travelfield, #returnfield").datetimepicker({
+                viewMode: "years",
+                format: "DD/MM/YYYY"
+            });
+        });
+
         $("#roundtripbox").change(function () {
             if (this.checked) {
+                $("#returnfield").val("");
                 $("#returndate").fadeIn("slow");
             } else {
                 $("#returndate").fadeOut("slow");
@@ -134,6 +132,7 @@
         });
 
         $("form").submit(function () {
+            if (!$("#roundtripbox").is(":checked")) $("#returnfield").val("-1");
             if ($(this).valid()) {
                 $.ajax({
                     url: this.action,

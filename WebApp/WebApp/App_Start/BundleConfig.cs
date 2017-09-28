@@ -25,9 +25,14 @@ namespace WebApp.App_Start
             bundles.Add(new ScriptBundle("~/bundles/jqueryunobtrusive")
                 .Include("~/Scripts/jquery.unobtrusive*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap")
+                .Include("~/Scripts/bootstrap*"));
+
             //Styles
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/bootstrap.css",
+                "~/Content/bootstrap-datetimepicker.css",
+                "~/Content/bootstrap-datetimepicker.min.css",
                 "~/Content/Site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css")
