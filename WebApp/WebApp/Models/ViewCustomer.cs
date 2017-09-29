@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-    public class Customer
+    public class ViewCustomer
     {
         public int id { get; set; }
         public int bookingId { get; set; }
@@ -30,6 +30,7 @@ namespace WebApp.Models
 
         [Display(Name = "Postnummer")]
         [Required(ErrorMessage = "Postnummer må oppgis")]
+        [RegularExpression(@"[0-9]{4}", ErrorMessage = "Postummer må være 4 siffer")]
         public String zipCode { get; set; }
 
         [Display(Name = "Poststed")]
@@ -38,6 +39,7 @@ namespace WebApp.Models
 
         [Display(Name = "E-Post")]
         [Required(ErrorMessage = "E-Post må oppgis")]
+        [EmailAddress(ErrorMessage ="E-post på være på formen: eksempel@eksempel.com")]
         public String eMail { get; set; }
     }
     

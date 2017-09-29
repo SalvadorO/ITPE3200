@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -13,26 +14,24 @@ namespace WebApp.Models
         {
             Database.CreateIfNotExists();
         }
-        public DbSet<Cities> Cities { get; set; }
-        public DbSet<Customers> Customers { get; set; }
-        public DbSet<Bookings> Bookings { get; set; }
-        public DbSet<FlightRoutes> FlightRoutes { get; set; }
-        public DbSet<Flights> Flights { get; set; }
-        public DbSet<AirportFlights> AirportFlights { get; set; }
-        public DbSet<Airports> Airports { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Booking> Booking { get; set; }
+        public DbSet<Flight> Flight { get; set; }
+        public DbSet<Airport> Airport { get; set; }
     }
-    public class Cities
+    public class City
     {
         [Key]
         public String ZipCode { get; set; }
-        public String City { get; set; }
-        public virtual List<Customers> Customers { get; set; }
+        public String CityName { get; set; }
+        public virtual List<Customer> Customers { get; set; }
     }
-    public class Customers
+    public class Customer
     {
         [Key]
         public int ID { get; set; }
-        public int BookingsID { get; set; }
+       // public int BookingsID { get; set; }
         public String Address { get; set; }
         public String ZipCode { get; set; }
         public String FirstName { get; set; }
@@ -40,10 +39,10 @@ namespace WebApp.Models
         public String PhoneNumber { get; set; }
         public String EMail { get; set; }
         public bool ContactPerson { get; set; }
-        public virtual Bookings Booking { get; set; }
-        public virtual Cities Cities { get; set; }
+        public virtual Booking Booking { get; set; }
+        public virtual City Cities { get; set; }
     }
-    public class Bookings
+    public class Booking
     {
         [Key]
         public int ID { get; set; }
@@ -51,53 +50,28 @@ namespace WebApp.Models
         public int ReturnFlightID { get; set; }
         public int Travelers { get; set; }
         public bool RoundTrip { get; set; }
-
-        public virtual List<Customers> Customers { get; set; }
-        public virtual FlightRoutes FlightRoutes { get; set; }
+        public virtual List<Customer> Customers { get; set; }
+        public virtual List<Flight> Flights { get; set; }
     }
-    public class FlightRoutes
+    public class Flight
     {
         [Key]
         public int ID { get; set; }
-        public int BookingsID { get; set; }
-        public int FlightsID { get; set; }
-        public virtual List<Bookings> Bookings { get; set; }
-        public virtual List<Flights> Flights { get; set; }
-    }
-    public class Flights
-    {
-        [Key]
-        public int ID { get; set; }
-
         public String TravelDate { get; set; }
-
         public int Departure { get; set; }
-
         public String DepartureTime { get; set; }
-
         public int Destination { get; set; }
-
         public String DestinationTime { get; set; }
-
         public String ClassType { get; set; }
-
-        public virtual FlightRoutes FlightRoute { get; set; }
-        public virtual AirportFlights AirportFlights { get; set; }
+        public virtual List<Booking> Bookings { get; set; }
+        public virtual List<Airport> Airports { get; set; }
     }
-    public class AirportFlights
-    {
-        [Key]
-        public int ID { get; set; }
-        public int FlightsID { get; set; }
-        public int AirportsID { get; set; }
-        public virtual List<Flights> Flights { get; set; }
-        public virtual List<Airports> Airports { get; set; }
-    }
-    public class Airports
+    public class Airport
     {
         [Key]
         public int ID { get; set; }
         public String Name { get; set; }
-        public virtual AirportFlights AirportFlights { get; set; }
+        public String Country { get; set; }
+        public virtual List<Flight> Flights { get; set; }
     }
 }

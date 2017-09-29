@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-    public class Flight
+    public class ViewFlight
     {
         public int id { get; set; }
         [Display(Name = "Fra tid")]
@@ -33,5 +33,8 @@ namespace WebApp.Models
         [Display(Name = "Klasse")]
         [Required(ErrorMessage = "Klasse må oppgis")]
         public String classType { get; set; }
+
+        public List<List<int>> travelIDs { get; set; }
+        public List<List<int>> returnIDs { get; set; }
     }
 }

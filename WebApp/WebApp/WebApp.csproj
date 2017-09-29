@@ -278,10 +278,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\ViewBooking.cs" />
     <Compile Include="Models\ViewModel.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Flight.cs" />
+    <Compile Include="Models\ViewCustomer.cs" />
+    <Compile Include="Models\ViewFlight.cs" />
     <Compile Include="Models\WebAppContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

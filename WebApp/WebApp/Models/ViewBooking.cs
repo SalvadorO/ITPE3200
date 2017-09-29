@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-    public class Booking
+    public class ViewBooking
     {
         public int id { get; set; }
         public int flightId { get; set; }

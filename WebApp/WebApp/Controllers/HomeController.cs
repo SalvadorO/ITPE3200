@@ -13,30 +13,54 @@ namespace WebApp.Controllers
         // View med søk
         public ActionResult ChooseFlight()
         {
-             
-             /*var db =  new WebAppContext();
             
-             List<Airports> air = new List<Airports>()
-             {
-                 new Airports{Name = "Oslo"},
-                 new Airports{Name = "Barcelona"}
-             };
-             foreach(var item in air){
-                 db.Airports.Add(item);
-             }
+            var db =  new WebAppContext();
+            db.Database.Delete();
 
-             List<Flights> flight = new List<Flights>()
-             {
-                 new Flights{DepartureTime = "03:00", Departure = 1, Destination = 2, DestinationTime = "07:00", TravelDate = "10/10/2000", ClassType = "Luxus" },
-                 new Flights{DepartureTime = "18:00", Departure = 1, Destination = 2, DestinationTime = "22:00", TravelDate = "18/10/2000", ClassType = "Luxus" },
-                 new Flights{DepartureTime = "00:00", Departure = 2, Destination = 1, DestinationTime = "04:00", TravelDate = "14/10/2000", ClassType = "Luxus" }
-             };
+           var Airport1 = new Airport { Name = "Oslo", Country = "Norge" };
+           var Airport2 = new Airport { Name = "Værnes", Country = "Norge" };
+           var Airport3 = new Airport { Name = "Tromsø", Country = "Norge" };
+           var Airport4 = new Airport { Name = "Bardufoss", Country = "Norge" };
+           var Airport5 = new Airport { Name = "Torp", Country = "Norge" };
+           var Airport6 = new Airport { Name = "Sola", Country = "Norge" };
+           var Airport7 = new Airport { Name = "Flesland", Country = "Norge" };
+           var Airport8 = new Airport { Name = "Hammerfest", Country = "Norge" };
 
-             foreach(var item in flight)
-             {
-                 db.Flights.Add(item);
-             }
-             db.SaveChanges();*/
+           db.Airport.Add(Airport1);
+           db.Airport.Add(Airport2);
+           db.Airport.Add(Airport3);
+           db.Airport.Add(Airport4);
+           db.Airport.Add(Airport5);
+           db.Airport.Add(Airport6);
+           db.Airport.Add(Airport7);
+           db.Airport.Add(Airport8);
+
+           var Flight1 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 4, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight11 = new Flight { Departure = 1, DepartureTime = "18:00", Destination = 4, DestinationTime = "19:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight2 = new Flight { Departure = 1, DepartureTime = "21:00", Destination = 4, DestinationTime = "22:35", TravelDate = "01/10/2017", ClassType = "Økonomi" };
+           var Flight3 = new Flight { Departure = 7, DepartureTime = "10:00", Destination = 5, DestinationTime = "10:45", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight4 = new Flight { Departure = 7, DepartureTime = "15:00", Destination = 5, DestinationTime = "15:45", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight5 = new Flight { Departure = 4, DepartureTime = "10:00", Destination = 1, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight6 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight7 = new Flight { Departure = 3, DepartureTime = "14:00", Destination = 8, DestinationTime = "15:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight8 = new Flight { Departure = 4, DepartureTime = "10:00", Destination = 1, DestinationTime = "11:35", TravelDate = "2/10/2017", ClassType = "Økonomi" };
+           var Flight9 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 7, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight10 = new Flight { Departure = 1, DepartureTime = "13:00", Destination = 2, DestinationTime = "14:00", TravelDate = "02/10/2017", ClassType = "Økonomi" };
+
+           db.Flight.Add(Flight1);
+           db.Flight.Add(Flight11);
+           db.Flight.Add(Flight2);
+           db.Flight.Add(Flight3);
+           db.Flight.Add(Flight4);
+           db.Flight.Add(Flight5);
+           db.Flight.Add(Flight6);
+           db.Flight.Add(Flight7);
+           db.Flight.Add(Flight8);
+           db.Flight.Add(Flight9);
+           db.Flight.Add(Flight10);
+
+            db.SaveChanges();
+            
 
             return View();
         }
@@ -50,8 +74,15 @@ namespace WebApp.Controllers
                 var db = new DBWebApp();
                 TempData["booking"] = searchFlight.booking;
                 ViewModel search = new ViewModel();
-                search.flights = db.searchFlights(searchFlight);
-                return PartialView("FlightPartial",search.flights);
+                search.flight = new ViewFlight();
+                search.travelflights = db.searchTravelFlights(searchFlight);
+                search.flight.travelIDs = db.filterIDs(search.travelflights);
+                if (searchFlight.booking.roundTrip)
+                {
+                    search.returnflights = db.searchReturnFlight(searchFlight);
+                    search.flight.returnIDs = db.filterIDs(search.returnflights);
+                }
+                return PartialView("FlightPartial",search);
             }
             return View();
         }
@@ -61,35 +92,37 @@ namespace WebApp.Controllers
         public JsonResult FindAirport(String Prefix)
         {
             var db = new WebAppContext();
-            var FoundAirport = (from f in db.Airports where f.Name.StartsWith(Prefix) select new { f.Name });
+            var FoundAirport = (from f in db.Airport where f.Name.StartsWith(Prefix) select new { f.Name });
             return Json(FoundAirport, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Registration(int id)
+        public ActionResult Registration(int travelID, int returnID)
         {
+            //STOPPER HER
+            System.Diagnostics.Debug.WriteLine("TRAVELID*** " + travelID);
+            System.Diagnostics.Debug.WriteLine("RETURNID*** " + returnID);
             var db = new DBWebApp();
-            ViewModel finalBooking = new ViewModel();
-            finalBooking.flight = db.getFlight(id);
-            finalBooking.booking = (Booking)TempData["booking"];
-            finalBooking.booking.flightId = id;
-            TempData["newbooking"] = finalBooking.booking;
-            return View(finalBooking);
+            ViewModel reg = new ViewModel();
+            //reg.flight = db.getFlight(id);
+            reg.booking = (ViewBooking)TempData["booking"];
+            //reg.booking.flightId = id;
+            TempData["newbooking"] = reg.booking;
+            return View(reg);
         }
         [HttpPost]
         public ActionResult Registration(ViewModel finalBooking)
         {
-                finalBooking.booking = (Booking)TempData["newbooking"];
-                TempData["finalBooking"] = finalBooking;
+                finalBooking.booking = (ViewBooking)TempData["newbooking"];
+                TempData["reg"] = finalBooking;
                 return RedirectToAction("Confirmation");
         }
 
         public ActionResult Confirmation()
         {
-            var finalView = (ViewModel)TempData["finalBooking"];
+            var finalView = (ViewModel)TempData["reg"];
             var db = new DBWebApp();
             finalView.flight = db.getFlight(finalView.booking.flightId);
             TempData["toDataBase"] = finalView;
-            //System.Diagnostics.Debug.WriteLine("DEP1** " + finalView.flight.departure);
             return View(finalView);
         }
  

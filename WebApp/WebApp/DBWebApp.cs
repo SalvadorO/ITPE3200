@@ -8,20 +8,20 @@ namespace WebApp
 {
     public class DBWebApp
     {
-        public List<List<Flight>> searchFlights(ViewModel search)
+        public List<List<ViewFlight>> searchTravelFlights(ViewModel search)
         {
             var db = new WebAppContext();
             String depName = search.flight.departure;
             String destName = search.flight.destination;
-            int depID = db.Airports.Where(a => a.Name.Equals(depName) ).Select(a => a.ID).FirstOrDefault();
-            int destID = db.Airports.Where(a => a.Name.Equals(destName)).Select(a => a.ID).FirstOrDefault();
-            List<List<Flight>> searchHit = new List<List<Flight>>();
+            int depID = db.Airport.Where(a => a.Name.Equals(depName) ).Select(a => a.ID).FirstOrDefault();
+            int destID = db.Airport.Where(a => a.Name.Equals(destName)).Select(a => a.ID).FirstOrDefault();
+            List<List<ViewFlight>> searchHit = new List<List<ViewFlight>>();
 
-            List<Flight> directRoute = db.Flights.Where(w => w.Departure == depID
+            List<ViewFlight> directRoute = db.Flight.Where(w => w.Departure == depID
             && w.Destination == destID
             && w.TravelDate.Equals(search.flight.travelDate)
             && w.ClassType.Equals(search.flight.classType))
-            .Select(s => new Flight()
+            .Select(s => new ViewFlight()
             {
                 id = s.ID,
                 travelDate = s.TravelDate,
@@ -34,22 +34,43 @@ namespace WebApp
 
             if(directRoute != null)
             {
-                searchHit.Insert(0,directRoute);
+                
+                for(int i = 0; i < directRoute.Count; i++)
+                {
+                    searchHit.Add(new List<ViewFlight>());
+                    searchHit[i].Add(directRoute.ElementAt(i));
+                     searchHit[0].Add(new ViewFlight {
+                     id = 1337,
+                     travelDate = "test",
+                     departure = "test",
+                     departureTime = "test",
+                     destination = "test",
+                     destinationTime = "test",
+                     classType = "test"
+                 });
+                }
             }
             else
             {
 
             }
-            System.Diagnostics.Debug.WriteLine("Bool " + search.booking.roundTrip);
-            System.Diagnostics.Debug.WriteLine("Return " + search.flight.returnDate);
+            return searchHit;
+        }
 
-            if (search.booking.roundTrip)
-            {
-                List<Flight> directReturnRoute = db.Flights.Where(w => w.Departure == destID
+        public List<List<ViewFlight>> searchReturnFlight(ViewModel search)
+        {
+            var db = new WebAppContext();
+            String depName = search.flight.departure;
+            String destName = search.flight.destination;
+            int depID = db.Airport.Where(a => a.Name.Equals(depName)).Select(a => a.ID).FirstOrDefault();
+            int destID = db.Airport.Where(a => a.Name.Equals(destName)).Select(a => a.ID).FirstOrDefault();
+            List<List<ViewFlight>> searchHit = new List<List<ViewFlight>>();
+
+            List<ViewFlight> directReturnRoute = db.Flight.Where(w => w.Departure == destID
                 && w.Destination == depID
                 && w.TravelDate.Equals(search.flight.returnDate)
                 && w.ClassType.Equals(search.flight.classType))
-                .Select(s => new Flight()
+                .Select(s => new ViewFlight()
                 {
                     id = s.ID,
                     travelDate = s.TravelDate,
@@ -60,22 +81,49 @@ namespace WebApp
                     classType = s.ClassType
                 }).ToList();
 
-                if (directReturnRoute != null)
+            if (directReturnRoute != null)
+            {
+                for (int i = 0; i < directReturnRoute.Count; i++)
                 {
-                    searchHit.Insert(1, directReturnRoute);
+                    searchHit.Add(new List<ViewFlight>());
+                    searchHit[i].Add(directReturnRoute[i]);
+                    searchHit[0].Add(new ViewFlight
+                    {
+                        id = 1337,
+                        travelDate = "test",
+                        departure = "test",
+                        departureTime = "test",
+                        destination = "test",
+                        destinationTime = "test",
+                        classType = "test"
+                    });
                 }
-                else
-                {
+            }
+            else
+            {
 
-                }
             }
             return searchHit;
         }
 
-        public Flight getFlight(int id)
+        public List<List<int>> filterIDs(List<List<ViewFlight>> inList)
+        {
+            List<List<int>> returnList = new List<List<int>>();
+            for(int x = 0; x < inList.Count; x++)
+            {
+                returnList.Add(new List<int>());
+                for( int y = 0; y < inList[x].Count; y++ )
+                {
+                    returnList[x].Add(inList[x][y].id);
+                }
+            }
+            return returnList;
+        }
+
+        public ViewFlight getFlight(int id)
         {
             var db = new WebAppContext();
-            var oneFlight = db.Flights.Find(id);
+            var oneFlight = db.Flight.Find(id);
 
             if(oneFlight == null)
             {
@@ -83,9 +131,9 @@ namespace WebApp
             }
             else
             {
-                String depName = db.Airports.Where(a => a.ID == oneFlight.Departure).Select(a => a.Name).FirstOrDefault();
-                String destName = db.Airports.Where(a => a.ID == oneFlight.Destination).Select(a => a.Name).FirstOrDefault();
-                var returnFlight = new Flight()
+                String depName = db.Airport.Where(a => a.ID == oneFlight.Departure).Select(a => a.Name).FirstOrDefault();
+                String destName = db.Airport.Where(a => a.ID == oneFlight.Destination).Select(a => a.Name).FirstOrDefault();
+                var returnFlight = new ViewFlight()
                 {
                     id = oneFlight.ID,
                     departure = depName,
@@ -100,16 +148,16 @@ namespace WebApp
         }
         public bool pushToDataBase(ViewModel final)
         {
-            var newBooking = new Bookings()
+            var newBooking = new Booking()
             {
                 Travelers = final.booking.travelers,
                 RoundTrip = final.booking.roundTrip,
                 TravelFlightID = final.booking.flightId
             };
 
-            var contactPerson = new Customers()
+            var contactPerson = new Customer()
             {
-                BookingsID = newBooking.ID,
+               // BookingsID = newBooking.ID,
                 FirstName = final.customers[0].firstName,
                 LastName = final.customers[0].lastName,
                 PhoneNumber = final.customers[0].phoneNumber,
@@ -120,23 +168,23 @@ namespace WebApp
             var db = new WebAppContext();
             try
             {
-                db.Bookings.Add(newBooking);
-                db.Customers.Add(contactPerson);
+                db.Booking.Add(newBooking);
+                db.Customer.Add(contactPerson);
 
                 if (final.booking.travelers > 1)
                 {
                     for (int i = 1; i < final.booking.travelers; i++)
                     {
-                        var customer = new Customers()
+                        var customer = new Customer()
                         {
-                            BookingsID = contactPerson.BookingsID,
+                           // BookingsID = contactPerson.BookingsID,
                             FirstName = final.customers[i].firstName,
                             LastName = final.customers[i].lastName,
                             PhoneNumber = final.customers[i].phoneNumber,
                             EMail = final.customers[i].eMail,
                             ContactPerson = false
                         };
-                        db.Customers.Add(customer);
+                        db.Customer.Add(customer);
                     }
                 }
                 db.SaveChanges();
