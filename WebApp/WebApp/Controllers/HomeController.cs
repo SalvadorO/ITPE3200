@@ -76,11 +76,11 @@ namespace WebApp.Controllers
                 ViewModel search = new ViewModel();
                 search.flight = new ViewFlight();
                 search.travelflights = db.searchTravelFlights(searchFlight);
-                search.flight.travelIDs = db.filterIDs(search.travelflights);
+                TempData["tids"] = search.flight.travelIDs = db.filterIDs(search.travelflights);
                 if (searchFlight.booking.roundTrip)
                 {
                     search.returnflights = db.searchReturnFlight(searchFlight);
-                    search.flight.returnIDs = db.filterIDs(search.returnflights);
+                    TempData["rids"] = search.flight.returnIDs = db.filterIDs(search.returnflights);
                 }
                 return PartialView("FlightPartial",search);
             }
@@ -96,23 +96,34 @@ namespace WebApp.Controllers
             return Json(FoundAirport, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Registration(int travelID, int returnID)
+        public void Helper(int travelID, int returnID)
         {
-            //STOPPER HER
-            System.Diagnostics.Debug.WriteLine("TRAVELID*** " + travelID);
-            System.Diagnostics.Debug.WriteLine("RETURNID*** " + returnID);
             var db = new DBWebApp();
             ViewModel reg = new ViewModel();
-            //reg.flight = db.getFlight(id);
+            reg.flight = new ViewFlight();
             reg.booking = (ViewBooking)TempData["booking"];
-            //reg.booking.flightId = id;
-            TempData["newbooking"] = reg.booking;
-            return View(reg);
+            reg.flight.travelIDs = (List<List<int>>)TempData["tids"];
+            reg.booking.chosenTravel = db.getFlights(reg.flight.travelIDs[travelID]);
+            if (returnID != -1)
+            {
+                reg.flight.returnIDs = (List<List<int>>)TempData["rids"];
+                reg.booking.chosenReturn = db.getFlights(reg.flight.returnIDs.ElementAt(returnID));
+            }
+            TempData["help"] = reg;
+        }
+
+        public ActionResult Registration()
+        {
+            var finalReg = (ViewModel)TempData["help"];
+            TempData["newbooking"] = finalReg.booking;
+            return View(finalReg);
         }
         [HttpPost]
         public ActionResult Registration(ViewModel finalBooking)
         {
-                finalBooking.booking = (ViewBooking)TempData["newbooking"];
+            System.Diagnostics.Debug.WriteLine("********* BLÆÆÆ3 ********");
+
+            finalBooking.booking = (ViewBooking)TempData["newbooking"];
                 TempData["reg"] = finalBooking;
                 return RedirectToAction("Confirmation");
         }
@@ -120,8 +131,6 @@ namespace WebApp.Controllers
         public ActionResult Confirmation()
         {
             var finalView = (ViewModel)TempData["reg"];
-            var db = new DBWebApp();
-            finalView.flight = db.getFlight(finalView.booking.flightId);
             TempData["toDataBase"] = finalView;
             return View(finalView);
         }

@@ -11,6 +11,6 @@ namespace WebApp.Models
        public List<ViewCustomer> customers { get; set; }
        public ViewFlight flight { get; set; }
        public List<List<ViewFlight>> travelflights { get; set; }
-        public List<List<ViewFlight>> returnflights { get; set; }
+       public List<List<ViewFlight>> returnflights { get; set; }
     }
 }

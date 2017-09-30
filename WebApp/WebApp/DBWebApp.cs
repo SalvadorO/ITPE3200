@@ -39,16 +39,17 @@ namespace WebApp
                 {
                     searchHit.Add(new List<ViewFlight>());
                     searchHit[i].Add(directRoute.ElementAt(i));
-                     searchHit[0].Add(new ViewFlight {
-                     id = 1337,
-                     travelDate = "test",
-                     departure = "test",
-                     departureTime = "test",
-                     destination = "test",
-                     destinationTime = "test",
-                     classType = "test"
-                 });
                 }
+                searchHit[0].Add(new ViewFlight
+                {
+                    id = 8,
+                    travelDate = "30/09/2017",
+                    departure = "Tromsø",
+                    departureTime = "14:00",
+                    destination = "Hammerfest",
+                    destinationTime = "15:00",
+                    classType = "Økonomi"
+                });
             }
             else
             {
@@ -87,16 +88,6 @@ namespace WebApp
                 {
                     searchHit.Add(new List<ViewFlight>());
                     searchHit[i].Add(directReturnRoute[i]);
-                    searchHit[0].Add(new ViewFlight
-                    {
-                        id = 1337,
-                        travelDate = "test",
-                        departure = "test",
-                        departureTime = "test",
-                        destination = "test",
-                        destinationTime = "test",
-                        classType = "test"
-                    });
                 }
             }
             else
@@ -120,32 +111,38 @@ namespace WebApp
             return returnList;
         }
 
-        public ViewFlight getFlight(int id)
+        public List<ViewFlight> getFlights(List<int> inList)
         {
             var db = new WebAppContext();
-            var oneFlight = db.Flight.Find(id);
+            List<ViewFlight> list = new List<ViewFlight>();
 
-            if(oneFlight == null)
-            {
-                return null;
-            }
-            else
-            {
-                String depName = db.Airport.Where(a => a.ID == oneFlight.Departure).Select(a => a.Name).FirstOrDefault();
-                String destName = db.Airport.Where(a => a.ID == oneFlight.Destination).Select(a => a.Name).FirstOrDefault();
-                var returnFlight = new ViewFlight()
+            foreach (var item in inList) {
+                var oneFlight = db.Flight.Find(item);
+
+                if (oneFlight == null)
                 {
-                    id = oneFlight.ID,
-                    departure = depName,
-                    departureTime = oneFlight.DepartureTime,
-                    destination = destName,
-                    destinationTime = oneFlight.DestinationTime,
-                    classType = oneFlight.ClassType
-                };
-                return returnFlight;
+                    return null;
+                }
+                else
+                {
+                    String depName = db.Airport.Where(a => a.ID == oneFlight.Departure).Select(a => a.Name).FirstOrDefault();
+                    String destName = db.Airport.Where(a => a.ID == oneFlight.Destination).Select(a => a.Name).FirstOrDefault();
+                    var returnFlight = new ViewFlight()
+                    {
+                        id = oneFlight.ID,
+                        departure = depName,
+                        departureTime = oneFlight.DepartureTime,
+                        destination = destName,
+                        destinationTime = oneFlight.DestinationTime,
+                        classType = oneFlight.ClassType,
+                        travelDate = oneFlight.TravelDate
+                    };
+                    list.Add(returnFlight);
+                }
             }
-
+            return list;
         }
+
         public bool pushToDataBase(ViewModel final)
         {
             var newBooking = new Booking()

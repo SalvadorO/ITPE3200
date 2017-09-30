@@ -117,7 +117,7 @@
 
         $(function () {
            $("#travelfield, #returnfield").datetimepicker({
-                viewMode: "years",
+                viewMode: "days",
                 format: "DD/MM/YYYY"
             });
         });
@@ -158,9 +158,23 @@
     });
 
     $(document).on("click", "#nextBtn", function () {
-        $.ajax({
-            url: '/Home/Registration',
-            data: { travelID: $("input[name=travel]:checked").val(), returnID: $("input[name=return]:checked").val() },
-        });
+        if ($("#roundtripbox").is(":checked")) {
+            $.ajax({
+                url: "/Home/Helper",
+                data: { travelID: $("input[name=travel]:checked").val(), returnID: $("input[name=return]:checked").val() },
+                success: function (strekninger) {
+                    window.location.href = "/Home/Registration"
+                }
+            });
+        } else {
+            $.ajax({
+                url: "/Home/Helper",
+                data: { travelID: $("input[name=travel]:checked").val(), returnID: -1 },
+                success: function (strekninger) {
+                    window.location.href = "/Home/Registration"
+                }
+            });
+        }
+        $("#nextBtn").prop("disabled", true)
     });
 </script>
