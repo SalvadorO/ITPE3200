@@ -147,24 +147,36 @@ namespace WebApp
         {
             var newBooking = new Booking()
             {
-                Travelers = final.booking.travelers,
-                RoundTrip = final.booking.roundTrip,
-                TravelFlightID = final.booking.flightId
+                 Travelers = final.booking.travelers,
+                 RoundTrip = final.booking.roundTrip
             };
 
             var contactPerson = new Customer()
             {
-               // BookingsID = newBooking.ID,
                 FirstName = final.customers[0].firstName,
                 LastName = final.customers[0].lastName,
                 PhoneNumber = final.customers[0].phoneNumber,
                 EMail = final.customers[0].eMail,
+                Address = final.customers[0].address,
+                ZipCode = final.customers[0].zipCode,
                 ContactPerson = true
             };
 
             var db = new WebAppContext();
             try
             {
+                var existingZip = db.City.Find(final.customers[0].zipCode);
+
+                if (existingZip == null)
+                {
+                    var newCity = new City()
+                    {
+                        ZipCode = final.customers[0].zipCode,
+                        CityName = final.customers[0].city
+                    };
+                    contactPerson.Cities = newCity;
+                }
+
                 db.Booking.Add(newBooking);
                 db.Customer.Add(contactPerson);
 
@@ -174,13 +186,27 @@ namespace WebApp
                     {
                         var customer = new Customer()
                         {
-                           // BookingsID = contactPerson.BookingsID,
                             FirstName = final.customers[i].firstName,
                             LastName = final.customers[i].lastName,
                             PhoneNumber = final.customers[i].phoneNumber,
                             EMail = final.customers[i].eMail,
+                            Address = final.customers[i].address,
+                            ZipCode = final.customers[i].zipCode,
                             ContactPerson = false
                         };
+
+                        var eZip = db.City.Find(final.customers[i].zipCode);
+
+                        if (eZip == null)
+                        {
+                            var newCity = new City()
+                            {
+                                ZipCode = final.customers[i].zipCode,
+                                CityName = final.customers[i].city
+                            };
+                            customer.Cities = newCity;
+                        }
+
                         db.Customer.Add(customer);
                     }
                 }

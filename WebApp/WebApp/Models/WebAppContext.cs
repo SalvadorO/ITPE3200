@@ -31,7 +31,6 @@ namespace WebApp.Models
     {
         [Key]
         public int ID { get; set; }
-       // public int BookingsID { get; set; }
         public String Address { get; set; }
         public String ZipCode { get; set; }
         public String FirstName { get; set; }

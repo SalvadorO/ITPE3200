@@ -1,37 +1,11 @@
 ﻿    @model WebApp.Models.ViewModel
 
     @{
-        ViewBag.Title = "Registration";
+        ViewBag.Title = "Registrering";
     }
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryval")
-        <h2>Registration</h2>
-
-
-        @using (Html.BeginForm())
-        {
-            <div class="form-group">
-                @Html.AntiForgeryToken()
-
-                @Html.DisplayNameFor(model => model.booking.travelers)
-                @Html.DisplayFor(model => model.booking.travelers)
-                <br />
-                @Html.DisplayNameFor(model => model.booking.roundTrip)
-                @Html.DisplayFor(model => model.booking.roundTrip)
-                <br />
-            </div>
-
-
-
-
-
-
-
-
-
-
-
+       
+        <h2>Registrering</h2>
 
                 <h2>Tur</h2>
                 <table class="table">
@@ -49,6 +23,9 @@
                             @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destinationTime)
                         </th>
                         <th>
+                            @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destination)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.booking.chosenTravel[0].classType)
                         </th>
                         <th></th>
@@ -61,16 +38,16 @@
                                     @Html.DisplayFor(modelItem => x.travelDate)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => x.travelDate)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => x.departureTime)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => x.departure)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => x.departureTime)
+                                    @Html.DisplayFor(modelItem => x.destinationTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => x.destination)
                                 </td>
 
                                 <td>
@@ -81,7 +58,8 @@
                     </table>
 
 
-            if (Model.booking.roundTrip) {
+            @if (Model.booking.roundTrip)
+            {
                 <h2>Retur</h2>
                 <table class="table">
                     <tr>
@@ -98,6 +76,9 @@
                             @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destinationTime)
                         </th>
                         <th>
+                            @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destination)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.booking.chosenReturn[0].classType)
                         </th>
                         <th></th>
@@ -110,16 +91,16 @@
                                 @Html.DisplayFor(modelItem => x.travelDate)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => x.travelDate)
-                            </td>
-                            <td>
                                 @Html.DisplayFor(modelItem => x.departureTime)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => x.departure)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => x.departureTime)
+                                @Html.DisplayFor(modelItem => x.destinationTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => x.destination)
                             </td>
 
                             <td>
@@ -135,11 +116,13 @@
 
 
 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
 
 
-
-
-
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
                     <h4>Kontaktperson</h4>
@@ -174,6 +157,30 @@
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.customers[0].eMail, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.customers[0].eMail, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customers[0].address, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.customers[0].address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.customers[0].address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customers[0].zipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.customers[0].zipCode, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.customers[0].zipCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.customers[0].city, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.customers[0].city, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.customers[0].city, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -217,6 +224,30 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.customers[i].address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.customers[i].address, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.customers[i].address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.customers[i].zipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.customers[i].zipCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.customers[i].zipCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.customers[i].city, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.customers[i].city, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.customers[i].city, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
                         }
                     }
 
@@ -226,4 +257,4 @@
                         </div>
                     </div>
                 </div>
-                }
+         }

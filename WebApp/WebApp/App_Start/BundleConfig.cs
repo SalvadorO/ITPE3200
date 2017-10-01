@@ -28,6 +28,9 @@ namespace WebApp.App_Start
             bundles.Add(new ScriptBundle("~/bundles/bootstrap")
                 .Include("~/Scripts/bootstrap*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/moment")
+                .Include("~/Scripts/moment.js"));
+
             //Styles
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/bootstrap.css",

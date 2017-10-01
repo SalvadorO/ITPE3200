@@ -121,11 +121,9 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult Registration(ViewModel finalBooking)
         {
-            System.Diagnostics.Debug.WriteLine("********* BLÆÆÆ3 ********");
-
             finalBooking.booking = (ViewBooking)TempData["newbooking"];
-                TempData["reg"] = finalBooking;
-                return RedirectToAction("Confirmation");
+            TempData["reg"] = finalBooking;
+            return RedirectToAction("Confirmation");
         }
 
         public ActionResult Confirmation()
