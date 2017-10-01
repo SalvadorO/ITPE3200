@@ -145,26 +145,23 @@ namespace WebApp
 
         public bool pushToDataBase(ViewModel final)
         {
-            var newBooking = new Booking()
-            {
-                 Travelers = final.booking.travelers,
-                 RoundTrip = final.booking.roundTrip
-            };
-
-            var contactPerson = new Customer()
-            {
-                FirstName = final.customers[0].firstName,
-                LastName = final.customers[0].lastName,
-                PhoneNumber = final.customers[0].phoneNumber,
-                EMail = final.customers[0].eMail,
-                Address = final.customers[0].address,
-                ZipCode = final.customers[0].zipCode,
-                ContactPerson = true
-            };
-
             var db = new WebAppContext();
             try
             {
+
+                var contactPerson = new Customer()
+                {
+                    FirstName = final.customers[0].firstName,
+                    LastName = final.customers[0].lastName,
+                    PhoneNumber = final.customers[0].phoneNumber,
+                    EMail = final.customers[0].eMail,
+                    Address = final.customers[0].address,
+                    ZipCode = final.customers[0].zipCode,
+                    ContactPerson = true,
+                    Bookings = new List<Booking>()
+            };
+
+
                 var existingZip = db.City.Find(final.customers[0].zipCode);
 
                 if (existingZip == null)
@@ -176,9 +173,37 @@ namespace WebApp
                     };
                     contactPerson.Cities = newCity;
                 }
-
-                db.Booking.Add(newBooking);
                 db.Customer.Add(contactPerson);
+
+
+                foreach (var i in final.booking.chosenTravel)
+                {
+                    var outBooking = new Booking()
+                    {
+                        FlightID = i.id,
+                        Travelers = final.booking.travelers,
+                        RoundTrip = final.booking.roundTrip
+                    };
+                    contactPerson.Bookings.Add(outBooking);
+
+                }
+                if (final.booking.roundTrip)
+                {
+                    foreach (var i in final.booking.chosenReturn)
+                    {
+                        var inBooking = new Booking()
+                        {
+                            FlightID = i.id,
+                            Travelers = final.booking.travelers,
+                            RoundTrip = final.booking.roundTrip
+                        };
+                        contactPerson.Bookings.Add(inBooking);
+
+                    }
+                }
+
+
+
 
                 if (final.booking.travelers > 1)
                 {
@@ -192,7 +217,8 @@ namespace WebApp
                             EMail = final.customers[i].eMail,
                             Address = final.customers[i].address,
                             ZipCode = final.customers[i].zipCode,
-                            ContactPerson = false
+                            ContactPerson = false,
+                            Bookings = new List<Booking>()
                         };
 
                         var eZip = db.City.Find(final.customers[i].zipCode);
@@ -208,6 +234,35 @@ namespace WebApp
                         }
 
                         db.Customer.Add(customer);
+
+                        foreach (var x in final.booking.chosenTravel)
+                        {
+                            var outBooking = new Booking()
+                            {
+                                FlightID = x.id,
+                                Travelers = final.booking.travelers,
+                                RoundTrip = final.booking.roundTrip
+                            };
+
+                            customer.Bookings.Add(outBooking);
+
+                        }
+                        if (final.booking.roundTrip)
+                        {
+                            foreach (var x in final.booking.chosenReturn)
+                            {
+                                var inBooking = new Booking()
+                                {
+                                    FlightID = x.id,
+                                    Travelers = final.booking.travelers,
+                                    RoundTrip = final.booking.roundTrip
+                                };
+
+                                customer.Bookings.Add(inBooking);
+
+                            }
+                        }
+
                     }
                 }
                 db.SaveChanges();

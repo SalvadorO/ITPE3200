@@ -38,15 +38,14 @@ namespace WebApp.Models
         public String PhoneNumber { get; set; }
         public String EMail { get; set; }
         public bool ContactPerson { get; set; }
-        public virtual Booking Booking { get; set; }
+        public virtual List<Booking> Bookings { get; set; }
         public virtual City Cities { get; set; }
     }
     public class Booking
     {
         [Key]
         public int ID { get; set; }
-        public int TravelFlightID { get; set; }
-        public int ReturnFlightID { get; set; }
+        public int FlightID { get; set; }
         public int Travelers { get; set; }
         public bool RoundTrip { get; set; }
         public virtual List<Customer> Customers { get; set; }
