@@ -35,29 +35,34 @@ namespace WebApp.Controllers
            db.Airport.Add(Airport7);
            db.Airport.Add(Airport8);
 
-           var Flight1 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 4, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
-           var Flight11 = new Flight { Departure = 1, DepartureTime = "18:00", Destination = 4, DestinationTime = "19:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
-           var Flight2 = new Flight { Departure = 1, DepartureTime = "21:00", Destination = 4, DestinationTime = "22:35", TravelDate = "01/10/2017", ClassType = "Økonomi" };
-           var Flight3 = new Flight { Departure = 7, DepartureTime = "10:00", Destination = 5, DestinationTime = "10:45", TravelDate = "30/09/2017", ClassType = "Økonomi" };
-           var Flight4 = new Flight { Departure = 7, DepartureTime = "15:00", Destination = 5, DestinationTime = "15:45", TravelDate = "30/09/2017", ClassType = "Økonomi" };
-           var Flight5 = new Flight { Departure = 4, DepartureTime = "10:00", Destination = 1, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
-           var Flight6 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
-           var Flight7 = new Flight { Departure = 3, DepartureTime = "14:00", Destination = 8, DestinationTime = "15:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+           var Flight1 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi",Seats = 50 };
+           var Flight2 = new Flight { Departure = 3, DepartureTime = "12:00", Destination = 8, DestinationTime = "14:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
+           var Flight3 = new Flight { Departure = 8, DepartureTime = "15:00", Destination = 3, DestinationTime = "17:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
+           var Flight4 = new Flight { Departure = 3, DepartureTime = "19:00", Destination = 1, DestinationTime = "21:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
+           var Flight5 = new Flight { Departure = 3, DepartureTime = "13:00", Destination = 8, DestinationTime = "15:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
+           var Flight6 = new Flight { Departure = 8, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
+          /* var Flight7 = new Flight { Departure = 3, DepartureTime = "14:00", Destination = 8, DestinationTime = "15:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
            var Flight8 = new Flight { Departure = 4, DepartureTime = "10:00", Destination = 1, DestinationTime = "11:35", TravelDate = "2/10/2017", ClassType = "Økonomi" };
            var Flight9 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 7, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
            var Flight10 = new Flight { Departure = 1, DepartureTime = "13:00", Destination = 2, DestinationTime = "14:00", TravelDate = "02/10/2017", ClassType = "Økonomi" };
+            var Flight11 = new Flight { Departure = 1, DepartureTime = "18:00", Destination = 4, DestinationTime = "19:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+            var Flight12 = new Flight { Departure = 8, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
+            var Flight13 = new Flight { Departure = 3, DepartureTime = "14:00", Destination = 1, DestinationTime = "15:00", TravelDate = "30/09/2017", ClassType = "Økonomi" }; */
 
            db.Flight.Add(Flight1);
-           db.Flight.Add(Flight11);
            db.Flight.Add(Flight2);
            db.Flight.Add(Flight3);
            db.Flight.Add(Flight4);
            db.Flight.Add(Flight5);
            db.Flight.Add(Flight6);
-           db.Flight.Add(Flight7);
+          /* db.Flight.Add(Flight7);
            db.Flight.Add(Flight8);
            db.Flight.Add(Flight9);
            db.Flight.Add(Flight10);
+            db.Flight.Add(Flight11);
+            db.Flight.Add(Flight12);
+            db.Flight.Add(Flight13);*/
+
 
             db.SaveChanges();
             
@@ -76,10 +81,12 @@ namespace WebApp.Controllers
                 ViewModel search = new ViewModel();
                 search.flight = new ViewFlight();
                 search.travelflights = db.searchTravelFlights(searchFlight);
+                System.Diagnostics.Debug.WriteLine("TRAVEL: " + search.travelflights.Count);
                 TempData["tids"] = search.flight.travelIDs = db.filterIDs(search.travelflights);
                 if (searchFlight.booking.roundTrip)
                 {
                     search.returnflights = db.searchReturnFlight(searchFlight);
+                    System.Diagnostics.Debug.WriteLine("REturn: " + search.returnflights.Count);
                     TempData["rids"] = search.flight.returnIDs = db.filterIDs(search.returnflights);
                 }
                 return PartialView("FlightPartial",search);

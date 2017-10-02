@@ -61,6 +61,8 @@ namespace WebApp.Models
         public int Destination { get; set; }
         public String DestinationTime { get; set; }
         public String ClassType { get; set; }
+        public int Price { get; set; }
+        public int Seats { get; set; }
         public virtual List<Booking> Bookings { get; set; }
         public virtual List<Airport> Airports { get; set; }
     }

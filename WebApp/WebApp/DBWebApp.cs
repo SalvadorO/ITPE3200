@@ -20,7 +20,8 @@ namespace WebApp
             List<ViewFlight> directRoute = db.Flight.Where(w => w.Departure == depID
             && w.Destination == destID
             && w.TravelDate.Equals(search.flight.travelDate)
-            && w.ClassType.Equals(search.flight.classType))
+            && w.ClassType.Equals(search.flight.classType)
+            && w.Seats >= search.booking.travelers)
             .Select(s => new ViewFlight()
             {
                 id = s.ID,
@@ -32,28 +33,64 @@ namespace WebApp
                 classType = s.ClassType
             }).ToList();
 
-            if(directRoute != null)
+            if(directRoute.Count != 0)
             {
-                
-                for(int i = 0; i < directRoute.Count; i++)
+                for (int i = 0; i < directRoute.Count; i++)
                 {
                     searchHit.Add(new List<ViewFlight>());
-                    searchHit[i].Add(directRoute.ElementAt(i));
+                    searchHit[i].Add(directRoute[i]);
                 }
-                searchHit[0].Add(new ViewFlight
-                {
-                    id = 8,
-                    travelDate = "30/09/2017",
-                    departure = "Tromsø",
-                    departureTime = "14:00",
-                    destination = "Hammerfest",
-                    destinationTime = "15:00",
-                    classType = "Økonomi"
-                });
             }
             else
             {
+                List<ViewFlight> tempdep = db.Flight.Where(w => w.Departure == depID
+            && w.TravelDate.Equals(search.flight.travelDate)
+            && w.ClassType.Equals(search.flight.classType)
+            && w.Seats >= search.booking.travelers)
+            .Select(s => new ViewFlight()
+            {
+                id = s.ID,
+                travelDate = s.TravelDate,
+                departure = depName,
+                departureTime = s.DepartureTime,
+                destination = db.Airport.Where(a => a.ID == s.Destination).Select(p => p.Name).FirstOrDefault(),
+                destinationTime = s.DestinationTime,
+                classType = s.ClassType
+            }).ToList();
 
+                List<ViewFlight> tempdest = db.Flight.Where(w => w.Destination == destID
+            && w.TravelDate.Equals(search.flight.travelDate)
+            && w.ClassType.Equals(search.flight.classType)
+            && w.Seats >= search.booking.travelers)
+            .Select(s => new ViewFlight()
+            {
+                id = s.ID,
+                travelDate = s.TravelDate,
+                departure = db.Airport.Where(a => a.ID == s.Departure).Select(p => p.Name).FirstOrDefault(),
+                departureTime = s.DepartureTime,
+                destination = destName,
+                destinationTime = s.DestinationTime,
+                classType = s.ClassType
+            }).ToList();
+
+                foreach (var x in tempdep)
+                {
+                    List<ViewFlight> templist = new List<ViewFlight>();
+                    foreach (var y in tempdest)
+                    {
+                        if (x.destination.Equals(y.departure) && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("01:00")) <= TimeSpan.Parse(y.departureTime)
+                            && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("05:00")) >= TimeSpan.Parse(y.departureTime))
+                        {
+                            templist.Add(x);
+                            templist.Add(y);
+                            break;
+                        }
+                    }
+                    if (templist.Count != 0)
+                    {
+                        searchHit.Add(templist);
+                    }
+                }
             }
             return searchHit;
         }
@@ -70,7 +107,8 @@ namespace WebApp
             List<ViewFlight> directReturnRoute = db.Flight.Where(w => w.Departure == destID
                 && w.Destination == depID
                 && w.TravelDate.Equals(search.flight.returnDate)
-                && w.ClassType.Equals(search.flight.classType))
+                && w.ClassType.Equals(search.flight.classType)
+                && w.Seats >= search.booking.travelers)
                 .Select(s => new ViewFlight()
                 {
                     id = s.ID,
@@ -82,7 +120,7 @@ namespace WebApp
                     classType = s.ClassType
                 }).ToList();
 
-            if (directReturnRoute != null)
+            if (directReturnRoute.Count != 0)
             {
                 for (int i = 0; i < directReturnRoute.Count; i++)
                 {
@@ -92,7 +130,54 @@ namespace WebApp
             }
             else
             {
+                List<ViewFlight> tempdep = db.Flight.Where(w => w.Departure == destID
+            && w.TravelDate.Equals(search.flight.travelDate)
+            && w.ClassType.Equals(search.flight.classType)
+            && w.Seats >= search.booking.travelers)
+            .Select(s => new ViewFlight()
+            {
+                id = s.ID,
+                travelDate = s.TravelDate,
+                departure = destName,
+                departureTime = s.DepartureTime,
+                destination = db.Airport.Where(a => a.ID == s.Destination).Select(p => p.Name).FirstOrDefault(),
+                destinationTime = s.DestinationTime,
+                classType = s.ClassType
+            }).ToList();
 
+                List<ViewFlight> tempdest = db.Flight.Where(w => w.Destination == depID
+            && w.TravelDate.Equals(search.flight.travelDate)
+            && w.ClassType.Equals(search.flight.classType)
+            && w.Seats >= search.booking.travelers)
+            .Select(s => new ViewFlight()
+            {
+                id = s.ID,
+                travelDate = s.TravelDate,
+                departure = db.Airport.Where(a => a.ID == s.Departure).Select(p => p.Name).FirstOrDefault(),
+                departureTime = s.DepartureTime,
+                destination = depName,
+                destinationTime = s.DestinationTime,
+                classType = s.ClassType
+            }).ToList();
+
+                foreach (var x in tempdep)
+                {
+                    List<ViewFlight> templist = new List<ViewFlight>();
+                    foreach (var y in tempdest)
+                    {
+                        if (x.destination.Equals(y.departure) && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("01:00")) <= TimeSpan.Parse(y.departureTime)
+                            && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("05:00")) >= TimeSpan.Parse(y.departureTime))
+                        {
+                            templist.Add(x);
+                            templist.Add(y);
+                            break;
+                        }
+                    }
+                    if (templist.Count != 0)
+                    {
+                        searchHit.Add(templist);
+                    }
+                }
             }
             return searchHit;
         }
@@ -187,6 +272,7 @@ namespace WebApp
                     contactPerson.Bookings.Add(outBooking);
 
                 }
+
                 if (final.booking.roundTrip)
                 {
                     foreach (var i in final.booking.chosenReturn)
@@ -202,9 +288,6 @@ namespace WebApp
                     }
                 }
 
-
-
-
                 if (final.booking.travelers > 1)
                 {
                     for (int i = 1; i < final.booking.travelers; i++)
@@ -218,7 +301,7 @@ namespace WebApp
                             Address = final.customers[i].address,
                             ZipCode = final.customers[i].zipCode,
                             ContactPerson = false,
-                            Bookings = new List<Booking>()
+                            Bookings = contactPerson.Bookings
                         };
 
                         var eZip = db.City.Find(final.customers[i].zipCode);
@@ -235,41 +318,27 @@ namespace WebApp
 
                         db.Customer.Add(customer);
 
-                        foreach (var x in final.booking.chosenTravel)
-                        {
-                            var outBooking = new Booking()
-                            {
-                                FlightID = x.id,
-                                Travelers = final.booking.travelers,
-                                RoundTrip = final.booking.roundTrip
-                            };
-
-                            customer.Bookings.Add(outBooking);
-
-                        }
-                        if (final.booking.roundTrip)
-                        {
-                            foreach (var x in final.booking.chosenReturn)
-                            {
-                                var inBooking = new Booking()
-                                {
-                                    FlightID = x.id,
-                                    Travelers = final.booking.travelers,
-                                    RoundTrip = final.booking.roundTrip
-                                };
-
-                                customer.Bookings.Add(inBooking);
-
-                            }
-                        }
-
                     }
                 }
+
+                updateSeats(final.booking.chosenTravel,db,final.booking.travelers);
+                updateSeats(final.booking.chosenReturn, db, final.booking.travelers);
+
                 db.SaveChanges();
                 return true;
             }
             catch(Exception error) { }
             return false;
+        }
+
+        public void updateSeats(List<ViewFlight> inList, WebAppContext db, int travelers)
+        {
+            foreach(var i in inList)
+            {
+                var update = db.Flight.Find(i.id);
+                int seats = update.Seats;
+                update.Seats = seats - travelers;
+            }
         }
     }
 }

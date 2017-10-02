@@ -34,6 +34,9 @@ namespace WebApp.Models
         [Required(ErrorMessage = "Klasse må oppgis")]
         public String classType { get; set; }
 
+        [Display(Name = "Ledige plasser")]
+        public int seats { get; set; }
+
         public List<List<int>> travelIDs { get; set; }
         public List<List<int>> returnIDs { get; set; }
     }
