@@ -2,6 +2,7 @@
     @{
         int radioTravelIndex = 0;
     }
+<div class="well">
     <h2>Tur</h2>
     <table class="table">
         <tr>
@@ -58,79 +59,77 @@
             radioTravelIndex++;
         }
 
-    @if (Model.travelflights.Count == 0)
-    {
-       <tr><td> <h4>Ingen treff! :(</h4></td></tr> 
-    }
-</table>
-@if (Model.returnflights != null)
-{
-    int radioReturnIndex = 0;
-    <h2>Retur</h2>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.returnflights[0][0].departure)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.returnflights[0][0].destinationTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.returnflights[0][0].departure)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.returnflights[0][0].destination)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.returnflights[0][0].travelDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.returnflights[0][0].classType)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var x in Model.returnflights)
-        {
-            <tr>
-
-                @foreach (var y in x)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => y.departureTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => y.destinationTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => y.departure)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => y.destination)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => y.travelDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => y.classType)
-                    </td>
-                }
-                <td>
-                    <input type="radio" name="return" id="return" value=@radioReturnIndex />
-                </td>
-            </tr>
-            radioReturnIndex++;
-        }
-
-        @if (Model.returnflights.Count == 0)
+        @if (Model.travelflights.Count == 0)
         {
             <tr><td> <h4>Ingen treff! :(</h4></td></tr>
         }
     </table>
-}
+    @if (Model.returnflights != null)
+    {
+        int radioReturnIndex = 0;
+        <h2>Retur</h2>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].departure)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].destinationTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].departure)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].destination)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].travelDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].classType)
+                </th>
+                <th></th>
+            </tr>
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Neste" id="nextBtn" class="btn btn-primary" disabled ="disabled" />
-    </div>
+            @foreach (var x in Model.returnflights)
+            {
+                <tr>
+
+                    @foreach (var y in x)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => y.departureTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => y.destinationTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => y.departure)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => y.destination)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => y.travelDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => y.classType)
+                        </td>
+                    }
+                    <td>
+                        <input type="radio" name="return" id="return" value=@radioReturnIndex />
+                    </td>
+                </tr>
+                radioReturnIndex++;
+            }
+
+            @if (Model.returnflights.Count == 0)
+            {
+                <tr><td> <h4>Ingen treff! :(</h4></td></tr>
+            }
+
+
+        </table>
+
+    }<input type="submit" value="Neste" id="nextBtn" class="btn btn-primary" disabled="disabled" />
 </div>

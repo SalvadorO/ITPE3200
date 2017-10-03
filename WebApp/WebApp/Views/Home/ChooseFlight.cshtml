@@ -18,73 +18,118 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Booking</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.departure, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.departure, new { htmlAttributes = new { @class = "form-control", @id = "searchdep"} })
-                @Html.ValidationMessageFor(model => model.flight.departure, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.destination, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.destination, new { htmlAttributes = new { @class = "form-control", @id = "searchdest" } })
-                @Html.ValidationMessageFor(model => model.flight.destination, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.travelDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.travelDate, new { htmlAttributes = new { @class = "form-control", @id = "travelfield" } })
-                @Html.ValidationMessageFor(model => model.flight.travelDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group", id="returndate">
-            @Html.LabelFor(model => model.flight.returnDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.returnDate, new { htmlAttributes = new { @class = "form-control", @id = "returnfield" } })
-                @Html.ValidationMessageFor(model => model.flight.returnDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.classType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.classType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.flight.classType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.booking.travelers, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.booking.travelers, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.booking.travelers, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.booking.roundTrip, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.CheckBoxFor(model => model.booking.roundTrip, new { @checked = true, @id = "roundtripbox" })
-                    @Html.ValidationMessageFor(model => model.booking.roundTrip, "", new { @class = "text-danger" })
+    <div class="well">
+        <div class="form-horizontal">
+            <h4>Booking</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.departure, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.departure, new { htmlAttributes = new { @class = "form-control", @id = "searchdep" } })
+                    @Html.ValidationMessageFor(model => model.flight.departure, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Søk" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.destination, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.destination, new { htmlAttributes = new { @class = "form-control", @id = "searchdest" } })
+                    @Html.ValidationMessageFor(model => model.flight.destination, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.travelDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.travelDate, new { htmlAttributes = new { @class = "form-control", @id = "travelfield" } })
+                    @Html.ValidationMessageFor(model => model.flight.travelDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" , id="returndate">
+                @Html.LabelFor(model => model.flight.returnDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.returnDate, new { htmlAttributes = new { @class = "form-control", @id = "returnfield" } })
+                    @Html.ValidationMessageFor(model => model.flight.returnDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.classType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.DropDownListFor(model => model.flight.classType,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "Økonomi" , Text = "Økonomi" },
+                       new SelectListItem { Value = "Business" , Text = "Business" },
+                       new SelectListItem { Value = "First" , Text = "First" },
+                    },
+                  new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.flight.classType, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.booking.travelers, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.DropDownListFor(model => model.booking.travelers,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "0" , Text = "0" },
+                       new SelectListItem { Value = "1" , Text = "1" },
+                       new SelectListItem { Value = "2" , Text = "2" },
+                       new SelectListItem { Value = "3" , Text = "3" },
+                       new SelectListItem { Value = "4" , Text = "4" },
+                       new SelectListItem { Value = "5" , Text = "5" },
+                       new SelectListItem { Value = "6" , Text = "6" },
+                       new SelectListItem { Value = "7" , Text = "7" },
+                       new SelectListItem { Value = "8" , Text = "8" },
+                       new SelectListItem { Value = "9" , Text = "9" },
+                    },
+                  new { @class = "numberOfTravelers" })
+                    @Html.ValidationMessageFor(model => model.booking.roundTrip, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.booking.roundTrip, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.booking.roundTrip, new { @checked = true, @id = "roundtripbox" })
+                        @Html.ValidationMessageFor(model => model.booking.roundTrip, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Søk" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 }

@@ -123,6 +123,7 @@ namespace WebApp.Controllers
         {
             var finalReg = (ViewModel)TempData["help"];
             TempData["newbooking"] = finalReg.booking;
+            TempData.Keep("help");
             return View(finalReg);
         }
         [HttpPost]

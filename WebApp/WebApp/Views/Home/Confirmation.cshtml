@@ -1,226 +1,479 @@
 ﻿@model WebApp.Models.ViewModel
-
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
 @{
     ViewBag.Title = "Reisen";
 }
 
 <h2>Confirmation</h2>
-
-<div>
-    <h4>Reisen</h4>
-    <hr />
-    <h2>Tur</h2>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.booking.chosenTravel[0].travelDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.booking.chosenTravel[0].departureTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.booking.chosenTravel[0].departure)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destinationTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destination)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.booking.chosenTravel[0].classType)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var x in Model.booking.chosenTravel)
-        {
+<div class="well">
+    <div>
+        <h4>Reisen</h4>
+        <hr />
+        <h2>Tur</h2>
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => x.travelDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => x.departureTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => x.departure)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => x.destinationTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => x.destination)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => x.classType)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.booking.chosenTravel[0].travelDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.booking.chosenTravel[0].departureTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.booking.chosenTravel[0].departure)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destinationTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destination)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.booking.chosenTravel[0].classType)
+                </th>
+                <th></th>
             </tr>
-        }
-    </table>
 
-
-    @if (Model.booking.roundTrip)
+            @foreach (var x in Model.booking.chosenTravel)
             {
-        <h2>Retur</h2>
-                <table class="table">
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => x.travelDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x.departureTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x.departure)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x.destinationTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x.destination)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => x.classType)
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+        @if (Model.booking.roundTrip)
+            {
+            <h2>Retur</h2>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.booking.chosenReturn[0].travelDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.booking.chosenReturn[0].departureTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.booking.chosenReturn[0].departure)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destinationTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destination)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.booking.chosenReturn[0].classType)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var x in Model.booking.chosenReturn)
+                {
                     <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.booking.chosenReturn[0].travelDate)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.booking.chosenReturn[0].departureTime)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.booking.chosenReturn[0].departure)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destinationTime)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destination)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.booking.chosenReturn[0].classType)
-                        </th>
-                        <th></th>
+                        <td>
+                            @Html.DisplayFor(modelItem => x.travelDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x.departureTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x.departure)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x.destinationTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x.destination)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => x.classType)
+                        </td>
                     </tr>
-
-                    @foreach (var x in Model.booking.chosenReturn)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => x.travelDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => x.departureTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => x.departure)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => x.destinationTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => x.destination)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => x.classType)
-                            </td>
-                        </tr>
-                    }
-                </table>
-    }
-
-
-
-    <h4>Kontaktperson</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.customers[0].eMail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.customers[0].eMail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.customers[0].firstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.customers[0].firstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.customers[0].lastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.customers[0].lastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.customers[0].address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.customers[0].address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.customers[0].city)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.customers[0].city)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.customers[0].zipCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.customers[0].zipCode)
-        </dd>
-    </dl>
-    @if (Model.booking.travelers > 1)
-    {
-        for (int i = 1; i < Model.booking.travelers; i++)
-        {
-            <h4>Medpassasjer</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.customers[i].eMail)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.customers[i].eMail)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.customers[i].firstName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.customers[i].firstName)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.customers[i].lastName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.customers[i].lastName)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.customers[i].address)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.customers[i].address)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.customers[i].city)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.customers[i].city)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.customers[i].zipCode)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.customers[i].zipCode)
-                </dd>
-
-            </dl>
+                }
+            </table>
         }
-    }
+
+
+
+        <h4>Kontaktperson</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.customers[0].eMail)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.customers[0].eMail)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.customers[0].firstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.customers[0].firstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.customers[0].lastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.customers[0].lastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.customers[0].address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.customers[0].address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.customers[0].city)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.customers[0].city)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.customers[0].zipCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.customers[0].zipCode)
+            </dd>
+        </dl>
+        @if (Model.booking.travelers > 1)
+        {
+            for (int i = 1; i < Model.booking.travelers; i++)
+            {
+                <h4>Medpassasjer</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.customers[i].eMail)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.customers[i].eMail)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.customers[i].firstName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.customers[i].firstName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.customers[i].lastName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.customers[i].lastName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.customers[i].address)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.customers[i].address)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.customers[i].city)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.customers[i].city)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.customers[i].zipCode)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.customers[i].zipCode)
+                    </dd>
+
+                </dl>
+            }
+        }
+    </div>
+
+
+
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal" onclick="pushDatabase">
+        Bestill
+    </button>
+    @Html.ActionLink("Avbryt", "Registration", new { empty = "" }, new { @class = "btn btn-default" })
 </div>
-@Html.ActionLink("Bestill", "pushDatabase", new { empty = "" }, new { @class = "btn btn-primary" })
+        <div id="confirmationModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Bekreftelse</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+
+
+                            <div>
+
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.booking.chosenTravel[0].travelDate)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.booking.chosenTravel[0].departureTime)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.booking.chosenTravel[0].departure)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destinationTime)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.booking.chosenTravel[0].destination)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.booking.chosenTravel[0].classType)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+
+                                    @foreach (var x in Model.booking.chosenTravel)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => x.travelDate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => x.departureTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => x.departure)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => x.destinationTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => x.destination)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => x.classType)
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+
+
+                                @if (Model.booking.roundTrip)
+            {
+                                    <h2>Retur</h2>
+                                    <table class="table">
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.booking.chosenReturn[0].travelDate)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.booking.chosenReturn[0].departureTime)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.booking.chosenReturn[0].departure)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destinationTime)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.booking.chosenReturn[0].destination)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.booking.chosenReturn[0].classType)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+
+                                        @foreach (var x in Model.booking.chosenReturn)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => x.travelDate)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => x.departureTime)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => x.departure)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => x.destinationTime)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => x.destination)
+                                                </td>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => x.classType)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                }
+
+
+
+                                <h4>Kontaktperson</h4>
+                                <hr />
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.customers[0].eMail)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.customers[0].eMail)
+                                    </dd>
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.customers[0].firstName)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.customers[0].firstName)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.customers[0].lastName)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.customers[0].lastName)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.customers[0].address)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.customers[0].address)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.customers[0].city)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.customers[0].city)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.customers[0].zipCode)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.customers[0].zipCode)
+                                    </dd>
+                                </dl>
+                                @if (Model.booking.travelers > 1)
+                                {
+                                    for (int i = 1; i < Model.booking.travelers; i++)
+                                    {
+                                        <h4>Medpassasjer</h4>
+                                        <hr />
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.customers[i].eMail)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.customers[i].eMail)
+                                            </dd>
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.customers[i].firstName)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.customers[i].firstName)
+                                            </dd>
+
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.customers[i].lastName)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.customers[i].lastName)
+                                            </dd>
+
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.customers[i].address)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.customers[i].address)
+                                            </dd>
+
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.customers[i].city)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.customers[i].city)
+                                            </dd>
+
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.customers[i].zipCode)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.customers[i].zipCode)
+                                            </dd>
+
+                                        </dl>
+                                    }
+                                }
+                            </div>
+
+
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        @Html.ActionLink("Bekreft bestilling", "pushDatabase", new { empty = "" }, new { @class = "btn btn-primary" })
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+   
