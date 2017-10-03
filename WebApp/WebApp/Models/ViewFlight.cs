@@ -36,6 +36,7 @@ namespace WebApp.Models
 
         [Display(Name = "Ledige plasser")]
         public int seats { get; set; }
+        public int price { get; set; }
 
         public List<List<int>> travelIDs { get; set; }
         public List<List<int>> returnIDs { get; set; }

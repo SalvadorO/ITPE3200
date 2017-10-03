@@ -170,7 +170,7 @@
         {
             for (int i = 1; i < Model.booking.travelers; i++)
             {
-                <h4>Medpassasjer</h4>
+                <h4>Medpassasjer @i</h4>
                 <hr />
                 <dl class="dl-horizontal">
                     <dt>
@@ -225,7 +225,7 @@
         }
     </div>
 
-
+    <div><h1>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice)</h1></div>
 
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal" onclick="pushDatabase">
@@ -235,8 +235,6 @@
 </div>
         <div id="confirmationModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-
-
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -244,10 +242,8 @@
                     </div>
                     <div class="modal-body">
                         <p>
-
-
                             <div>
-
+                                <h2>Tur</h2>
                                 <table class="table">
                                     <tr>
                                         <th>
@@ -297,9 +293,8 @@
                                     }
                                 </table>
 
-
                                 @if (Model.booking.roundTrip)
-            {
+                                 {
                                     <h2>Retur</h2>
                                     <table class="table">
                                         <tr>
@@ -350,8 +345,6 @@
                                         }
                                     </table>
                                 }
-
-
 
                                 <h4>Kontaktperson</h4>
                                 <hr />
@@ -407,7 +400,7 @@
                                 {
                                     for (int i = 1; i < Model.booking.travelers; i++)
                                     {
-                                        <h4>Medpassasjer</h4>
+                                        <h4>Medpassasjer @i</h4>
                                         <hr />
                                         <dl class="dl-horizontal">
                                             <dt>

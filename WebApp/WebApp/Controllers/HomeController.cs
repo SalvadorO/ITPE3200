@@ -35,12 +35,12 @@ namespace WebApp.Controllers
            db.Airport.Add(Airport7);
            db.Airport.Add(Airport8);
 
-           var Flight1 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi",Seats = 50 };
-           var Flight2 = new Flight { Departure = 3, DepartureTime = "12:00", Destination = 8, DestinationTime = "14:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
-           var Flight3 = new Flight { Departure = 8, DepartureTime = "15:00", Destination = 3, DestinationTime = "17:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
-           var Flight4 = new Flight { Departure = 3, DepartureTime = "19:00", Destination = 1, DestinationTime = "21:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
-           var Flight5 = new Flight { Departure = 3, DepartureTime = "13:00", Destination = 8, DestinationTime = "15:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
-           var Flight6 = new Flight { Departure = 8, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50 };
+           var Flight1 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi",Seats = 50, Price = 1500 };
+           var Flight2 = new Flight { Departure = 1, DepartureTime = "12:00", Destination = 3, DestinationTime = "14:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
+           var Flight3 = new Flight { Departure = 1, DepartureTime = "15:00", Destination = 3, DestinationTime = "17:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
+           var Flight4 = new Flight { Departure = 1, DepartureTime = "19:00", Destination = 3, DestinationTime = "21:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
+           var Flight5 = new Flight { Departure = 1, DepartureTime = "13:00", Destination = 3, DestinationTime = "15:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
+           var Flight6 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
           /* var Flight7 = new Flight { Departure = 3, DepartureTime = "14:00", Destination = 8, DestinationTime = "15:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
            var Flight8 = new Flight { Departure = 4, DepartureTime = "10:00", Destination = 1, DestinationTime = "11:35", TravelDate = "2/10/2017", ClassType = "Økonomi" };
            var Flight9 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 7, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
@@ -81,12 +81,10 @@ namespace WebApp.Controllers
                 ViewModel search = new ViewModel();
                 search.flight = new ViewFlight();
                 search.travelflights = db.searchTravelFlights(searchFlight);
-                System.Diagnostics.Debug.WriteLine("TRAVEL: " + search.travelflights.Count);
                 TempData["tids"] = search.flight.travelIDs = db.filterIDs(search.travelflights);
                 if (searchFlight.booking.roundTrip)
                 {
                     search.returnflights = db.searchReturnFlight(searchFlight);
-                    System.Diagnostics.Debug.WriteLine("REturn: " + search.returnflights.Count);
                     TempData["rids"] = search.flight.returnIDs = db.filterIDs(search.returnflights);
                 }
                 return PartialView("FlightPartial",search);
@@ -111,10 +109,13 @@ namespace WebApp.Controllers
             reg.booking = (ViewBooking)TempData["booking"];
             reg.flight.travelIDs = (List<List<int>>)TempData["tids"];
             reg.booking.chosenTravel = db.getFlights(reg.flight.travelIDs[travelID]);
+            reg.booking.totalPrice = db.getPrice(reg.booking.chosenTravel) * reg.booking.travelers;
+            System.Diagnostics.Debug.WriteLine("******** " + db.getPrice(reg.booking.chosenTravel));
             if (returnID != -1)
             {
                 reg.flight.returnIDs = (List<List<int>>)TempData["rids"];
                 reg.booking.chosenReturn = db.getFlights(reg.flight.returnIDs.ElementAt(returnID));
+                reg.booking.totalPrice += db.getPrice(reg.booking.chosenReturn) * reg.booking.travelers;
             }
             TempData["help"] = reg;
         }

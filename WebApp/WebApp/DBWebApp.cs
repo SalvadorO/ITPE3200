@@ -31,8 +31,11 @@ namespace WebApp
                 destination = destName,
                 destinationTime = s.DestinationTime,
                 classType = s.ClassType
-            }).ToList();
-
+            }).OrderBy(o => o.departureTime).ToList();
+            foreach(var i in directRoute)
+            {
+                System.Diagnostics.Debug.WriteLine("**" + i.departureTime);
+            }
             if(directRoute.Count != 0)
             {
                 for (int i = 0; i < directRoute.Count; i++)
@@ -56,7 +59,7 @@ namespace WebApp
                 destination = db.Airport.Where(a => a.ID == s.Destination).Select(p => p.Name).FirstOrDefault(),
                 destinationTime = s.DestinationTime,
                 classType = s.ClassType
-            }).ToList();
+            }).OrderBy(o => o.departureTime).ToList();
 
                 List<ViewFlight> tempdest = db.Flight.Where(w => w.Destination == destID
             && w.TravelDate.Equals(search.flight.travelDate)
@@ -71,15 +74,15 @@ namespace WebApp
                 destination = destName,
                 destinationTime = s.DestinationTime,
                 classType = s.ClassType
-            }).ToList();
+            }).OrderBy(o => o.departureTime).ToList();
 
                 foreach (var x in tempdep)
                 {
                     List<ViewFlight> templist = new List<ViewFlight>();
                     foreach (var y in tempdest)
                     {
-                        if (x.destination.Equals(y.departure) && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("01:00")) <= TimeSpan.Parse(y.departureTime)
-                            && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("05:00")) >= TimeSpan.Parse(y.departureTime))
+                        if (x.destination.Equals(y.departure) && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.FromHours(1)) <= TimeSpan.Parse(y.departureTime)
+                            && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.FromHours(5)) >= TimeSpan.Parse(y.departureTime))
                         {
                             templist.Add(x);
                             templist.Add(y);
@@ -118,7 +121,7 @@ namespace WebApp
                     destination = destName,
                     destinationTime = s.DestinationTime,
                     classType = s.ClassType
-                }).ToList();
+                }).OrderBy(o => o.departureTime).ToList();
 
             if (directReturnRoute.Count != 0)
             {
@@ -143,7 +146,7 @@ namespace WebApp
                 destination = db.Airport.Where(a => a.ID == s.Destination).Select(p => p.Name).FirstOrDefault(),
                 destinationTime = s.DestinationTime,
                 classType = s.ClassType
-            }).ToList();
+            }).OrderBy(o => o.departureTime).ToList();
 
                 List<ViewFlight> tempdest = db.Flight.Where(w => w.Destination == depID
             && w.TravelDate.Equals(search.flight.travelDate)
@@ -158,15 +161,15 @@ namespace WebApp
                 destination = depName,
                 destinationTime = s.DestinationTime,
                 classType = s.ClassType
-            }).ToList();
+            }).OrderBy(o => o.departureTime).ToList();
 
                 foreach (var x in tempdep)
                 {
                     List<ViewFlight> templist = new List<ViewFlight>();
                     foreach (var y in tempdest)
                     {
-                        if (x.destination.Equals(y.departure) && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("01:00")) <= TimeSpan.Parse(y.departureTime)
-                            && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.Parse("05:00")) >= TimeSpan.Parse(y.departureTime))
+                        if (x.destination.Equals(y.departure) && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.FromHours(1)) <= TimeSpan.Parse(y.departureTime)
+                            && TimeSpan.Parse(x.destinationTime).Add(TimeSpan.FromHours(5)) >= TimeSpan.Parse(y.departureTime))
                         {
                             templist.Add(x);
                             templist.Add(y);
@@ -220,12 +223,23 @@ namespace WebApp
                         destination = destName,
                         destinationTime = oneFlight.DestinationTime,
                         classType = oneFlight.ClassType,
-                        travelDate = oneFlight.TravelDate
+                        travelDate = oneFlight.TravelDate,
+                        price = oneFlight.Price
                     };
                     list.Add(returnFlight);
                 }
             }
             return list;
+        }
+
+        public int getPrice(List<ViewFlight> list)
+        {
+            int price = 0;
+            foreach (var p in list)
+            {
+                price += p.price;
+            }
+            return price;
         }
 
         public bool pushToDataBase(ViewModel final)
@@ -272,6 +286,7 @@ namespace WebApp
                     contactPerson.Bookings.Add(outBooking);
 
                 }
+                updateSeats(final.booking.chosenTravel, db, final.booking.travelers);
 
                 if (final.booking.roundTrip)
                 {
@@ -286,6 +301,7 @@ namespace WebApp
                         contactPerson.Bookings.Add(inBooking);
 
                     }
+                    updateSeats(final.booking.chosenReturn, db, final.booking.travelers);
                 }
 
                 if (final.booking.travelers > 1)
@@ -320,10 +336,6 @@ namespace WebApp
 
                     }
                 }
-
-                updateSeats(final.booking.chosenTravel,db,final.booking.travelers);
-                updateSeats(final.booking.chosenReturn, db, final.booking.travelers);
-
                 db.SaveChanges();
                 return true;
             }

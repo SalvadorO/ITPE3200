@@ -11,9 +11,8 @@
     @Scripts.Render("~/bundles/jqueryunobtrusive")
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/css")
-   @* @RenderBody()
-    @RenderSection("scripts", required: false)*@
-<h2>Flight</h2>
+
+<h2>Finn flight</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -76,21 +75,12 @@
 
 
 
-
-
-
-
-
-
-
-
             <div class="form-group">
                 @Html.LabelFor(model => model.booking.travelers, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
 
                     @Html.DropDownListFor(model => model.booking.travelers,
                   new List<SelectListItem> {
-                       new SelectListItem { Value = "0" , Text = "0" },
                        new SelectListItem { Value = "1" , Text = "1" },
                        new SelectListItem { Value = "2" , Text = "2" },
                        new SelectListItem { Value = "3" , Text = "3" },
