@@ -455,9 +455,44 @@
                                 }
                             </div>
 
+                            <h4>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice)</h4>
 
+
+
+                            <br />
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.customers[0].cardName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.customers[0].cardName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.customers[0].cardName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.customers[0].cardNr, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.customers[0].cardNr, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.customers[0].cardNr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.customers[0].expDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.customers[0].expDate, new { htmlAttributes = new { @class = "form-control", @id = "expDate" } })
+                                    @Html.ValidationMessageFor(model => model.customers[0].expDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
                         </p>
+                       
                     </div>
+                    <br />
                     <div class="modal-footer">
                         @Html.ActionLink("Bekreft bestilling", "pushDatabase", new { empty = "" }, new { @class = "btn btn-primary" })
                         <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
@@ -469,4 +504,19 @@
 
 
         </div>
-   
+   <script type="text/javascript">
+       $(document).ready(function ()
+       {
+           $(function () {
+               $("#expDate").datetimepicker({
+                   changeMonth: true,
+                   changeYear: true,
+                   yearRange: "-50:+50",
+                   dateFormat: "yy-mm-dd"
+                   
+               });
+           });
+
+
+       }
+   </script>
