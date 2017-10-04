@@ -36,11 +36,11 @@ namespace WebApp.Controllers
            db.Airport.Add(Airport8);
 
            var Flight1 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi",Seats = 50, Price = 1500 };
-           var Flight2 = new Flight { Departure = 1, DepartureTime = "12:00", Destination = 3, DestinationTime = "14:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
-           var Flight3 = new Flight { Departure = 1, DepartureTime = "15:00", Destination = 3, DestinationTime = "17:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
-           var Flight4 = new Flight { Departure = 1, DepartureTime = "19:00", Destination = 3, DestinationTime = "21:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
-           var Flight5 = new Flight { Departure = 1, DepartureTime = "13:00", Destination = 3, DestinationTime = "15:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
-           var Flight6 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 1500 };
+           var Flight2 = new Flight { Departure = 1, DepartureTime = "12:00", Destination = 3, DestinationTime = "14:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 600 };
+           var Flight3 = new Flight { Departure = 1, DepartureTime = "15:00", Destination = 3, DestinationTime = "17:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 354 };
+           var Flight4 = new Flight { Departure = 3, DepartureTime = "19:00", Destination = 1, DestinationTime = "21:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 656 };
+           var Flight5 = new Flight { Departure = 1, DepartureTime = "13:00", Destination = 3, DestinationTime = "15:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 252 };
+           var Flight6 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 3, DestinationTime = "12:00", TravelDate = "02/10/2017", ClassType = "Økonomi", Seats = 50, Price = 111 };
           /* var Flight7 = new Flight { Departure = 3, DepartureTime = "14:00", Destination = 8, DestinationTime = "15:00", TravelDate = "30/09/2017", ClassType = "Økonomi" };
            var Flight8 = new Flight { Departure = 4, DepartureTime = "10:00", Destination = 1, DestinationTime = "11:35", TravelDate = "2/10/2017", ClassType = "Økonomi" };
            var Flight9 = new Flight { Departure = 1, DepartureTime = "10:00", Destination = 7, DestinationTime = "11:35", TravelDate = "30/09/2017", ClassType = "Økonomi" };
@@ -92,6 +92,21 @@ namespace WebApp.Controllers
             return View();
         }
 
+        //Oppdaterer pris i partial view dynamisk
+        public int UpdateDynamicPrice(int trav, int ret, int num)
+        {
+            int price = 0;
+            var db = new DBWebApp();
+            price = db.getPrice(db.getFlights(((List<List<int>>)TempData["tids"])[trav])) * num;
+            TempData.Keep("tids");
+            if(ret != -1)
+            {
+                price += db.getPrice(db.getFlights(((List<List<int>>)TempData["rids"])[ret])) * num;
+                TempData.Keep("rids");
+            }
+            return price;
+        }
+
         //Finner mulige flyplasser i Airport-databasen.
         [HttpPost]
         public JsonResult FindAirport(String Prefix)
@@ -110,7 +125,6 @@ namespace WebApp.Controllers
             reg.flight.travelIDs = (List<List<int>>)TempData["tids"];
             reg.booking.chosenTravel = db.getFlights(reg.flight.travelIDs[travelID]);
             reg.booking.totalPrice = db.getPrice(reg.booking.chosenTravel) * reg.booking.travelers;
-            System.Diagnostics.Debug.WriteLine("******** " + db.getPrice(reg.booking.chosenTravel));
             if (returnID != -1)
             {
                 reg.flight.returnIDs = (List<List<int>>)TempData["rids"];

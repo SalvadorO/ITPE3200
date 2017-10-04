@@ -92,8 +92,6 @@
                        new SelectListItem { Value = "9" , Text = "9" },
                     },
                   new { @class = "numberOfTravelers" })
-                    @Html.ValidationMessageFor(model => model.booking.roundTrip, "", new { @class = "text-danger" })
-
                 </div>
             </div>
 
@@ -184,10 +182,30 @@
     
     });
 
-    $(document).on("change", "#travel, #return", function () {
+    $(document).on("change", "#travel, #return, #booking_travelers",  function () {
         if ($(":radio:checked").length == 2 && $("#roundtripbox").is(":checked")) {
+            $.ajax({
+                url: "/Home/UpdateDynamicPrice",
+                data: { trav: $("input[name=travel]:checked").val(), ret: $("input[name=return]:checked").val(), num: $("#booking_travelers").val() },
+                success: function (price) {
+                    $("#dynprice").html("Totalpris: " + price);
+                },
+                error: function () {
+                    $("#dynprice").html("");
+                }
+            });
             $("#nextBtn").prop("disabled", false)
         } else if ($(":radio:checked").length == 1 && !$("#roundtripbox").is(":checked")) {
+            $.ajax({
+                url: "/Home/UpdateDynamicPrice",
+                data: { trav: $("input[name=travel]:checked").val(), ret: -1, num: $("#booking_travelers").val() },
+                success: function (price) {
+                    $("#dynprice").html("Totalpris: " + price);
+                },
+                error: function () {
+                    $("#dynprice").html("");
+                }
+            });
             $("#nextBtn").prop("disabled", false)
         }
     });

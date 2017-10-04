@@ -343,7 +343,7 @@ namespace WebApp
             return false;
         }
 
-        public void updateSeats(List<ViewFlight> inList, WebAppContext db, int travelers)
+        private void updateSeats(List<ViewFlight> inList, WebAppContext db, int travelers)
         {
             foreach(var i in inList)
             {
