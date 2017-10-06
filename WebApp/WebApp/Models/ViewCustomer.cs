@@ -56,7 +56,8 @@ namespace WebApp.Models
 
         [Display(Name = "Utløpsdato")]
         [Required(ErrorMessage = "Utløpsdato må oppgis")]
-        public String expDate { get; set; }
+        public String expDateMM { get; set; }
+        public String expDateYY { get; set; }
     }
     
 

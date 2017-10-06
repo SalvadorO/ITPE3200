@@ -454,16 +454,19 @@
                                     }
                                 }
                             </div>
-
-                            <h4>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice)</h4>
+                            <br />
+                            <h2>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice)</h2>
+                            <br />
+                            <h3>Betaling</h3> 
+                            
 
 
 
                             <br />
                             <div class="form-group">
                                 @Html.LabelFor(model => model.customers[0].cardName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.customers[0].cardName, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.customers[0].cardName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fornavn og Etternavn" } })
                                     @Html.ValidationMessageFor(model => model.customers[0].cardName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -471,23 +474,31 @@
                             <br />
                             <div class="form-group">
                                 @Html.LabelFor(model => model.customers[0].cardNr, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.customers[0].cardNr, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="col-md-5">
+                                    @Html.EditorFor(model => model.customers[0].cardNr, new { htmlAttributes = new { @class = "form-control", @placeholder = "1234 1234 1234 1234" } })
                                     @Html.ValidationMessageFor(model => model.customers[0].cardNr, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <br />
 
+                            <br />
                             <div class="form-group">
-                                @Html.LabelFor(model => model.customers[0].expDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.customers[0].expDate, new { htmlAttributes = new { @class = "form-control", @id = "expDate" } })
-                                    @Html.ValidationMessageFor(model => model.customers[0].expDate, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.customers[0].expDateYY, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.customers[0].expDateYY, new { htmlAttributes = new { @class = "form-control", @id = "expDate", @placeholder = "MM/YY" } })
+                                    @Html.ValidationMessageFor(model => model.customers[0].expDateYY, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <br />
                             <br />
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.customers[0].code, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-1">
+                                    @Html.EditorFor(model => model.customers[0].code, new { htmlAttributes = new { @class = "form-control", @id = "CVV", @placeholder = "CVV" } })
+                                    @Html.ValidationMessageFor(model => model.customers[0].code, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                             <br />
                         </p>
                        
@@ -504,19 +515,4 @@
 
 
         </div>
-   <script type="text/javascript">
-       $(document).ready(function ()
-       {
-           $(function () {
-               $("#expDate").datetimepicker({
-                   changeMonth: true,
-                   changeYear: true,
-                   yearRange: "-50:+50",
-                   dateFormat: "yy-mm-dd"
-                   
-               });
-           });
-
-
-       }
-   </script>
+   

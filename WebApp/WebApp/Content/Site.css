@@ -19,3 +19,13 @@ form-control {
     
     opacity: 0.8;
 }
+
+body .modal-dialog {
+    
+    width: 60%;
+    
+}
+#test {
+  
+    clear: both;
+}
