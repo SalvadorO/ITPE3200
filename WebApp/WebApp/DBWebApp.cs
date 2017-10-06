@@ -300,7 +300,11 @@ namespace WebApp
                         {
                             FlightID = i.id,
                             Travelers = final.booking.travelers,
-                            RoundTrip = final.booking.roundTrip
+                            RoundTrip = final.booking.roundTrip,
+                            CardName = final.cardInfo.cardName,
+                            CardNr = final.cardInfo.cardNr,
+                            Code = final.cardInfo.code,
+                            ExpDate = final.cardInfo.expDateMM + "/" + final.cardInfo.expDateYY
                         };
                         contactPerson.Bookings.Add(inBooking);
 
