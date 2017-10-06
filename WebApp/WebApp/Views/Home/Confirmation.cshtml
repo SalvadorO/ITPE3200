@@ -345,114 +345,6 @@
                                         }
                                     </table>
                                 }
-
-                                <h4>Kontaktperson</h4>
-                                <hr />
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.customers[0].eMail)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.customers[0].eMail)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.customers[0].firstName)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.customers[0].firstName)
-                                    </dd>
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.customers[0].lastName)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.customers[0].lastName)
-                                    </dd>
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.customers[0].address)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.customers[0].address)
-                                    </dd>
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.customers[0].city)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.customers[0].city)
-                                    </dd>
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.customers[0].zipCode)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.customers[0].zipCode)
-                                    </dd>
-                                </dl>
-                                @if (Model.booking.travelers > 1)
-                                {
-                                    for (int i = 1; i < Model.booking.travelers; i++)
-                                    {
-                                        <h4>Medpassasjer @i</h4>
-                                        <hr />
-                                        <dl class="dl-horizontal">
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.customers[i].eMail)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.customers[i].eMail)
-                                            </dd>
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.customers[i].firstName)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.customers[i].firstName)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.customers[i].lastName)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.customers[i].lastName)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.customers[i].address)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.customers[i].address)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.customers[i].city)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.customers[i].city)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.customers[i].zipCode)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.customers[i].zipCode)
-                                            </dd>
-
-                                        </dl>
-                                    }
-                                }
                             </div>
                             <br />
                             <h2>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice)</h2>
@@ -460,23 +352,25 @@
                             <h3>Betaling</h3> 
                             
 
-
+                             @using (Html.BeginForm("pushDatabase", "Home"))
+                             {
+                                 @Html.AntiForgeryToken()
 
                             <br />
                             <div class="form-group">
-                                @Html.LabelFor(model => model.customers[0].cardName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.cardInfo.cardName, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-5">
-                                    @Html.EditorFor(model => model.customers[0].cardName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fornavn og Etternavn" } })
-                                    @Html.ValidationMessageFor(model => model.customers[0].cardName, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.cardInfo.cardName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fornavn og Etternavn" } })
+                                    @Html.ValidationMessageFor(model => model.cardInfo.cardName, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <br />
                             <br />
                             <div class="form-group">
-                                @Html.LabelFor(model => model.customers[0].cardNr, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.cardInfo.cardNr, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-5">
-                                    @Html.EditorFor(model => model.customers[0].cardNr, new { htmlAttributes = new { @class = "form-control", @placeholder = "1234 1234 1234 1234" } })
-                                    @Html.ValidationMessageFor(model => model.customers[0].cardNr, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.cardInfo.cardNr, new { htmlAttributes = new { @class = "form-control", @placeholder = "1234 1234 1234 1234" } })
+                                    @Html.ValidationMessageFor(model => model.cardInfo.cardNr, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
@@ -484,33 +378,74 @@
 
                             <br />
                             <div class="form-group">
-                                @Html.LabelFor(model => model.customers[0].expDateYY, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.cardInfo.expDateMM, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-2">
-                                    @Html.EditorFor(model => model.customers[0].expDateYY, new { htmlAttributes = new { @class = "form-control", @id = "expDate", @placeholder = "MM/YY" } })
-                                    @Html.ValidationMessageFor(model => model.customers[0].expDateYY, "", new { @class = "text-danger" })
+                                    @Html.DropDownListFor(model => model.cardInfo.expDateMM,
+                  new List<SelectListItem>
+                                {
+                                new SelectListItem { Value = "01" , Text = "01" },
+                                new SelectListItem { Value = "02" , Text = "02" },
+                                new SelectListItem { Value = "03" , Text = "03" },
+                                new SelectListItem { Value = "04" , Text = "04" },
+                                new SelectListItem { Value = "05" , Text = "05" },
+                                new SelectListItem { Value = "06" , Text = "06" },
+                                new SelectListItem { Value = "07" , Text = "07" },
+                                new SelectListItem { Value = "08" , Text = "08" },
+                                new SelectListItem { Value = "09" , Text = "09" },
+                                }, new { htmlAttributes = new { @class = "form-control", @id = "expDate", @placeholder = "MM" } })
+                                    @Html.ValidationMessageFor(model => model.cardInfo.expDateMM, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <br />
-                            <br />
                             <div class="form-group">
-                                @Html.LabelFor(model => model.customers[0].code, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-1">
-                                    @Html.EditorFor(model => model.customers[0].code, new { htmlAttributes = new { @class = "form-control", @id = "CVV", @placeholder = "CVV" } })
-                                    @Html.ValidationMessageFor(model => model.customers[0].code, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.cardInfo.expDateYY, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-2">
+                                    @Html.DropDownListFor(model => model.cardInfo.expDateYY,
+                  new List<SelectListItem>
+                                {
+                                new SelectListItem { Value = "1" , Text = "1" },
+                                new SelectListItem { Value = "2" , Text = "2" },
+                                new SelectListItem { Value = "3" , Text = "3" },
+                                new SelectListItem { Value = "4" , Text = "4" },
+                                new SelectListItem { Value = "5" , Text = "5" },
+                                new SelectListItem { Value = "6" , Text = "6" },
+                                new SelectListItem { Value = "7" , Text = "7" },
+                                new SelectListItem { Value = "8" , Text = "8" },
+                                new SelectListItem { Value = "9" , Text = "9" },
+                                }, new { htmlAttributes = new { @class = "form-control", @id = "expDate", @placeholder = "YYYY" } })
+                                    @Html.ValidationMessageFor(model => model.cardInfo.expDateYY, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <br />
-                        </p>
-                       
-                    </div>
-                    <br />
-                    <div class="modal-footer">
-                        @Html.ActionLink("Bekreft bestilling", "pushDatabase", new { empty = "" }, new { @class = "btn btn-primary" })
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
-                    </div>
-                </div>
 
 
+
+                            
+
+
+
+                                <br />
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.cardInfo.code, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-1">
+                                        @Html.EditorFor(model => model.cardInfo.code, new { htmlAttributes = new { @class = "form-control", @id = "CVV", @placeholder = "CVV" } })
+                                        @Html.ValidationMessageFor(model => model.cardInfo.code, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+
+                                <div class="modal-footer">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Betal" class="btn btn-primary" />
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+</div>
+
+                             
             </div>
 
 

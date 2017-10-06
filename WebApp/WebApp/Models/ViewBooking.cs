@@ -19,7 +19,6 @@ namespace WebApp.Models
         [Required(ErrorMessage = "Antall reisende må oppgis")]
         public int travelers { get; set; }
         public int totalPrice { get; set; }
-
         public List<ViewFlight> chosenTravel { get; set; }
         public List<ViewFlight> chosenReturn { get; set; }
     }

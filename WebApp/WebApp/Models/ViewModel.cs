@@ -10,6 +10,7 @@ namespace WebApp.Models
        public ViewBooking booking { get; set; }
        public List<ViewCustomer> customers { get; set; }
        public ViewFlight flight { get; set; }
+       public ViewCardInfo cardInfo { get; set; }
        public List<List<ViewFlight>> travelflights { get; set; }
        public List<List<ViewFlight>> returnflights { get; set; }
     }

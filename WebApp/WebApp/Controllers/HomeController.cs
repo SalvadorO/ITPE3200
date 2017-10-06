@@ -156,12 +156,15 @@ namespace WebApp.Controllers
             return View(finalView);
         }
  
-        public ActionResult pushDatabase()
+        [HttpPost]
+        public ActionResult pushDatabase(ViewModel incard)
         {
+            var toPush = (ViewModel)TempData["toDataBase"];
+            toPush.cardInfo = incard.cardInfo;
             if (ModelState.IsValid)
             {
                 var db = new DBWebApp();
-                bool pushOK = db.pushToDataBase((ViewModel)TempData["toDataBase"]);
+                bool pushOK = db.pushToDataBase(toPush);
                 if (pushOK)
                 {
                     return RedirectToAction("FinishedBooking");

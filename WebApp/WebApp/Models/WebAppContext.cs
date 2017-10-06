@@ -38,10 +38,6 @@ namespace WebApp.Models
         public String PhoneNumber { get; set; }
         public String EMail { get; set; }
         public bool ContactPerson { get; set; }
-        public String CardName { get; set; }
-        public String CardNr { get; set; }
-        public String Code { get; set; }
-        public String ExpDate { get; set; }
         public virtual List<Booking> Bookings { get; set; }
         public virtual City Cities { get; set; }
     }
@@ -52,6 +48,10 @@ namespace WebApp.Models
         public int FlightID { get; set; }
         public int Travelers { get; set; }
         public bool RoundTrip { get; set; }
+        public String CardName { get; set; }
+        public String CardNr { get; set; }
+        public String Code { get; set; }
+        public String ExpDate { get; set; }
         public virtual List<Customer> Customers { get; set; }
         public virtual List<Flight> Flights { get; set; }
     }

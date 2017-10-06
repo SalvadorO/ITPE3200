@@ -41,23 +41,6 @@ namespace WebApp.Models
         [Required(ErrorMessage = "E-Post må oppgis")]
         [EmailAddress(ErrorMessage ="E-post på være på formen: eksempel@eksempel.com")]
         public String eMail { get; set; }
-
-        [Display(Name = "Kortholders navn")]
-        [Required(ErrorMessage = "Kortholders navn må oppgis")]
-        public String cardName { get; set; }
-
-        [Display(Name = "Kortnummer")]
-        [Required(ErrorMessage = "Kortnummer må oppgis")]
-        public String cardNr { get; set; }
-
-        [Display(Name = "3-siffer-kode")]
-        [Required(ErrorMessage = "3-siffer-kode må oppgis")]
-        public String code { get; set; }
-
-        [Display(Name = "Utløpsdato")]
-        [Required(ErrorMessage = "Utløpsdato må oppgis")]
-        public String expDateMM { get; set; }
-        public String expDateYY { get; set; }
     }
     
 
