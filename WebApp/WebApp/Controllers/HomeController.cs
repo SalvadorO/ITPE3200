@@ -86,15 +86,15 @@ namespace WebApp.Controllers
                 ViewModel search = new ViewModel();
                 search.flight = new ViewFlight();
                 search.travelflights = db.searchTravelFlights(searchFlight);
-                TempData["tids"] = search.flight.travelIDs = db.filterIDs(search.travelflights);
+                TempData["tids"] = db.filterIDs(search.travelflights);
                 if (searchFlight.booking.roundTrip)
                 {
                     search.returnflights = db.searchReturnFlight(searchFlight);
-                    TempData["rids"] = search.flight.returnIDs = db.filterIDs(search.returnflights);
+                    TempData["rids"] = db.filterIDs(search.returnflights);
                 }
                 return PartialView("FlightPartial",search);
             }
-            return View();
+            return RedirectToAction("Error");
         }
 
         //Oppdaterer pris i partial view dynamisk
@@ -175,10 +175,15 @@ namespace WebApp.Controllers
                     return RedirectToAction("FinishedBooking");
                 }
             }
-            return View();
+            return RedirectToAction("Error");
         }
         
         public ActionResult FinishedBooking()
+        {
+            return View();
+        }
+
+        public ActionResult Error()
         {
             return View();
         }

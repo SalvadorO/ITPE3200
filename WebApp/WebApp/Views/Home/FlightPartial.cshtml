@@ -3,21 +3,18 @@
         int radioTravelIndex = 0;
     }
 <div class="well">
-    <h3>
-        <label id="dynprice">
-        </label>
-    </h3>
+    
     <h2>Tur</h2>
-    <table class="table table-bordered">
+    <table class="table">
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.travelflights[0][0].departureTime)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.travelflights[0][0].departure)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.travelflights[0][0].destinationTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.travelflights[0][0].departure)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.travelflights[0][0].destination)
@@ -27,6 +24,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.travelflights[0][0].classType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.travelflights[0][0].price)
             </th>
             <th></th>
         </tr>
@@ -39,10 +39,10 @@
                     @Html.DisplayFor(modelItem => x[0].departureTime)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => x[0].destinationTime)
+                    @Html.DisplayFor(modelItem => x[0].departure)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => x[0].departure)
+                    @Html.DisplayFor(modelItem => x[0].destinationTime)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => x[0].destination)
@@ -53,9 +53,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => x[0].classType)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => x[0].price)
+                </td>
                 <td rowspan=@x.Count align="center">
-                    <br />
-                    <input type="radio" name="travel" id="travel" value=@radioTravelIndex />
+                    <input type="radio" name="travel" id="travel" value=@radioTravelIndex style="height:15px;width:15px;" />
                 </td>
             </tr>
 
@@ -66,10 +68,10 @@
                         @Html.DisplayFor(modelItem => x[i].departureTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => x[i].destinationTime)
+                        @Html.DisplayFor(modelItem => x[i].departure)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => x[i].departure)
+                        @Html.DisplayFor(modelItem => x[i].destinationTime)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => x[i].destination)
@@ -80,19 +82,123 @@
                     <td>
                         @Html.DisplayFor(modelItem => x[i].classType)
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[i].price)
+                    </td>
                 </tr>
-                <tr><th id="thColor" colspan="8"><br /></th></tr>
-
             }
+            <tr><td style="background-color:lightgrey" colspan="8"><br /></td></tr>
+
             radioTravelIndex++;
         }
 
         @if (Model.travelflights.Count == 0)
         {
-            <tr><td> <h4>Ingen treff! :(</h4></td></tr>
+            <tr><td colspan="8"> <h4>Ingen treff, prøv en annen dato!</h4></td></tr>
         }
     </table>
 
-    
+    @if (Model.returnflights != null)
+    {
+        int radioReturnIndex = 0;
+        <h2>Retur</h2>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].departureTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].departure)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].destinationTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].destination)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].travelDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].classType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.returnflights[0][0].price)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var x in Model.returnflights)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[0].departureTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[0].departure)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[0].destinationTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[0].destination)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[0].travelDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[0].classType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => x[0].price)
+                    </td>
+                    <td rowspan=@x.Count align="center">
+                        <input type="radio" name="return" id="return" value=@radioReturnIndex style="height:15px;width:15px;" />
+                    </td>
+                </tr>
+
+                for (int i = 1; i < x.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => x[i].departureTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x[i].departure)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x[i].destinationTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x[i].destination)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x[i].travelDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x[i].classType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => x[i].price)
+                        </td>
+                    </tr>
+                }
+                <tr><td style="background-color:lightgrey" colspan="8"><br /></td></tr>
+
+                radioReturnIndex++;
+            }
+
+            @if (Model.returnflights.Count == 0)
+            {
+                <tr><td colspan="8"> <h4>Ingen treff, prøv en annen dato!</h4></td></tr>
+            }
+        </table>
+
+    }
+    <h3>
+        <label id="dynprice">
+        </label>
+    </h3>
     <input type="submit" value="Neste" id="nextBtn" class="btn btn-primary" disabled="disabled" />
 </div>

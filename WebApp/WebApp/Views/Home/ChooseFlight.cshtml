@@ -18,7 +18,7 @@
 {
     @Html.AntiForgeryToken()
     <div class="well">
-        <div class="form-horizontal" >
+        <div class="form-horizontal">
             <h4>Booking</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -54,9 +54,6 @@
                 </div>
             </div>
 
-
-
-
             <div class="form-group">
                 @Html.LabelFor(model => model.flight.classType, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -72,9 +69,6 @@
 
                 </div>
             </div>
-
-
-
             <div class="form-group">
                 @Html.LabelFor(model => model.booking.travelers, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -100,7 +94,7 @@
                 @Html.LabelFor(model => model.booking.roundTrip, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="checkbox">
-                        @Html.CheckBoxFor(model => model.booking.roundTrip, new { @checked = true, @id = "roundtripbox" })
+                        @Html.CheckBoxFor(model => model.booking.roundTrip, new { @checked = true, @id = "roundtripbox", style= "height:20px;width:20px;" })
                         @Html.ValidationMessageFor(model => model.booking.roundTrip, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -196,7 +190,7 @@
                 url: "/Home/UpdateDynamicPrice",
                 data: { trav: $("input[name=travel]:checked").val(), ret: $("input[name=return]:checked").val(), num: $("#booking_travelers").val() },
                 success: function (price) {
-                    $("#dynprice").html("Totalpris: " + price);
+                    $("#dynprice").html("Totalpris: " + price + ".00,-");
                 },
                 error: function () {
                     $("#dynprice").html("");
@@ -208,7 +202,7 @@
                 url: "/Home/UpdateDynamicPrice",
                 data: { trav: $("input[name=travel]:checked").val(), ret: -1, num: $("#booking_travelers").val() },
                 success: function (price) {
-                    $("#dynprice").html("Totalpris: " + price);
+                    $("#dynprice").html("Totalpris: " + price + ".00,-");
                 },
                 error: function () {
                     $("#dynprice").html("");

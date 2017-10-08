@@ -30,7 +30,9 @@ namespace WebApp
                 departureTime = s.DepartureTime,
                 destination = destName,
                 destinationTime = s.DestinationTime,
-                classType = s.ClassType
+                classType = s.ClassType,
+                price = s.Price
+                
             }).OrderBy(o => o.departureTime).ToList();
             foreach(var i in directRoute)
             {
@@ -58,7 +60,8 @@ namespace WebApp
                 departureTime = s.DepartureTime,
                 destination = db.Airport.Where(a => a.ID == s.Destination).Select(p => p.Name).FirstOrDefault(),
                 destinationTime = s.DestinationTime,
-                classType = s.ClassType
+                classType = s.ClassType,
+                price = s.Price
             }).OrderBy(o => o.departureTime).ToList();
 
                 List<ViewFlight> tempdest = db.Flight.Where(w => w.Destination == destID
@@ -73,7 +76,8 @@ namespace WebApp
                 departureTime = s.DepartureTime,
                 destination = destName,
                 destinationTime = s.DestinationTime,
-                classType = s.ClassType
+                classType = s.ClassType,
+                price = s.Price
             }).OrderBy(o => o.departureTime).ToList();
 
                 foreach (var x in tempdep)
@@ -120,7 +124,8 @@ namespace WebApp
                     departureTime = s.DepartureTime,
                     destination = destName,
                     destinationTime = s.DestinationTime,
-                    classType = s.ClassType
+                    classType = s.ClassType,
+                    price = s.Price
                 }).OrderBy(o => o.departureTime).ToList();
 
             if (directReturnRoute.Count != 0)
@@ -145,7 +150,8 @@ namespace WebApp
                 departureTime = s.DepartureTime,
                 destination = db.Airport.Where(a => a.ID == s.Destination).Select(p => p.Name).FirstOrDefault(),
                 destinationTime = s.DestinationTime,
-                classType = s.ClassType
+                classType = s.ClassType,
+                price = s.Price
             }).OrderBy(o => o.departureTime).ToList();
 
                 List<ViewFlight> tempdest = db.Flight.Where(w => w.Destination == depID
@@ -160,7 +166,8 @@ namespace WebApp
                 departureTime = s.DepartureTime,
                 destination = depName,
                 destinationTime = s.DestinationTime,
-                classType = s.ClassType
+                classType = s.ClassType,
+                price = s.Price
             }).OrderBy(o => o.departureTime).ToList();
 
                 foreach (var x in tempdep)

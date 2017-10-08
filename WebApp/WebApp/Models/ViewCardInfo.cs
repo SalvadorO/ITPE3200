@@ -18,11 +18,9 @@ namespace WebApp.Models
 
         [Display(Name = "3-siffer-kode")]
         [Required(ErrorMessage = "3-siffer-kode må oppgis")]
-      
-        [RegularExpression(pattern: @"^[0-9]$" , ErrorMessage = "Må være Tall")]
+        [RegularExpression(@"[0-9]{3}", ErrorMessage = "Må være 3 Tall")]
 
         public String code { get; set; }
-        
 
         [Display(Name = "Utløpsdato")]
         [Required(ErrorMessage = "Utløpsdato må oppgis")]

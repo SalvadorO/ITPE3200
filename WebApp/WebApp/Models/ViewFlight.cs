@@ -9,9 +9,9 @@ namespace WebApp.Models
     public class ViewFlight
     {
         public int id { get; set; }
-        [Display(Name = "Fra tid")]
+        [Display(Name = "Avgang")]
         public String departureTime { get; set; }
-        [Display(Name = "Til tid")]
+        [Display(Name = "Ankomst")]
         public String destinationTime { get; set; }
 
         [Display(Name = "Fra")]
@@ -22,11 +22,11 @@ namespace WebApp.Models
         [Required(ErrorMessage = "Til må oppgis")]
         public String destination { get; set; }
 
-        [Display(Name = "Dato ut")]
+        [Display(Name = "Reisedato")]
         [Required(ErrorMessage = "Dato ut må oppgis")]
         public String travelDate { get; set; }
 
-        [Display(Name = "Dato hjem")]
+        [Display(Name = "Returdato")]
         [Required(ErrorMessage = "Dato hjem må oppgis")]
         public String returnDate { get; set; }
 
@@ -36,6 +36,7 @@ namespace WebApp.Models
 
         [Display(Name = "Ledige plasser")]
         public int seats { get; set; }
+        [Display(Name = "Pris")]
         public int price { get; set; }
 
         public List<List<int>> travelIDs { get; set; }

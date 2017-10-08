@@ -1,6 +1,14 @@
 ﻿@model WebApp.Models.ViewModel
 @Styles.Render("~/Content/css")
 @Styles.Render("~/Content/themes/base/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/moment")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryunobtrusive")
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
 @{
     ViewBag.Title = "Reisen";
 }
@@ -225,7 +233,7 @@
         }
     </div>
 
-    <div><h1>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice)</h1></div>
+    <div><h1>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice).00,-</h1></div>
 
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmationModal" onclick="pushDatabase">
@@ -351,7 +359,7 @@
                                 }
                             </div>
                             <br />
-                            <h2>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice)</h2>
+                            <h2>Totalpris: @Html.DisplayFor(model => model.booking.totalPrice).00,-</h2>
                             <br />
                             <h3>Betaling</h3> 
                             
@@ -359,34 +367,33 @@
                              @using (Html.BeginForm("pushDatabase", "Home"))
                              {
                                  @Html.AntiForgeryToken()
-
-                            <br />
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.cardInfo.cardName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-5">
-                                    @Html.EditorFor(model => model.cardInfo.cardName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fornavn og Etternavn" } })
-                                    @Html.ValidationMessageFor(model => model.cardInfo.cardName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <br />
-                            <br />
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.cardInfo.cardNr, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-5">
-                                    @Html.EditorFor(model => model.cardInfo.cardNr, new { htmlAttributes = new { @class = "form-control", @placeholder = "1234 1234 1234 1234", @maxlength = "19" } })
-                                    @Html.ValidationMessageFor(model => model.cardInfo.cardNr, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <br />
-
-                            <br />
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.cardInfo.expDateMM, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-2">
-                                    @Html.DropDownListFor(model => model.cardInfo.expDateMM,
+                                <div class="form-horizontal">
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.cardInfo.cardName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.cardInfo.cardName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Fornavn og Etternavn" } })
+                                            @Html.ValidationMessageFor(model => model.cardInfo.cardName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.cardInfo.cardNr, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.cardInfo.cardNr, new { htmlAttributes = new { @class = "form-control", @placeholder = "1234 1234 1234 1234", @maxlength = "19" } })
+                                            @Html.ValidationMessageFor(model => model.cardInfo.cardNr, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.cardInfo.expDateMM, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-2">
+                                            @Html.DropDownListFor(model => model.cardInfo.expDateMM,
                   new List<SelectListItem>
                                 {
+                                new SelectListItem { Value = "" , Text = "" },
                                 new SelectListItem { Value = "01" , Text = "01" },
                                 new SelectListItem { Value = "02" , Text = "02" },
                                 new SelectListItem { Value = "03" , Text = "03" },
@@ -400,11 +407,12 @@
                                 new SelectListItem { Value = "11" , Text = "11" },
                                 new SelectListItem { Value = "12" , Text = "12" },
                                 }, new { htmlAttributes = new { @class = "form-control", @id = "expDateMM", @placeholder = "MM" } })
-                                    @Html.ValidationMessageFor(model => model.cardInfo.expDateMM, "", new { @class = "text-danger" })
-                               /
-                                    @Html.DropDownListFor(model => model.cardInfo.expDateYY,
+                                            @Html.ValidationMessageFor(model => model.cardInfo.expDateMM, "", new { @class = "text-danger" })
+                                            /
+                                            @Html.DropDownListFor(model => model.cardInfo.expDateYY,
                   new List<SelectListItem>
                                 {
+                                new SelectListItem { Value = "" , Text = "" },
                                 new SelectListItem { Value = "17" , Text = "17" },
                                 new SelectListItem { Value = "18" , Text = "18" },
                                 new SelectListItem { Value = "19" , Text = "19" },
@@ -415,45 +423,34 @@
                                 new SelectListItem { Value = "23" , Text = "24" },
                                 new SelectListItem { Value = "24" , Text = "25" },
                                 }, new { htmlAttributes = new { @class = "form-control", @id = "expDateYY", @placeholder = "YY" } })
-                                    @Html.ValidationMessageFor(model => model.cardInfo.expDateYY, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <br />
-
-
-
-                            
-
-
-
-                                <br />
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.cardInfo.code, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-1">
-                                        @Html.EditorFor(model => model.cardInfo.code, new { htmlAttributes = new { @class = "form-control", @id = "CVV", @placeholder = "CVV" , @maxlength = "3" } })
-                                        @Html.ValidationMessageFor(model => model.cardInfo.code, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
-
-                                <div class="modal-footer">
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Betal" class="btn btn-primary" />
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+                                            @Html.ValidationMessageFor(model => model.cardInfo.expDateYY, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.cardInfo.code, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-1">
+                                            @Html.EditorFor(model => model.cardInfo.code, new { htmlAttributes = new { @class = "form-control", @id = "CVV", @placeholder = "CVV", @maxlength = "3" } })
+                                            @Html.ValidationMessageFor(model => model.cardInfo.code, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="modal-footer">
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Betal" class="btn btn-primary" />
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Avbryt</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                    }
                                 </div>
-                                }
-</div>
-
-                             
+                    </div>
+                 </div>
             </div>
-
-
-        </div>
-   </div>
 
     <script type="text/javascript">
         $(document).on('click', '#avbrytKnapp', function () {
