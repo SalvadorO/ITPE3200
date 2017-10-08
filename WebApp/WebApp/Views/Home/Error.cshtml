@@ -2,6 +2,15 @@
 @{
     ViewBag.Title = "Error";
 }
+<div class="well">
+    <h2>Oops...Noe gikk galt!</h2>
+    <button type="button" class="btn btn-default" id="avbrytKnapp">
+        Tilbake
+    </button>
+</div>
+<script type="text/javascript">
+        $(document).on('click', '#avbrytKnapp', function () {
+            history.go(-1);
+    });
 
-<h2>Oops...Noe gikk galt!</h2>
-
+</script>

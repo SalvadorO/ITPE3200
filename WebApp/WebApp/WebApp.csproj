@@ -125,6 +125,7 @@
     <Content Include="Content\img\7.jpeg" />
     <Content Include="Content\img\7copy.jpeg" />
     <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\logo2.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
