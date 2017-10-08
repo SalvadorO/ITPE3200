@@ -1,103 +1,143 @@
-﻿@model WebApp.Models.SearchBooking
+﻿@model WebApp.Models.ViewModel
 
 @{
     ViewBag.Title = "Choose Flight";
 }
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryunobtrusive")
+    @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/css")
-   @* @RenderBody()
-    @RenderSection("scripts", required: false)*@
-<h2>Flight</h2>
+
+<h2>Finn flight</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Booking</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.departure, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.departure, new { htmlAttributes = new { @class = "form-control", @id = "searchDep"} })
-                @Html.ValidationMessageFor(model => model.flight.departure, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.destination, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.destination, new { htmlAttributes = new { @class = "form-control", @id = "searchDest" } })
-                @Html.ValidationMessageFor(model => model.flight.destination, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.travelDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.travelDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.flight.travelDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.returnDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.returnDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.flight.returnDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.flight.classType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.flight.classType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.flight.classType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.booking.travelers, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.booking.travelers, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.booking.travelers, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.booking.oneWay, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.booking.oneWay)
-                    @Html.ValidationMessageFor(model => model.booking.oneWay, "", new { @class = "text-danger" })
+    <div class="well">
+        <div class="form-horizontal" >
+            <h4>Booking</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.departure, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.departure, new { htmlAttributes = new { @class = "form-control", @id = "searchdep" } })
+                    @Html.ValidationMessageFor(model => model.flight.departure, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Søk" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.destination, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.destination, new { htmlAttributes = new { @class = "form-control", @id = "searchdest" } })
+                    @Html.ValidationMessageFor(model => model.flight.destination, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.travelDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.travelDate, new { htmlAttributes = new { @class = "form-control", @id = "travelfield" } })
+                    @Html.ValidationMessageFor(model => model.flight.travelDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" , id="returndate">
+                @Html.LabelFor(model => model.flight.returnDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.flight.returnDate, new { htmlAttributes = new { @class = "form-control", @id = "returnfield" } })
+                    @Html.ValidationMessageFor(model => model.flight.returnDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.flight.classType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.DropDownListFor(model => model.flight.classType,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "Økonomi" , Text = "Økonomi" },
+                       new SelectListItem { Value = "Business" , Text = "Business" },
+                       new SelectListItem { Value = "First" , Text = "First" },
+                    },
+                  new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.flight.classType, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.booking.travelers, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.DropDownListFor(model => model.booking.travelers,
+                  new List<SelectListItem> {
+                       new SelectListItem { Value = "1" , Text = "1" },
+                       new SelectListItem { Value = "2" , Text = "2" },
+                       new SelectListItem { Value = "3" , Text = "3" },
+                       new SelectListItem { Value = "4" , Text = "4" },
+                       new SelectListItem { Value = "5" , Text = "5" },
+                       new SelectListItem { Value = "6" , Text = "6" },
+                       new SelectListItem { Value = "7" , Text = "7" },
+                       new SelectListItem { Value = "8" , Text = "8" },
+                       new SelectListItem { Value = "9" , Text = "9" },
+                    },
+                  new { @class = "numberOfTravelers" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.booking.roundTrip, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(model => model.booking.roundTrip, new { @checked = true, @id = "roundtripbox" })
+                        @Html.ValidationMessageFor(model => model.booking.roundTrip, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Søk" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 }
-    @if (Model != null)
-    {
-        foreach (var kunde in Model.flights)
-        {
-            @Html.Partial("FlightPartial", kunde)
-        }
-    }
+<div id="partialview">
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
+
+
+
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#searchDep").autocomplete({
+
+        $("#searchdep, #searchdest").autocomplete({
             source: function (request, response) {
                 $.ajax({
                     url: "/Home/FindAirport",
@@ -115,23 +155,90 @@
                 })
             }
         });
-        $("#searchDest").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/Home/FindAirport",
-                    type: "POST",
-                    dataType: "json",
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        if (!data.length) { var result = [{ label: "Ingen resultat", value: response.term }]; response(result); }
-                        else {
-                            response($.map(data, function (item) {
-                                return { label: item.Name, value: item.Name };
-                            }))
-                        }
-                    }
-                })
+
+        $(function () {
+           $("#travelfield, #returnfield").datetimepicker({
+                viewMode: "days",
+                format: "DD/MM/YYYY"
+            });
+        });
+
+
+        $("#roundtripbox").change(function () {
+            if (this.checked) {
+                $("#returnfield").val("");
+                $("#returndate").fadeIn("slow");
+            } else {
+                $("#returndate").fadeOut("slow");
             }
         });
-    })
+
+        $("form").submit(function () {
+            if (!$("#roundtripbox").is(":checked")) $("#returnfield").val("-1");
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $("#partialview").html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    
+    });
+
+    $(document).on("change", "#travel, #return, #booking_travelers",  function () {
+        if ($(":radio:checked").length == 2 && $("#roundtripbox").is(":checked")) {
+            $.ajax({
+                url: "/Home/UpdateDynamicPrice",
+                data: { trav: $("input[name=travel]:checked").val(), ret: $("input[name=return]:checked").val(), num: $("#booking_travelers").val() },
+                success: function (price) {
+                    $("#dynprice").html("Totalpris: " + price);
+                },
+                error: function () {
+                    $("#dynprice").html("");
+                }
+            });
+            $("#nextBtn").prop("disabled", false)
+        } else if ($(":radio:checked").length == 1 && !$("#roundtripbox").is(":checked")) {
+            $.ajax({
+                url: "/Home/UpdateDynamicPrice",
+                data: { trav: $("input[name=travel]:checked").val(), ret: -1, num: $("#booking_travelers").val() },
+                success: function (price) {
+                    $("#dynprice").html("Totalpris: " + price);
+                },
+                error: function () {
+                    $("#dynprice").html("");
+                }
+            });
+            $("#nextBtn").prop("disabled", false)
+        }
+    });
+
+    $(document).on("click", "#nextBtn", function () {
+        if ($("#roundtripbox").is(":checked")) {
+            $.ajax({
+                url: "/Home/Helper",
+                data: { travelID: $("input[name=travel]:checked").val(), returnID: $("input[name=return]:checked").val() },
+                success: function (strekninger) {
+                    window.location.href = "/Home/Registration"
+                }
+            });
+        } else {
+            $.ajax({
+                url: "/Home/Helper",
+                data: { travelID: $("input[name=travel]:checked").val(), returnID: -1 },
+                success: function (strekninger) {
+                    window.location.href = "/Home/Registration"
+                }
+            });
+        }
+        $("#nextBtn").prop("disabled", true)
+    });
+
+    
+
 </script>

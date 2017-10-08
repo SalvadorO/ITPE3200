@@ -22,10 +22,20 @@ namespace WebApp.App_Start
                 .Include("~/Scripts/jquery-ui-{version}.min.js",
                 "~/Scripts/jquery-ui-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryunobtrusive")
+                .Include("~/Scripts/jquery.unobtrusive*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap")
+                .Include("~/Scripts/bootstrap*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/moment")
+                .Include("~/Scripts/moment.js"));
 
             //Styles
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/bootstrap.css",
+                "~/Content/bootstrap-datetimepicker.css",
+                "~/Content/bootstrap-datetimepicker.min.css",
                 "~/Content/Site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css")

@@ -1,13 +1,43 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-top: 150px;
+    padding-bottom: 220px;
+    float:inherit;
+    background-size:cover;
+    background-image: url("../Content/img/2.jpeg");
+    
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
+
 form-control {
+    float: left;
+}
+.well {
     
+    
+    opacity: 0.8;
+}
+
+body .modal-dialog {
+    
+    width: 60%;
+    
+}
+
+.navbar-inverse {
+    background-color: #000000 !important;
+}
+
+
+td {
+   
+    padding-bottom: 40px;
+
+}
+
+#thColor {
+    background-color: darkblue;
+}
+table{
+
+
 }
