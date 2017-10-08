@@ -1185,6 +1185,7 @@ namespace WebApp.Controllers
             return Json(FoundAirport, JsonRequestBehavior.AllowGet);
         }
 
+        //Hjelper til med å sette opp registrerings-viewet
         public void Helper(int travelID, int returnID)
         {
             var db = new DBWebApp();
@@ -1203,6 +1204,7 @@ namespace WebApp.Controllers
             TempData["help"] = reg;
         }
 
+        //View med registrering
         public ActionResult Registration()
         {
             var finalReg = (ViewModel)TempData["help"];
@@ -1210,6 +1212,8 @@ namespace WebApp.Controllers
             TempData.Keep("help");
             return View(finalReg);
         }
+
+        //Sender informasjonen videre til bekreftelses-view
         [HttpPost]
         public ActionResult Registration(ViewModel finalBooking)
         {
@@ -1218,6 +1222,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Confirmation");
         }
 
+        //View med all informasjon og modal til betalings-informasjon
         public ActionResult Confirmation()
         {
             var finalView = (ViewModel)TempData["reg"];
@@ -1225,6 +1230,7 @@ namespace WebApp.Controllers
             return View(finalView);
         }
  
+        //Legger alt inn i database
         [HttpPost]
         public ActionResult pushDatabase(ViewModel incard)
         {
@@ -1242,11 +1248,13 @@ namespace WebApp.Controllers
             return RedirectToAction("Error");
         }
         
+        //Viser view som bekrefter bestillingen
         public ActionResult FinishedBooking()
         {
             return View();
         }
 
+        //View som viser når noe går galt
         public ActionResult Error()
         {
             return View();
