@@ -139,7 +139,7 @@ namespace WebApp
             else
             {
                 List<ViewFlight> tempdep = db.Flight.Where(w => w.Departure == destID
-            && w.TravelDate.Equals(search.flight.travelDate)
+            && w.TravelDate.Equals(search.flight.returnDate)
             && w.ClassType.Equals(search.flight.classType)
             && w.Seats >= search.booking.travelers)
             .Select(s => new ViewFlight()
@@ -155,7 +155,7 @@ namespace WebApp
             }).OrderBy(o => o.departureTime).ToList();
 
                 List<ViewFlight> tempdest = db.Flight.Where(w => w.Destination == depID
-            && w.TravelDate.Equals(search.flight.travelDate)
+            && w.TravelDate.Equals(search.flight.returnDate)
             && w.ClassType.Equals(search.flight.classType)
             && w.Seats >= search.booking.travelers)
             .Select(s => new ViewFlight()
