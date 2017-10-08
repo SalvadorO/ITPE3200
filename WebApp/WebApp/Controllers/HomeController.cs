@@ -18,12 +18,12 @@ namespace WebApp.Controllers
             db.Database.Delete();
 
            var Airport1 = new Airport { Name = "Oslo", Country = "Norge" };
-           var Airport2 = new Airport { Name = "Værnes", Country = "Norge" };
+           var Airport2 = new Airport { Name = "Trondheim", Country = "Norge" };
            var Airport3 = new Airport { Name = "Tromsø", Country = "Norge" };
            var Airport4 = new Airport { Name = "Bardufoss", Country = "Norge" };
-           var Airport5 = new Airport { Name = "Torp", Country = "Norge" };
-           var Airport6 = new Airport { Name = "Sola", Country = "Norge" };
-           var Airport7 = new Airport { Name = "Flesland", Country = "Norge" };
+           var Airport5 = new Airport { Name = "Sandefjord", Country = "Norge" };
+           var Airport6 = new Airport { Name = "Stavanger", Country = "Norge" };
+           var Airport7 = new Airport { Name = "Bergen", Country = "Norge" };
            var Airport8 = new Airport { Name = "Hammerfest", Country = "Norge" };
 
            db.Airport.Add(Airport1);
