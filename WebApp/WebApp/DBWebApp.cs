@@ -120,9 +120,9 @@ namespace WebApp
                 {
                     id = s.ID,
                     travelDate = s.TravelDate,
-                    departure = depName,
+                    departure = destName,
                     departureTime = s.DepartureTime,
-                    destination = destName,
+                    destination = depName,
                     destinationTime = s.DestinationTime,
                     classType = s.ClassType,
                     price = s.Price
