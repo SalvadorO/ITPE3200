@@ -24,7 +24,7 @@ namespace WebApp.Models
 
         [Display(Name = "Telefonnummer")]
         [Required(ErrorMessage = "Telefonnummer må oppgis")]
-        [RegularExpression(@"[0-9]{8}", ErrorMessage = "Postummer må være 8 siffer")]
+        [RegularExpression(@"[0-9]{8}", ErrorMessage = "Telefonnummer må være 8 siffer")]
         public String phoneNumber { get; set; }
 
         [Display(Name = "Adresse")]
