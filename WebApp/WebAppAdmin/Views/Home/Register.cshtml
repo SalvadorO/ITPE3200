@@ -10,8 +10,17 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
+        @if (ViewBag.UsernameExist != null)
+        {
+            <div>
+                @if (ViewBag.UsernameExist)
+                {
+                    <p class="alert alert-danger">Brukernavnet eksisterer allerede!</p>
+                }
+            </div>
+        }
         <h4>EmployeeRegister</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

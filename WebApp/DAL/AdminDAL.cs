@@ -180,7 +180,17 @@ namespace WebAppAdmin.DAL
             }
 
         }
-
+        public bool usernameExist(String uname)
+        {
+            if(new AdminDBContext().Shadow.Where(w => w.Username.Equals(uname)).FirstOrDefault() == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public int getUsernameID(String uname)
         {
             return new AdminDBContext().Shadow.Where(w => w.Username.Equals(uname))

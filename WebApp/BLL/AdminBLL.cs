@@ -29,20 +29,21 @@ namespace WebAppAdmin.BLL
         {
             return new AdminDAL().deleteEmployee(id);
         }
-
         public List<Employee> listEmployee()
         {
             return new AdminDAL().listEmployee();
         }
-
         public Employee oneEmployee(int id)
         {
             return new AdminDAL().oneEmployee(id);
         }
-
         public int getUsernameID(String uname)
         {
             return new AdminDAL().getUsernameID(uname);
+        }
+        public bool usernameExist(String uname)
+        {
+            return new AdminDAL().usernameExist(uname);
         }
     }
 }

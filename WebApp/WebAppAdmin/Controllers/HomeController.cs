@@ -62,7 +62,14 @@ namespace WebAppAdmin.Controllers
             {
                 return RedirectToAction("Error");
             }
-            if(new AdminBLL().insertEmp(inEmp))
+            var bll = new AdminBLL();
+            System.Diagnostics.Debug.WriteLine("*********" + inEmp.Username);
+            if (bll.usernameExist(inEmp.Username))
+            {
+                ViewBag.UsernameExist = true;
+                return View();
+            }
+            if(bll.insertEmp(inEmp))
             {
                 return View();
             }
@@ -118,12 +125,13 @@ namespace WebAppAdmin.Controllers
         [HttpPost]
         public ActionResult DeleteEmployee(int id)
         {
-            if(new AdminBLL().getUsernameID((String)Session["Username"]) == id)
+            var bll = new AdminBLL();
+            if(bll.getUsernameID((String)Session["Username"]) == id)
             {
                 TempData["SelfDelete"] = true;
                 return RedirectToAction("EditEmployee", new { id = id });
             }
-            if(new AdminBLL().deleteEmployee(id))
+            if(bll.deleteEmployee(id))
             {
                 return RedirectToAction("ListEmployee");
             }
