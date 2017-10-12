@@ -57,7 +57,7 @@ namespace WebAppAdmin.DAL
             {
                 try { 
                 var newEmp = new Employee_DB();
-                var newShadow = new Shadow();
+                var newShadow = new Shadow_DB();
                     string salt = Salt();
                     var passwordNSalt = inEmp.Password + salt;
                     byte[] passwordDB = Hash(passwordNSalt);
@@ -74,14 +74,14 @@ namespace WebAppAdmin.DAL
                     var existingZip = db.City.Find(inEmp.ZipCode);
                     if (existingZip == null)
                     {
-                    var newCity = new City()
+                    var newCity = new City_DB()
                     {
                         ZipCode = inEmp.ZipCode,
                         CityName = inEmp.City
                     };
                     newEmp.City = newCity;
                     }
-                    db.Employee_DB.Add(newEmp);
+                    db.Employee.Add(newEmp);
                     db.SaveChanges();
                     return true;
 
@@ -95,7 +95,7 @@ namespace WebAppAdmin.DAL
         public List<Employee> listEmployee()
         {
             var db = new AdminDBContext();
-            List<Employee> all = db.Employee_DB.Select(e => new Employee()
+            List<Employee> all = db.Employee.Select(e => new Employee()
             {
                 ID = e.ID,
                 FirstName = e.FirstName,
@@ -108,9 +108,9 @@ namespace WebAppAdmin.DAL
         public Employee oneEmployee(int id)
         {
             var db = new AdminDBContext();
-            var e = db.Employee_DB.Find(id);
+            var e = db.Employee.Find(id);
 
-            if (db.Employee_DB.Find(id) == null)
+            if (db.Employee.Find(id) == null)
             {
                 return null;
             }
@@ -137,7 +137,7 @@ namespace WebAppAdmin.DAL
             var db = new AdminDBContext();
             try
             {
-                var editEmp = db.Employee_DB.Find(id);
+                var editEmp = db.Employee.Find(id);
                 editEmp.FirstName = inEmp.FirstName;
                 editEmp.LastName = inEmp.LastName;
                 editEmp.PhoneNumber = inEmp.PhoneNumber;
@@ -147,7 +147,7 @@ namespace WebAppAdmin.DAL
                 {
                     if(db.City.FirstOrDefault(z => z.ZipCode == inEmp.ZipCode) == null)
                     {
-                        var newCity = new City()
+                        var newCity = new City_DB()
                         {
                             ZipCode = inEmp.ZipCode,
                             CityName = inEmp.City
@@ -170,7 +170,7 @@ namespace WebAppAdmin.DAL
             try
             {
                 db.Shadow.Remove(db.Shadow.Find(id));
-                db.Employee_DB.Remove(db.Employee_DB.Find(id));
+                db.Employee.Remove(db.Employee.Find(id));
                 db.SaveChanges();
                 return true;
             }
@@ -179,6 +179,12 @@ namespace WebAppAdmin.DAL
                 return false;
             }
 
+        }
+
+        public int getUsernameID(String uname)
+        {
+            return new AdminDBContext().Shadow.Where(w => w.Username.Equals(uname))
+                .Select(s => s.Employee_ID).FirstOrDefault();
         }
     }
 }

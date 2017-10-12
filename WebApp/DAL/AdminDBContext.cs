@@ -15,12 +15,12 @@ namespace WebAppAdmin.DAL
         {
             Database.CreateIfNotExists();
         }
-        public DbSet<Shadow> Shadow { get; set; }
-        public DbSet<Employee_DB> Employee_DB { get; set; }
-        public DbSet<City> City { get; set; }
+        public DbSet<Shadow_DB> Shadow { get; set; }
+        public DbSet<Employee_DB> Employee { get; set; }
+        public DbSet<City_DB> City { get; set; }
     }
 
-    public class Shadow
+    public class Shadow_DB
     {
         [Key,ForeignKey("Employee")]
         public int Employee_ID { get; set; }
@@ -30,7 +30,7 @@ namespace WebAppAdmin.DAL
         public virtual Employee_DB Employee { get; set; }
     }
 
-    public class City
+    public class City_DB
     {
         [Key]
         public String ZipCode { get; set; }
@@ -48,7 +48,7 @@ namespace WebAppAdmin.DAL
         public String EMail { get; set; }
         public String Address { get; set; }
         public String ZipCode { get; set; }
-        public virtual City City { get; set; }
-        public virtual Shadow Shadow { get; set; }
+        public virtual City_DB City { get; set; }
+        public virtual Shadow_DB Shadow { get; set; }
     }
 }

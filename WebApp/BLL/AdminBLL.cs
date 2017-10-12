@@ -39,5 +39,10 @@ namespace WebAppAdmin.BLL
         {
             return new AdminDAL().oneEmployee(id);
         }
+
+        public int getUsernameID(String uname)
+        {
+            return new AdminDAL().getUsernameID(uname);
+        }
     }
 }

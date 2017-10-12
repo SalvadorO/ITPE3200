@@ -21,8 +21,13 @@
                 @Html.ActionLink("Ansatte", "ListEmployee", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Kunder", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Flyvninger", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Logg av", "LogOut", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            @if ((bool)Session["LoggedIn"]) {
+            <div class="navbar-right">
+                @Html.ActionLink("Logg av", "LogOut", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <p style="color:white">@Session["Username"]</p>
+            </div>
+            }
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 </ul>

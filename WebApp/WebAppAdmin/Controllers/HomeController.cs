@@ -34,6 +34,7 @@ namespace WebAppAdmin.Controllers
             {
                 Session["LoggedIn"] = true;
                 ViewBag.LoggedIn = true;
+                Session["Username"] = loggedIn.Username;
                 return View();
             }
             else
@@ -95,6 +96,10 @@ namespace WebAppAdmin.Controllers
             {
                 return RedirectToAction("LogIn");
             }
+            if (TempData["SelfDelete"] != null)
+            {
+                ViewBag.SelfDelete = (bool)TempData["SelfDelete"];
+            }
             return View(new AdminBLL().oneEmployee(id));
         }
 
@@ -113,6 +118,11 @@ namespace WebAppAdmin.Controllers
         [HttpPost]
         public ActionResult DeleteEmployee(int id)
         {
+            if(new AdminBLL().getUsernameID((String)Session["Username"]) == id)
+            {
+                TempData["SelfDelete"] = true;
+                return RedirectToAction("EditEmployee", new { id = id });
+            }
             if(new AdminBLL().deleteEmployee(id))
             {
                 return RedirectToAction("ListEmployee");
@@ -123,6 +133,7 @@ namespace WebAppAdmin.Controllers
         public ActionResult LogOut()
         {
             Session["LoggedIn"] = false;
+            Session["Username"] = null;
             return RedirectToAction("LogIn");
         }
 

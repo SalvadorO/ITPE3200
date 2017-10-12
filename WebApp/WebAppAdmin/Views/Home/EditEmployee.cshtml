@@ -9,8 +9,17 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
+        @if (ViewBag.SelfDelete != null)
+        {
+        <div>
+            @if (ViewBag.SelfDelete)
+            {
+                <p class="alert alert-danger">Du kan ikke slette din egen bruker!</p>
+            }
+        </div>
+        }
         <h4>Employee</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
