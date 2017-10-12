@@ -56,8 +56,8 @@ namespace WebAppAdmin.DAL
             using (var db = new AdminDBContext())
             {
                 try { 
-                var newEmp = new Employee();
-                var newlogin = new Shadow();
+                var newEmp = new Employee_DB();
+                var newShadow = new Shadow();
                     string salt = Salt();
                     var passwordNSalt = inEmp.Password + salt;
                     byte[] passwordDB = Hash(passwordNSalt);
@@ -67,10 +67,10 @@ namespace WebAppAdmin.DAL
                     newEmp.ZipCode = inEmp.ZipCode;
                     newEmp.EMail = inEmp.EMail;
                     newEmp.PhoneNumber = inEmp.PhoneNumber;
-                    newlogin.Username = inEmp.Username;
-                    newlogin.Password = passwordDB;
-                    newlogin.Salt = salt;
-
+                    newShadow.Username = inEmp.Username;
+                    newShadow.Password = passwordDB;
+                    newShadow.Salt = salt;
+                    newEmp.Shadow = newShadow;
                     var existingZip = db.City.Find(inEmp.ZipCode);
                     if (existingZip == null)
                     {
@@ -79,10 +79,9 @@ namespace WebAppAdmin.DAL
                         ZipCode = inEmp.ZipCode,
                         CityName = inEmp.City
                     };
-                    newEmp.Cities = newCity;
+                    newEmp.City = newCity;
                     }
-                    db.Employee.Add(newEmp);
-                    db.Shadow.Add(newlogin);
+                    db.Employee_DB.Add(newEmp);
                     db.SaveChanges();
                     return true;
 
@@ -91,6 +90,95 @@ namespace WebAppAdmin.DAL
                         return false;
                     }
             }
+        }
+
+        public List<Employee> listEmployee()
+        {
+            var db = new AdminDBContext();
+            List<Employee> all = db.Employee_DB.Select(e => new Employee()
+            {
+                ID = e.ID,
+                FirstName = e.FirstName,
+                LastName = e.LastName
+            }
+            ).ToList();
+            return all;
+        }
+
+        public Employee oneEmployee(int id)
+        {
+            var db = new AdminDBContext();
+            var e = db.Employee_DB.Find(id);
+
+            if (db.Employee_DB.Find(id) == null)
+            {
+                return null;
+            }
+            else {
+
+                var one = new Employee()
+                {
+                    ID = e.ID,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    PhoneNumber = e.PhoneNumber,
+                    EMail = e.EMail,
+                    Address = e.Address,
+                    ZipCode = e.ZipCode,
+                    City = e.City.CityName
+                };
+
+                return one;
+            }
+        }
+
+        public bool editEmployee(int id, Employee inEmp)
+        {
+            var db = new AdminDBContext();
+            try
+            {
+                var editEmp = db.Employee_DB.Find(id);
+                editEmp.FirstName = inEmp.FirstName;
+                editEmp.LastName = inEmp.LastName;
+                editEmp.PhoneNumber = inEmp.PhoneNumber;
+                editEmp.EMail = inEmp.EMail;
+                editEmp.Address = inEmp.Address;
+                if(editEmp.ZipCode != inEmp.ZipCode)
+                {
+                    if(db.City.FirstOrDefault(z => z.ZipCode == inEmp.ZipCode) == null)
+                    {
+                        var newCity = new City()
+                        {
+                            ZipCode = inEmp.ZipCode,
+                            CityName = inEmp.City
+                        };
+                        db.City.Add(newCity);
+                    }
+                editEmp.ZipCode = inEmp.ZipCode;
+                }
+                db.SaveChanges();
+                return true;
+            }catch(Exception error)
+            {
+                return false;
+            }
+        }
+
+        public bool deleteEmployee(int id)
+        {
+            var db = new AdminDBContext();
+            try
+            {
+                db.Shadow.Remove(db.Shadow.Find(id));
+                db.Employee_DB.Remove(db.Employee_DB.Find(id));
+                db.SaveChanges();
+                return true;
+            }
+            catch(Exception error)
+            {
+                return false;
+            }
+
         }
     }
 }

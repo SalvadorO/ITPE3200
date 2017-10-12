@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -15,16 +16,18 @@ namespace WebAppAdmin.DAL
             Database.CreateIfNotExists();
         }
         public DbSet<Shadow> Shadow { get; set; }
-        public DbSet<Employee> Employee { get; set; }
+        public DbSet<Employee_DB> Employee_DB { get; set; }
         public DbSet<City> City { get; set; }
     }
 
     public class Shadow
     {
-        [Key]
+        [Key,ForeignKey("Employee")]
+        public int Employee_ID { get; set; }
         public string Username { get; set; }
         public byte[] Password { get; set; }
         public string Salt { get; set; }
+        public virtual Employee_DB Employee { get; set; }
     }
 
     public class City
@@ -32,10 +35,10 @@ namespace WebAppAdmin.DAL
         [Key]
         public String ZipCode { get; set; }
         public String CityName { get; set; }
-        public virtual List<Employee> Employees { get; set; }
+        public virtual List<Employee_DB> Employees { get; set; }
     }
 
-    public class Employee
+    public class Employee_DB
     {
         [Key]
         public int ID { get; set; }
@@ -45,7 +48,7 @@ namespace WebAppAdmin.DAL
         public String EMail { get; set; }
         public String Address { get; set; }
         public String ZipCode { get; set; }
-        public String City { get; set; }
-        public virtual City Cities { get; set; }
+        public virtual City City { get; set; }
+        public virtual Shadow Shadow { get; set; }
     }
 }

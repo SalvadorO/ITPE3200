@@ -46,6 +46,10 @@ namespace WebAppAdmin.Controllers
 
         public ActionResult Register()
         {
+            /*if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }*/
             return View();
         }
 
@@ -55,7 +59,6 @@ namespace WebAppAdmin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                System.Diagnostics.Debug.WriteLine("****MODELSTATE*****");
                 return RedirectToAction("Error");
             }
             if(new AdminBLL().insertEmp(inEmp))
@@ -64,9 +67,63 @@ namespace WebAppAdmin.Controllers
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("****FALSE*****");
                 return RedirectToAction("Error");
             }
+        }
+
+        public ActionResult ListEmployee()
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View(new AdminBLL().listEmployee());
+        }
+
+        public ActionResult DetailEmployee(int id)
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View(new AdminBLL().oneEmployee(id));
+        }
+
+        public ActionResult EditEmployee(int id)
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View(new AdminBLL().oneEmployee(id));
+        }
+
+        [HttpPost]
+        public ActionResult EditEmployee(int id,Employee inEmp)
+        {
+            if (ModelState.IsValid)
+            {
+                if (new AdminBLL().editEmployee(id, inEmp))
+                {
+                    return RedirectToAction("ListEmployee");
+                }
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DeleteEmployee(int id)
+        {
+            if(new AdminBLL().deleteEmployee(id))
+            {
+                return RedirectToAction("ListEmployee");
+            }
+            return RedirectToAction("Error");
+        }
+
+        public ActionResult LogOut()
+        {
+            Session["LoggedIn"] = false;
+            return RedirectToAction("LogIn");
         }
 
         public ActionResult Error()

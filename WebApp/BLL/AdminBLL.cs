@@ -20,5 +20,24 @@ namespace WebAppAdmin.BLL
         {
             return new AdminDAL().insertEmployee(inEmp);
         }
+        public bool editEmployee(int id, Employee inEmp)
+        {
+            return new AdminDAL().editEmployee(id,inEmp);
+        }
+
+        public bool deleteEmployee(int id)
+        {
+            return new AdminDAL().deleteEmployee(id);
+        }
+
+        public List<Employee> listEmployee()
+        {
+            return new AdminDAL().listEmployee();
+        }
+
+        public Employee oneEmployee(int id)
+        {
+            return new AdminDAL().oneEmployee(id);
+        }
     }
 }
