@@ -45,5 +45,17 @@ namespace WebAppAdmin.BLL
         {
             return new AdminDAL().usernameExist(uname);
         }
+        public String getUsername(int id)
+        {
+            return new AdminDAL().getUsername(id);
+        }
+        public bool correctOldPassword(int id, String op)
+        {
+            return new AdminDAL().correctOldPassword(id,op);
+        }
+        public bool editEmployeeLogin(int id, EmployeeEditLogin inEEL)
+        {
+            return new AdminDAL().editEmployeeLogin(id,inEEL);
+        }
     }
 }

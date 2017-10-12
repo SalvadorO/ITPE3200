@@ -196,5 +196,51 @@ namespace WebAppAdmin.DAL
             return new AdminDBContext().Shadow.Where(w => w.Username.Equals(uname))
                 .Select(s => s.Employee_ID).FirstOrDefault();
         }
+
+        public String getUsername(int id)
+        {
+            return new AdminDBContext().Shadow.Where(w => w.Employee_ID == id).Select(s => s.Username).FirstOrDefault();
+        }
+
+        public bool correctOldPassword(int id, String op)
+        {
+            using (var db = new AdminDBContext())
+            {
+                var foundEmp = db.Shadow.FirstOrDefault(b => b.Employee_ID == id);
+                if (foundEmp != null)
+                {
+                    byte[] passwordForTest = Hash(op + foundEmp.Salt);
+                    bool rightEmp = foundEmp.Password.SequenceEqual(passwordForTest);
+                    return rightEmp;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public bool editEmployeeLogin(int id, EmployeeEditLogin inEEL)
+        {
+            using (var db = new AdminDBContext())
+            {
+                try
+                {
+                    var editShadow = db.Shadow.Find(id);
+                    string salt = Salt();
+                    var passwordNSalt = inEEL.Password + salt;
+                    byte[] passwordDB = Hash(passwordNSalt);
+                    editShadow.Username = inEEL.Username;
+                    editShadow.Password = passwordDB;
+                    editShadow.Salt = salt;
+                    db.SaveChanges();
+                    return true;
+
+                }
+                catch (Exception error)
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

@@ -17,6 +17,11 @@ namespace WebAppAdmin.Model
         [Required(ErrorMessage = "Passord må oppgis")]
         public string Password { get; set; }
 
+        [Display(Name = "Bekreft passord")]
+        [Required(ErrorMessage = "Bekreft passord må oppgis")]
+        [Compare("Password",ErrorMessage = "Passord må være like")]
+        public string ConfirmPassword { get; set; }
+
         [Display(Name = "Adresse")]
         [Required(ErrorMessage = "Adresse må oppgis")]
         public String Address { get; set; }

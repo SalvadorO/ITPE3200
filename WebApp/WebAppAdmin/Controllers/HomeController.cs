@@ -63,7 +63,6 @@ namespace WebAppAdmin.Controllers
                 return RedirectToAction("Error");
             }
             var bll = new AdminBLL();
-            System.Diagnostics.Debug.WriteLine("*********" + inEmp.Username);
             if (bll.usernameExist(inEmp.Username))
             {
                 ViewBag.UsernameExist = true;
@@ -136,6 +135,40 @@ namespace WebAppAdmin.Controllers
                 return RedirectToAction("ListEmployee");
             }
             return RedirectToAction("Error");
+        }
+
+        public ActionResult EditLogIn(int id)
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            var EEL = new EmployeeEditLogin();
+            EEL.Username = new AdminBLL().getUsername(id);
+            return View(EEL);
+        }
+        [HttpPost]
+        public ActionResult EditLogIn(int id, EmployeeEditLogin inEEL)
+        {
+            var bll = new AdminBLL();
+            if(bll.correctOldPassword(id, inEEL.OldPassword))
+            {
+                if (bll.editEmployeeLogin(id, inEEL))
+                {
+                    ViewBag.EditLogin = true;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.EditLogin = false;
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.OPOK = false;
+            }
+            return View();
         }
 
         public ActionResult LogOut()

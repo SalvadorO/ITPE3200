@@ -85,6 +85,7 @@
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Lagre endringer" class="btn btn-default" />
                 <input type="button" value="Slett ansatt" class="btn btn-danger" data-toggle="modal" data-target="#delete-Employee-Modal"/>
+                @Html.ActionLink("Endre brukernavn og passord", "EditLogIn", "Home", new { id = Model.ID }, new { @class = "btn btn-default" })
             </div>
         </div>
     </div>
