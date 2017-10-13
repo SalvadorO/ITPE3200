@@ -10,18 +10,8 @@ namespace WebAppAdmin.Controllers
 {
     public class HomeController : Controller
     {
-        // Kode brukt fra forelesning
         public ActionResult LogIn()
         {
-            if (Session["LoggedIn"] == null)
-            {
-                Session["LoggedIn"] = false;
-                ViewBag.LoggedIn = false;
-            }
-            else
-            {
-                ViewBag.LoggedIn = (bool)Session["LoggedIn"];
-            }
             return View();
         }
 
@@ -35,7 +25,7 @@ namespace WebAppAdmin.Controllers
                 Session["LoggedIn"] = true;
                 ViewBag.LoggedIn = true;
                 Session["Username"] = loggedIn.Username;
-                return View();
+                return RedirectToAction("MainPage");
             }
             else
             {
@@ -43,6 +33,15 @@ namespace WebAppAdmin.Controllers
                 ViewBag.LoggedIn = false;
                 return View();
             }
+        }
+
+        public ActionResult MainPage()
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View();
         }
 
         public ActionResult Register()
@@ -173,7 +172,7 @@ namespace WebAppAdmin.Controllers
 
         public ActionResult LogOut()
         {
-            Session["LoggedIn"] = false;
+            Session["LoggedIn"] = null;
             Session["Username"] = null;
             return RedirectToAction("LogIn");
         }

@@ -133,6 +133,7 @@
     <Content Include="Views\Home\DetailEmployee.cshtml" />
     <Content Include="Views\Home\EditEmployee.cshtml" />
     <Content Include="Views\Home\EditLogIn.cshtml" />
+    <Content Include="Views\Home\MainPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
