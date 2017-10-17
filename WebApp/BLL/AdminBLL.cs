@@ -73,6 +73,10 @@ namespace WebApp.BLL
         {
             return new AdminDAL().editFlight(id, ef);
         }
+        public bool deleteFlight(int id)
+        {
+            return new AdminDAL().deleteFlight(id);
+        }
         public bool insertAirplane(AdminAirplane inAir)
         {
             return new AdminDAL().insertAirplane(inAir);

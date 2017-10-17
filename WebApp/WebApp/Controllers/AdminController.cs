@@ -237,19 +237,21 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult EditFlight(int id, AdminFlight inFlight)
         {
-            System.Diagnostics.Debug.WriteLine(id);
-            System.Diagnostics.Debug.WriteLine(inFlight.ClassType);
-            System.Diagnostics.Debug.WriteLine(inFlight.Departure);
-            System.Diagnostics.Debug.WriteLine(inFlight.Airplane);
-            System.Diagnostics.Debug.WriteLine(inFlight.ID);
-
-
             if (ModelState.IsValid)
             {
                 if (new AdminBLL().editFlight(id, inFlight)) {
                     TempData["FlightEdit"] = true;
                     return RedirectToAction("ListFlight");
                 }
+            }
+            return RedirectToAction("Error");
+        }
+        [HttpPost]
+        public ActionResult DeleteFlight(int id)
+        {
+            if (new AdminBLL().deleteFlight(id))
+            {
+                return RedirectToAction("ListFlight");
             }
             return RedirectToAction("Error");
         }

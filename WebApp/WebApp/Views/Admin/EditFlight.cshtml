@@ -82,12 +82,33 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Lagre endringer" class="btn btn-default" />
+                <input type="button" value="Slett flyrute" class="btn btn-danger" data-toggle="modal" data-target="#delete-Flight-Modal" />
+
             </div>
         </div>
     </div>
 }
+<div class="modal fade" id="delete-Flight-Modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Slette flyrute?</h3>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("DeleteFlight", "Admin", new { id = Model.ID }))
+                {
+                    @Html.AntiForgeryToken()
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Slett flyrute" class="btn btn-danger" />
+                        <input type="button" value="Lukk" class="btn btn-default" data-dismiss="modal">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>

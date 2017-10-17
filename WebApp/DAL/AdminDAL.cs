@@ -340,6 +340,21 @@ namespace WebApp.DAL
             }
         }
 
+        public bool deleteFlight(int id)
+        {
+            var db = new WAPPContext();
+            try
+            {
+                db.Flight.Remove(db.Flight.Find(id));
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
+
         public List<AdminAirplane> listAirplanes()
         {
             var db = new WAPPContext();
