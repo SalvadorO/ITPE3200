@@ -108,7 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\WebAppDatabase.mdf" />
-    <Content Include="App_Data\WebAppDatabase_log.ldf" />
+    <Content Include="App_Data\WebAppDatabase_log.ldf">
+      <DependentUpon>WebAppDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -127,6 +129,7 @@
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\logo2.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Site2.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />

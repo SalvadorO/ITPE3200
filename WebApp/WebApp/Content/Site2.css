@@ -1,0 +1,23 @@
+﻿body {
+    padding-top: 150px;
+    padding-bottom: 220px;
+    float: inherit;
+  
+
+   
+}
+
+
+form-control {
+    float: left;
+}
+
+.navbar-inverse {
+    background-color: #000000 !important;
+}
+
+
+td {
+    padding-bottom: 40px;
+}
+
