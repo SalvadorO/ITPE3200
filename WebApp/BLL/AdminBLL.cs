@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using WebAppAdmin.DAL;
-using WebAppAdmin.Model;
+using WebApp.DAL;
+using WebApp.Model;
 
-namespace WebAppAdmin.BLL
+namespace WebApp.BLL
 {
     public class AdminBLL
     {
@@ -56,6 +52,10 @@ namespace WebAppAdmin.BLL
         public bool editEmployeeLogin(int id, EmployeeEditLogin inEEL)
         {
             return new AdminDAL().editEmployeeLogin(id,inEEL);
+        }
+        public List<AdminFlight> listAllFlights()
+        {
+            return new AdminDAL().listAllFlights();
         }
     }
 }

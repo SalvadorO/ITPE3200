@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebAppAdmin.BLL;
-using WebAppAdmin.Model;
+using WebApp.BLL;
+using WebApp.Model;
 
-namespace WebAppAdmin.Controllers
+namespace Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
         public ActionResult LogIn()
         {
+            if (Session["LoggedIn"] != null 
+                && (bool)Session["LoggedIn"] == true)
+            {
+                return RedirectToAction("MainPage");
+            }
             return View();
         }
 
@@ -168,6 +173,20 @@ namespace WebAppAdmin.Controllers
                 ViewBag.OPOK = false;
             }
             return View();
+        }
+
+        public ActionResult ListFlight()
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View();
+        }
+        
+        public ActionResult ListAllFlights()
+        {
+            return PartialView("_ListFlight", new AdminBLL().listAllFlights());
         }
 
         public ActionResult LogOut()

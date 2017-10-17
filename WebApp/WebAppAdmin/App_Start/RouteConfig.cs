@@ -16,7 +16,7 @@ namespace WebAppAdmin
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "LogIn", id = UrlParameter.Optional }
+                defaults: new { controller = "Admin", action = "LogIn", id = UrlParameter.Optional }
             );
         }
     }

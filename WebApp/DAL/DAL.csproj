@@ -48,8 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminDAL.cs" />
-    <Compile Include="AdminDBContext.cs" />
-    <Compile Include="CustomerDBContext.cs" />
+    <Compile Include="WAPPContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "ListFlight";
+}
+
+<h2>ListFlight</h2>
+<input type="button" value="Alle flyvninger" class="btn btn-primary" id="allFlights" />
+
+<div id="partialListFlight"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#allFlights").click(function () {
+            $.ajax({
+                    url: "/Admin/ListAllFlights",
+                    success: function (result) {
+                        $("#partialListFlight").html(result);
+                    }
+                });
+        });
+        @*
+ $("form").submit(function () {
+            if (!$("#roundtripbox").is(":checked")) $("#returnfield").val("-1");
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $("#partialview").html(result);
+                    }
+                });
+            }
+            return false;
+        });*@
+    });
+    </script>

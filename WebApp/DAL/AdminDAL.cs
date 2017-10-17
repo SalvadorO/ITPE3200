@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using WebAppAdmin.Model;
+using WebApp.Model;
 
-namespace WebAppAdmin.DAL
+namespace WebApp.DAL
 {
     public class AdminDAL
     {
         //Kode brukt fra forelesning
         public bool getShadow(EmployeeLogin inEmp)
         {
-            using (var db = new AdminDBContext())
+            using (var db = new WAPPContext())
             {
                 var foundEmp = db.Shadow.FirstOrDefault(b => b.Username == inEmp.Username);
                 if (foundEmp != null)
@@ -53,7 +52,7 @@ namespace WebAppAdmin.DAL
 
         public bool insertEmployee(EmployeeRegister inEmp)
         {
-            using (var db = new AdminDBContext())
+            using (var db = new WAPPContext())
             {
                 try { 
                 var newEmp = new Employee_DB();
@@ -74,7 +73,7 @@ namespace WebAppAdmin.DAL
                     var existingZip = db.City.Find(inEmp.ZipCode);
                     if (existingZip == null)
                     {
-                    var newCity = new City_DB()
+                    var newCity = new City()
                     {
                         ZipCode = inEmp.ZipCode,
                         CityName = inEmp.City
@@ -94,7 +93,7 @@ namespace WebAppAdmin.DAL
 
         public List<Employee> listEmployee()
         {
-            var db = new AdminDBContext();
+            var db = new WAPPContext();
             List<Employee> all = db.Employee.Select(e => new Employee()
             {
                 ID = e.ID,
@@ -107,7 +106,7 @@ namespace WebAppAdmin.DAL
 
         public Employee oneEmployee(int id)
         {
-            var db = new AdminDBContext();
+            var db = new WAPPContext();
             var e = db.Employee.Find(id);
 
             if (db.Employee.Find(id) == null)
@@ -134,7 +133,7 @@ namespace WebAppAdmin.DAL
 
         public bool editEmployee(int id, Employee inEmp)
         {
-            var db = new AdminDBContext();
+            var db = new WAPPContext();
             try
             {
                 var editEmp = db.Employee.Find(id);
@@ -147,7 +146,7 @@ namespace WebAppAdmin.DAL
                 {
                     if(db.City.FirstOrDefault(z => z.ZipCode == inEmp.ZipCode) == null)
                     {
-                        var newCity = new City_DB()
+                        var newCity = new City()
                         {
                             ZipCode = inEmp.ZipCode,
                             CityName = inEmp.City
@@ -166,7 +165,7 @@ namespace WebAppAdmin.DAL
 
         public bool deleteEmployee(int id)
         {
-            var db = new AdminDBContext();
+            var db = new WAPPContext();
             try
             {
                 db.Shadow.Remove(db.Shadow.Find(id));
@@ -182,7 +181,7 @@ namespace WebAppAdmin.DAL
         }
         public bool usernameExist(String uname)
         {
-            if(new AdminDBContext().Shadow.Where(w => w.Username.Equals(uname)).FirstOrDefault() == null)
+            if(new WAPPContext().Shadow.Where(w => w.Username.Equals(uname)).FirstOrDefault() == null)
             {
                 return false;
             }
@@ -193,18 +192,18 @@ namespace WebAppAdmin.DAL
         }
         public int getUsernameID(String uname)
         {
-            return new AdminDBContext().Shadow.Where(w => w.Username.Equals(uname))
+            return new WAPPContext().Shadow.Where(w => w.Username.Equals(uname))
                 .Select(s => s.Employee_ID).FirstOrDefault();
         }
 
         public String getUsername(int id)
         {
-            return new AdminDBContext().Shadow.Where(w => w.Employee_ID == id).Select(s => s.Username).FirstOrDefault();
+            return new WAPPContext().Shadow.Where(w => w.Employee_ID == id).Select(s => s.Username).FirstOrDefault();
         }
 
         public bool correctOldPassword(int id, String op)
         {
-            using (var db = new AdminDBContext())
+            using (var db = new WAPPContext())
             {
                 var foundEmp = db.Shadow.FirstOrDefault(b => b.Employee_ID == id);
                 if (foundEmp != null)
@@ -221,7 +220,7 @@ namespace WebAppAdmin.DAL
         }
         public bool editEmployeeLogin(int id, EmployeeEditLogin inEEL)
         {
-            using (var db = new AdminDBContext())
+            using (var db = new WAPPContext())
             {
                 try
                 {
@@ -241,6 +240,25 @@ namespace WebAppAdmin.DAL
                     return false;
                 }
             }
+        }
+
+        public List<AdminFlight> listAllFlights()
+        {
+            var db = new WAPPContext();
+            List<AdminFlight> all = db.Flight.Select(e => new AdminFlight()
+            {
+                 ID = e.ID,
+                 TravelDate = e.TravelDate,
+                 DepartureTime = e.DepartureTime,
+                 Departure = db.Airport.Where(w => w.ID == e.Departure).Select(s => s.Name).FirstOrDefault(),
+                 DestinationTime = e.DestinationTime,
+                 Destination = db.Airport.Where(w => w.ID == e.Destination).Select(s => s.Name).FirstOrDefault(),
+                 ClassType = e.ClassType,
+                 Seats = e.Seats,
+                 Price = e.Price
+            }
+            ).ToList();
+            return all;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebAppAdmin.Model
+namespace WebApp.Model
 {
     public class EmployeeEditLogin
     {

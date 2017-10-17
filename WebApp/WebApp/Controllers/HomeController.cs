@@ -13,7 +13,7 @@ namespace WebApp.Controllers
         // View med søk
         public ActionResult ChooseFlight()
         {
-            
+            /*
             var db =  new WebAppContext();
             db.Database.Delete();
 
@@ -1135,7 +1135,7 @@ namespace WebApp.Controllers
 
             db.SaveChanges();
             
-
+    */
             return View();
         }
 

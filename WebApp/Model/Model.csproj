@@ -7,7 +7,7 @@
     <ProjectGuid>{20A5348A-A45C-485D-99C0-CA7A80B071E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebAppAdmin.Model</RootNamespace>
+    <RootNamespace>Model</RootNamespace>
     <AssemblyName>Model</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminFlight.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeEditLogin.cs" />
     <Compile Include="EmployeeLogin.cs" />

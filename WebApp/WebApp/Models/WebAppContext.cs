@@ -10,7 +10,7 @@ namespace WebApp.Models
 {
     public class WebAppContext : DbContext
     {
-        public WebAppContext() : base("WebApp")
+        public WebAppContext() : base("Database")
         {
             Database.CreateIfNotExists();
         }
@@ -19,6 +19,31 @@ namespace WebApp.Models
         public DbSet<Booking> Booking { get; set; }
         public DbSet<Flight> Flight { get; set; }
         public DbSet<Airport> Airport { get; set; }
+        public DbSet<Shadow_DB> Shadow { get; set; }
+        public DbSet<Employee_DB> Employee { get; set; }
+    }
+
+    public class Shadow_DB
+    {
+        [Key, ForeignKey("Employee")]
+        public int Employee_ID { get; set; }
+        public string Username { get; set; }
+        public byte[] Password { get; set; }
+        public string Salt { get; set; }
+        public virtual Employee_DB Employee { get; set; }
+    }
+    public class Employee_DB
+    {
+        [Key]
+        public int ID { get; set; }
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+        public String PhoneNumber { get; set; }
+        public String EMail { get; set; }
+        public String Address { get; set; }
+        public String ZipCode { get; set; }
+        public virtual City City { get; set; }
+        public virtual Shadow_DB Shadow { get; set; }
     }
     public class City
     {
@@ -26,6 +51,8 @@ namespace WebApp.Models
         public String ZipCode { get; set; }
         public String CityName { get; set; }
         public virtual List<Customer> Customers { get; set; }
+        public virtual List<Employee_DB> Employees { get; set; }
+
     }
     public class Customer
     {
