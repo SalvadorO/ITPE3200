@@ -1,4 +1,4 @@
-﻿@model List<WebApp.Model.AdminFlight>
+﻿@model List<WebApp.Model.AdminViewFlight>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -9,22 +9,25 @@
             @Html.DisplayNameFor(model => model[0].ID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].DepartureTime)
+            @Html.DisplayNameFor(model => model[0].TravelDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].DestinationTime)
+            @Html.DisplayNameFor(model => model[0].DepartureTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].Departure)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model[0].DestinationTime)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model[0].Destination)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].TravelDate)
+            @Html.DisplayNameFor(model => model[0].ClassType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].ClassType)
+            @Html.DisplayNameFor(model => model[0].Airplane)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].Seats)
@@ -41,22 +44,25 @@
             @Html.DisplayFor(modelItem => item.ID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DepartureTime)
+            @Html.DisplayFor(modelItem => item.TravelDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DestinationTime)
+            @Html.DisplayFor(modelItem => item.DepartureTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Departure)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.DestinationTime)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Destination)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TravelDate)
+            @Html.DisplayFor(modelItem => item.ClassType)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ClassType)
+            @Html.DisplayFor(modelItem => item.Airplane)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Seats)
@@ -65,9 +71,7 @@
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Endre", "EditFlight", new {  id=item.ID }, new { @class = "btn btn-default" })
         </td>
     </tr>
 }

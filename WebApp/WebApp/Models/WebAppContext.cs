@@ -21,6 +21,7 @@ namespace WebApp.Models
         public DbSet<Airport> Airport { get; set; }
         public DbSet<Shadow_DB> Shadow { get; set; }
         public DbSet<Employee_DB> Employee { get; set; }
+        public DbSet<Airplane> Airplanes { get; set; }
     }
 
     public class Shadow_DB
@@ -96,6 +97,7 @@ namespace WebApp.Models
         public int Seats { get; set; }
         public virtual List<Booking> Bookings { get; set; }
         public virtual List<Airport> Airports { get; set; }
+        public virtual Airplane Airplane { get; set; }
     }
     public class Airport
     {
@@ -103,6 +105,14 @@ namespace WebApp.Models
         public int ID { get; set; }
         public String Name { get; set; }
         public String Country { get; set; }
+        public virtual List<Flight> Flights { get; set; }
+    }
+    public class Airplane
+    {
+        [Key]
+        public int ID { get; set; }
+        public String Name { get; set; }
+        public int Seats { get; set; }
         public virtual List<Flight> Flights { get; set; }
     }
 }

@@ -8,9 +8,12 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryunobtrusive")
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,6 +29,8 @@
                 @Html.ActionLink("Admin", "LogIn", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Ansatte", "ListEmployee", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Kunder", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Flyplasser", "ListAirport", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Fly", "ListAirplane", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Flyvninger", "ListFlight", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 }
                 else

@@ -108,9 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\WebAppDatabase.mdf" />
-    <Content Include="App_Data\WebAppDatabase_log.ldf">
-      <DependentUpon>WebAppDatabase.mdf</DependentUpon>
-    </Content>
+    <Content Include="App_Data\WebAppDatabase_log.ldf" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -326,6 +324,14 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\ListFlight.cshtml" />
     <Content Include="Views\Admin\_ListFlight.cshtml" />
+    <Content Include="Views\Admin\ListAirplane.cshtml" />
+    <Content Include="Views\Admin\NewAirplane.cshtml" />
+    <Content Include="Views\Admin\ListAirport.cshtml" />
+    <Content Include="Views\Admin\NewAirport.cshtml" />
+    <Content Include="Views\Admin\EditAirplane.cshtml" />
+    <Content Include="Views\Admin\EditAirport.cshtml" />
+    <Content Include="Views\Admin\NewFlight.cshtml" />
+    <Content Include="Views\Admin\EditFlight.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

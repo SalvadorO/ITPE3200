@@ -53,9 +53,70 @@ namespace WebApp.BLL
         {
             return new AdminDAL().editEmployeeLogin(id,inEEL);
         }
-        public List<AdminFlight> listAllFlights()
+        public List<AdminViewFlight> listAllFlights()
         {
             return new AdminDAL().listAllFlights();
+        }
+        public AdminFlight oneFlight(int id)
+        {
+            return new AdminDAL().oneFlight(id);
+        }
+        public List<AdminAirplane> listAirplanes()
+        {
+            return new AdminDAL().listAirplanes();
+        }
+        public bool insertFlight(AdminFlight inFlight)
+        {
+            return new AdminDAL().insertFlight(inFlight);
+        }
+        public bool editFlight(int id, AdminFlight ef)
+        {
+            return new AdminDAL().editFlight(id, ef);
+        }
+        public bool insertAirplane(AdminAirplane inAir)
+        {
+            return new AdminDAL().insertAirplane(inAir);
+        }
+        public bool editAirplane(int id, AdminAirplane inAir)
+        {
+            return new AdminDAL().editAirplane(id, inAir);
+        }
+        public List<AdminAirport> listAirports()
+        {
+            return new AdminDAL().listAirports();
+        }
+        public bool insertAirport(AdminAirport inAir)
+        {
+            return new AdminDAL().insertAirport(inAir);
+        }
+        public bool editAirPlane(int id, AdminAirplane inAir)
+        {
+            return new AdminDAL().editAirplane(id, inAir);
+        }
+        public bool editAirPort(int id, AdminAirport inAir)
+        {
+            return new AdminDAL().editAirport(id, inAir);
+        }
+        public AdminAirplane oneAirplane(int id)
+        {
+            return new AdminDAL().oneAirplane(id);
+        }
+        public AdminAirport oneAirport(int id)
+        {
+            return new AdminDAL().oneAirport(id);
+        }
+        public bool deleteAirplane(int id)
+        {
+            return new AdminDAL().deleteAirplane(id);
+        }
+        public bool deleteAirport(int id)
+        {
+            return new AdminDAL().deleteAirport(id);
+        }
+
+        public List<int> getInfo()
+        {
+            return new AdminDAL().getInfo();
         }
     }
 }

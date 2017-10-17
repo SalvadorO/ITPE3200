@@ -1,7 +1,9 @@
-﻿
+﻿@model List<int>
 @{
     ViewBag.Title = "MainPage";
 }
 
-<h2>Velkommen @Session["Username"]</h2>
+<h2>Logget inn som: @Session["Username"]</h2>
 
+<h3>Ansatte: @Model[0] | Registrerte kunder: @Model[1] | Flymaskiner: @Model[2] | Flyplasser: @Model[3]</h3>
+<h4>Antall bookinger: @Model[4] | Antall flyvninger: @Model[5]</h4>

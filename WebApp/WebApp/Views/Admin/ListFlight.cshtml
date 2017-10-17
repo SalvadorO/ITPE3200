@@ -2,9 +2,27 @@
 @{
     ViewBag.Title = "ListFlight";
 }
-
+@if (ViewBag.FlightInsert != null)
+{
+    <div>
+        @if (ViewBag.FlightInsert)
+        {
+            <p class="alert alert-success">Ny flyrute lagt til!</p>
+        }
+    </div>
+}
+@if (ViewBag.FlightEdit != null)
+{
+    <div>
+        @if (ViewBag.FlightEdit)
+        {
+            <p class="alert alert-success">Flyrute endret!</p>
+        }
+    </div>
+}
 <h2>ListFlight</h2>
-<input type="button" value="Alle flyvninger" class="btn btn-primary" id="allFlights" />
+@Html.ActionLink("Ny flyrute", "NewFlight", "Admin", new { @class = "btn btn-primary" })
+<input type="button" value="Alle flyvninger" class="btn btn-default" id="allFlights" />
 
 <div id="partialListFlight"></div>
 

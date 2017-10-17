@@ -9,7 +9,6 @@ namespace WebApp.DAL
 {
     public class AdminDAL
     {
-        //Kode brukt fra forelesning
         public bool getShadow(EmployeeLogin inEmp)
         {
             using (var db = new WAPPContext())
@@ -28,7 +27,6 @@ namespace WebApp.DAL
             }
         }
 
-        //Kode brukt fra forelesning
         private byte[] Hash(string inString)
         {
             byte[] inData, outData;
@@ -38,7 +36,6 @@ namespace WebApp.DAL
             return outData;
         }
 
-        //Kode brukt fra forelesning
         private string Salt()
         {
             byte[] randomArray = new byte[10];
@@ -109,7 +106,7 @@ namespace WebApp.DAL
             var db = new WAPPContext();
             var e = db.Employee.Find(id);
 
-            if (db.Employee.Find(id) == null)
+            if (e == null)
             {
                 return null;
             }
@@ -242,10 +239,10 @@ namespace WebApp.DAL
             }
         }
 
-        public List<AdminFlight> listAllFlights()
+        public List<AdminViewFlight> listAllFlights()
         {
             var db = new WAPPContext();
-            List<AdminFlight> all = db.Flight.Select(e => new AdminFlight()
+            List<AdminViewFlight> all = db.Flight.Select(e => new AdminViewFlight()
             {
                  ID = e.ID,
                  TravelDate = e.TravelDate,
@@ -254,11 +251,281 @@ namespace WebApp.DAL
                  DestinationTime = e.DestinationTime,
                  Destination = db.Airport.Where(w => w.ID == e.Destination).Select(s => s.Name).FirstOrDefault(),
                  ClassType = e.ClassType,
+                 Airplane = e.Airplane.Name,
                  Seats = e.Seats,
                  Price = e.Price
             }
             ).ToList();
             return all;
+        }
+
+        public AdminFlight oneFlight(int id)
+        {
+            var db = new WAPPContext();
+            var e = db.Flight.Find(id);
+
+            if (e == null)
+            {
+                return null;
+            }
+            else
+            {
+
+                var one = new AdminFlight()
+                {
+                    ID = e.ID,
+                    TravelDate = e.TravelDate,
+                    DepartureTime = e.DepartureTime,
+                    Departure = e.Departure,
+                    DestinationTime = e.DestinationTime,
+                    Destination = e.Destination,
+                    ClassType = e.ClassType,
+                    Seats = e.Seats,
+                    Airplane = e.Airplane.ID,
+                    Price = e.Price
+                };
+
+                return one;
+            }
+        }
+
+        public bool insertFlight(AdminFlight inFlight)
+        {
+            using (var db = new WAPPContext())
+            {
+                try
+                {
+                    var outFlight = new Flight();
+                    outFlight.TravelDate = inFlight.TravelDate;
+                    outFlight.DepartureTime = inFlight.TravelDate;
+                    outFlight.Departure = inFlight.Departure;
+                    outFlight.DestinationTime = inFlight.DestinationTime;
+                    outFlight.Destination = inFlight.Destination;
+                    outFlight.ClassType = inFlight.ClassType;
+                    outFlight.Airplane = db.Airplanes.Find(inFlight.Airplane);
+                    outFlight.Seats = outFlight.Airplane.Seats;
+                    outFlight.Price = inFlight.Price;
+                    db.Flight.Add(outFlight);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception error)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool editFlight(int id, AdminFlight ef)
+        {
+            var db = new WAPPContext();
+            try
+            {
+                var editf = db.Flight.Find(id);
+                editf.TravelDate = ef.TravelDate;
+                editf.DepartureTime = ef.DepartureTime;
+                editf.Departure = ef.Departure;
+                editf.DestinationTime = ef.DestinationTime;
+                editf.Destination = ef.Destination;
+                editf.ClassType = ef.ClassType;
+                editf.Airplane = db.Airplanes.Find(ef.Airplane);
+                editf.Price = ef.Price;
+
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
+
+        public List<AdminAirplane> listAirplanes()
+        {
+            var db = new WAPPContext();
+            List<AdminAirplane> all = db.Airplanes.Select(e => new AdminAirplane()
+            {
+                 ID = e.ID,
+                 Name = e.Name,
+                 Seats = e.Seats
+            }
+            ).ToList();
+            return all;
+        }
+
+        public List<AdminAirport> listAirports()
+        {
+            var db = new WAPPContext();
+            List<AdminAirport> all = db.Airport.Select(e => new AdminAirport()
+            {
+                ID = e.ID,
+                Name = e.Name,
+                Country = e.Country
+            }
+            ).ToList();
+            return all;
+        }
+        public bool insertAirplane(AdminAirplane inAir)
+        {
+            using (var db = new WAPPContext())
+            {
+                try
+                {
+                    var newAir = new Airplane();
+                    newAir.Name = inAir.Name;
+                    newAir.Seats = inAir.Seats;
+                    db.Airplanes.Add(newAir);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch(Exception error)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool insertAirport(AdminAirport inAir)
+        {
+            using (var db = new WAPPContext())
+            {
+                try
+                {
+                    var newAir = new Airport();
+                    newAir.Name = inAir.Name;
+                    newAir.Country = inAir.Country;
+                    db.Airport.Add(newAir);
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception error)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool editAirplane(int id, AdminAirplane inAir)
+        {
+            var db = new WAPPContext();
+            try
+            {
+                var editAir = db.Airplanes.Find(id);
+                editAir.Name = inAir.Name;
+                editAir.Seats = inAir.Seats;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
+
+        public bool editAirport(int id, AdminAirport inAir)
+        {
+            var db = new WAPPContext();
+            try
+            {
+                var editAir = db.Airport.Find(id);
+                editAir.Name = inAir.Name;
+                editAir.Country = inAir.Country;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
+
+        public AdminAirplane oneAirplane(int id)
+        {
+            var db = new WAPPContext();
+            var e = db.Airplanes.Find(id);
+
+            if (e == null)
+            {
+                return null;
+            }
+            else
+            {
+
+                var one = new AdminAirplane()
+                {
+                    ID = e.ID,
+                    Name = e.Name,
+                    Seats = e.Seats
+                };
+
+                return one;
+            }
+        }
+
+        public AdminAirport oneAirport(int id)
+        {
+            var db = new WAPPContext();
+            var e = db.Airport.Find(id);
+
+            if (e == null)
+            {
+                return null;
+            }
+            else
+            {
+
+                var one = new AdminAirport()
+                {
+                    ID = e.ID,
+                    Name = e.Name,
+                    Country = e.Country
+                };
+
+                return one;
+            }
+        }
+
+        public bool deleteAirplane(int id)
+        {
+            var db = new WAPPContext();
+            try
+            {
+                db.Airplanes.Remove(db.Airplanes.Find(id));
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
+
+        public bool deleteAirport(int id)
+        {
+            var db = new WAPPContext();
+            try
+            {
+                db.Airport.Remove(db.Airport.Find(id));
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
+
+        public List<int> getInfo()
+        {
+            List<int> info = new List<int>();
+            var db = new WAPPContext();
+            info.Add(db.Employee.Count());
+            info.Add(db.Customer.Count());
+            info.Add(db.Airplanes.Count());
+            info.Add(db.Airport.Count());
+            info.Add(db.Booking.Count());
+            info.Add(db.Flight.Count());
+            return info;
         }
     }
 }
