@@ -171,6 +171,57 @@ namespace WebApp.Controllers
             return View();
         }
 
+        public ActionResult ListCustomer()
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View();
+
+        }
+
+        public ActionResult ListContactPersons()
+        {
+            return PartialView("_ListCustomer", new AdminBLL().listContactPersons());
+        }
+
+        public ActionResult EditCustomer(int id)
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View(new AdminBLL().oneCustomer(id));
+        }
+
+        [HttpPost]
+        public ActionResult EditCustomer(int id, AdminCustomer inCust)
+        {
+            if (ModelState.IsValid)
+            {
+                if (new AdminBLL().editCustomer(id, inCust))
+                {
+                    return RedirectToAction("ListCustomer");
+                }
+            }
+            return RedirectToAction("Error");
+        }
+
+        public ActionResult CustomerBooking(int id)
+        {
+            return View(new AdminBLL().customerBooking(id));
+        }
+
+        public ActionResult DetailCustomer(int id)
+        {
+            if ((bool)Session["LoggedIn"] == false)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View(new AdminBLL().detailCustomer(id));
+        }
+
         public ActionResult ListFlight()
         {
             if ((bool)Session["LoggedIn"] == false)
@@ -191,6 +242,12 @@ namespace WebApp.Controllers
         public ActionResult ListAllFlights()
         {
             return PartialView("_ListFlight", new AdminBLL().listAllFlights());
+        }
+        public ActionResult SearchFlights(int id)
+        {
+            var f = new AdminBLL().searchFlight(id);
+            if (f == null) return null;
+            return PartialView("_ListFlight", f);
         }
 
         public ActionResult NewFlight()

@@ -1,0 +1,153 @@
+﻿@model List<WebApp.Model.AdminCustomer>
+
+@{
+    ViewBag.Title = "DetailCustomer";
+}
+
+<div>
+    <h4>Kontaktperson</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model[0].FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model[0].FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model[0].LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model[0].LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model[0].PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model[0].PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model[0].EMail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model[0].EMail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model[0].Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model[0].Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model[0].ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model[0].ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model[0].City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model[0].City)
+        </dd>
+        <dd><br /></dd>
+        <dd>
+            <a href="@Url.Action("EditCustomer", "Admin", new { id=Model[0].ID })" class="btn btn-primary" title="Rediger">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
+            </a> |
+            <a href="@Url.Action("DeleteCustomer", "Admin", new { id=Model[0].ID })" class="btn btn-danger" title="Slett">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true" style="font-size:15px"></span>
+            </a>
+        </dd>
+    </dl>
+</div>
+
+@for (int i = 1; i < Model.Count; i++)
+{
+    <div>
+        <h4>Medreisende @i</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model[i].FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model[i].FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model[i].LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model[i].LastName)
+            </dd>
+            @if (Model[i].PhoneNumber != null)
+            {
+            <dt>
+                @Html.DisplayNameFor(model => model[i].PhoneNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model[i].PhoneNumber)
+            </dd>
+            }
+            @if (Model[i].EMail != null)
+            {
+            <dt>
+                @Html.DisplayNameFor(model => model[i].EMail)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model[i].EMail)
+            </dd>
+            }
+            <dt>
+                @Html.DisplayNameFor(model => model[i].Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model[i].Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model[i].ZipCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model[i].ZipCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model[i].City)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model[i].City)
+            </dd>
+            <dd><br /></dd>
+            <dd>
+                <a href="@Url.Action("EditCustomer", "Admin", new { id=Model[i].ID })" class="btn btn-primary" title="Rediger">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
+                </a> |
+                <a href="@Url.Action("DeleteCustomer", "Admin", new { id=Model[i].ID })" class="btn btn-danger" title="Slett">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" style="font-size:15px"></span>
+                </a>
+            </dd>
+        </dl>
+    </div>
+}

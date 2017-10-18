@@ -34,10 +34,6 @@ namespace WebApp
                 price = s.Price
                 
             }).OrderBy(o => o.departureTime).ToList();
-            foreach(var i in directRoute)
-            {
-                System.Diagnostics.Debug.WriteLine("**" + i.departureTime);
-            }
             if(directRoute.Count != 0)
             {
                 for (int i = 0; i < directRoute.Count; i++)

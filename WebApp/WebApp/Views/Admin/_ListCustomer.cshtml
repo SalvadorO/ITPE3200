@@ -1,14 +1,5 @@
-﻿@model List<WebApp.Model.Employee>
+﻿@model List<WebApp.Model.AdminCustomer>
 
-@{
-    ViewBag.Title = "ListEmployee";
-}
-
-<h2>ListEmployee</h2>
-
-<p>
-    @Html.ActionLink("Ny ansatt", "Register", "Admin", new { @class = "btn btn-primary" })
-</p>
 <table class="table">
     <tr>
         <th>
@@ -35,16 +26,17 @@
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-            <a href="@Url.Action("EditEmployee", "Admin", new { id=item.ID })" class="btn btn-primary" title="Rediger">
+            <a href="@Url.Action("EditCustomer", "Admin", new { id=item.ID })" class="btn btn-primary" title="Rediger">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
             </a> |
-            <a href="@Url.Action("DetailEmployee", "Admin", new { id=item.ID })" class="btn btn-default" title="Detaljer">
+            <a href="@Url.Action("CustomerBooking", "Admin", new { id=item.ID })" class="btn btn-default" title="Bookinger">
+                <span class="glyphicon glyphicon-plane" aria-hidden="true" style="font-size:15px"></span>
+            </a> |
+            <a href="@Url.Action("DetailCustomer", "Admin", new { id=item.ID })" class="btn btn-default" title="Detaljer">
                 <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="font-size:15px"></span>
             </a>
         </td>
     </tr>
 }
-    
+
 </table>
-
-

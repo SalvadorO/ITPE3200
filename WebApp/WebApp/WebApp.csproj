@@ -332,6 +332,11 @@
     <Content Include="Views\Admin\EditAirport.cshtml" />
     <Content Include="Views\Admin\NewFlight.cshtml" />
     <Content Include="Views\Admin\EditFlight.cshtml" />
+    <Content Include="Views\Admin\_ListCustomer.cshtml" />
+    <Content Include="Views\Admin\ListCustomer.cshtml" />
+    <Content Include="Views\Admin\EditCustomer.cshtml" />
+    <Content Include="Views\Admin\CustomerBooking.cshtml" />
+    <Content Include="Views\Admin\DetailCustomer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

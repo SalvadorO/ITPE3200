@@ -28,9 +28,9 @@
                 {
                 @Html.ActionLink("Admin", "LogIn", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Ansatte", "ListEmployee", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Kunder", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Kunder", "ListCustomer", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Flyplasser", "ListAirport", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Fly", "ListAirplane", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Flymaskiner", "ListAirplane", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Flyruter", "ListFlight", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 }
                 else
@@ -43,14 +43,9 @@
                 }
             </div>
             <div class="navbar-right">
-
                 @if (Session["LoggedIn"] != null && (bool)Session["LoggedIn"])
                 {
                     @Html.ActionLink("Logg av " + Session["Username"], "LogOut", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                }
-                else
-                {
-                    @Html.ActionLink("Admin", "LogIn", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                 }
             </div>
 

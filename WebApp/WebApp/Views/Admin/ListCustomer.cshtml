@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "ListCustomer";
+}
+
+<h2>ListCustomer</h2>
+<input type="button" value="Alle kontaktpersoner" class="btn btn-default" id="allContact" />
+
+<div id="partialListCustomer"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#allContact").click(function () {
+            $.ajax({
+                    url: "/Admin/ListContactPersons",
+                    success: function (result) {
+                        $("#partialListCustomer").html(result);
+                    },
+                    error: function () {
+                        $("#partialListCustomer").html("");
+                    }
+                });
+        });
+
+        $("#searchFlights").click(function () {
+            $.ajax({
+                url: "/Admin/SearchFlights",
+                data: { id: $("#searchFlightsText").val()},
+                success: function (result) {
+                    if (result == "") {
+                        $("#partialListFlight").html("<h3>Ingen treff!</h3>");
+                    } else {
+                        $("#partialListFlight").html(result);
+                    }
+                    },
+                error: function () {
+                        $("#partialListFlight").html("");
+                    }
+                });
+        });
+    });
+</script>
+
+

@@ -1,0 +1,80 @@
+﻿@model WebApp.Model.AdminBooking
+
+@{
+    ViewBag.Title = "CustomerBooking";
+}
+
+<h2>Bookinger</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].TravelDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].Departure)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].DestinationTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].ClassType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].Airplane)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].Seats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Flights[0].Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Flights)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TravelDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DestinationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Airplane)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+    }
+
+</table>

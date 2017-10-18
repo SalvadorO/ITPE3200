@@ -35,8 +35,7 @@ namespace WebApp.App_Start
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/bootstrap.css",
                 "~/Content/bootstrap-datetimepicker.css",
-                "~/Content/bootstrap-datetimepicker.min.css",
-                "~/Content/Site.css"));
+                "~/Content/bootstrap-datetimepicker.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css")
                 .Include("~/Content/themes/base/jquery-ui.css"));

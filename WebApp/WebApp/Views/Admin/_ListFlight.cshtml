@@ -71,7 +71,9 @@
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.ActionLink("Endre", "EditFlight", new {  id=item.ID }, new { @class = "btn btn-default" })
+            <a href="@Url.Action("EditFlight", "Admin", new { id=item.ID })" class="btn btn-default" title="Rediger">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
+            </a>
         </td>
     </tr>
 }

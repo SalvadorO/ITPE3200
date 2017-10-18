@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "NewFlight";
 }
-
 <h2>NewFlight</h2>
 
 @using (Html.BeginForm()) 
@@ -58,8 +57,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ClassType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ClassType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClassType, "", new { @class = "text-danger" })
+
+                     @Html.DropDownListFor(model => model.ClassType,
+                       new List<SelectListItem> {
+                       new SelectListItem { Value = "" , Text = "" },
+                       new SelectListItem { Value = "Økonomi" , Text = "Økonomi" },
+                       new SelectListItem { Value = "Business" , Text = "Business" },
+                       new SelectListItem { Value = "First" , Text = "First" },
+                        },
+                        new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ClassType, "", new { @class = "text-danger" })
+
             </div>
         </div>
 
@@ -86,3 +94,21 @@
         </div>
     </div>
 }
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $("#TravelDate").datetimepicker({
+                viewMode: "days",
+                format: "DD/MM/YYYY"
+            });
+        });
+        $(function () {
+            $("#DepartureTime,#DestinationTime").datetimepicker({
+                viewMode: "days",
+                format: "H:m"
+            });
+        });
+    });
+</script>

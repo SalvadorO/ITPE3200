@@ -7,25 +7,32 @@ using System.Threading.Tasks;
 
 namespace WebApp.Model
 {
-    public class Employee
+    public class AdminCustomer
     {
+        public int Helpint { get; set; }
+
         [Display(Name = "ID")]
         public int ID { get; set; }
+
         [Display(Name = "Fornavn")]
         public String FirstName { get; set; }
+
         [Display(Name = "Etternavn")]
         public String LastName { get; set; }
+
         [Display(Name = "Telefonnummer")]
         public String PhoneNumber { get; set; }
-        [Display(Name = "E-post")]
+
+        [Display(Name = "E-Post")]
         public String EMail { get; set; }
+
         [Display(Name = "Adresse")]
         public String Address { get; set; }
+
         [Display(Name = "Postnummer")]
         public String ZipCode { get; set; }
+
         [Display(Name = "Poststed")]
         public String City { get; set; }
-        [Display(Name = "Brukernavn")]
-        public String Username { get; set; }
     }
 }
