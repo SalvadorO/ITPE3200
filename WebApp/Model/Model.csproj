@@ -52,6 +52,7 @@
     <Compile Include="EmployeeLogin.cs" />
     <Compile Include="EmployeeRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchFlight.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

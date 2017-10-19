@@ -23,10 +23,15 @@
 <h2>ListFlight</h2>
 @Html.ActionLink("Ny flyrute", "NewFlight", "Admin", new { @class = "btn btn-primary" })
 <input type="button" value="Alle flyruter" class="btn btn-default" id="allFlights" />
-<input type="text" placeholder="Flyrute-ID" id="searchFlightsText" />
-<input type="button" value="Søk" class="btn btn-primary" id="searchFlights" />
-<div id="partialListFlight"></div>
 
+<div>
+@{Html.RenderPartial("_SearchFlight");}
+</div>
+<div id="partialListFlight">
+    @{ Html.RenderAction("SearchFlights","Admin");}
+</div>
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
 <script type="text/javascript">
     $(document).ready(function () {
         $("#allFlights").click(function () {
@@ -41,21 +46,11 @@
                 });
         });
 
-        $("#searchFlights").click(function () {
-            $.ajax({
-                url: "/Admin/SearchFlights",
-                data: { id: $("#searchFlightsText").val()},
-                success: function (result) {
-                    if (result == "") {
-                        $("#partialListFlight").html("<h3>Ingen treff!</h3>");
-                    } else {
-                        $("#partialListFlight").html(result);
-                    }
-                    },
-                error: function () {
-                        $("#partialListFlight").html("");
-                    }
-                });
+        $(function () {
+            $("#Date").datetimepicker({
+                viewMode: "days",
+                format: "DD/MM/YYYY"
+            });
         });
     });
     </script>

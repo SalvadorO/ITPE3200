@@ -95,7 +95,8 @@ namespace WebApp.DAL
             {
                 ID = e.ID,
                 FirstName = e.FirstName,
-                LastName = e.LastName
+                LastName = e.LastName,
+                Username = e.Shadow.Username
             }
             ).ToList();
             return all;
@@ -153,6 +154,33 @@ namespace WebApp.DAL
                     City = e.Cities.CityName
                 };
 
+                return one;
+            }
+        }
+
+        public AdminCustomer searchCustomer(int id)
+        {
+            var db = new WAPPContext();
+            var e = db.Customer.Find(id);
+
+            if (e == null || e.ContactPerson == false)
+            {
+                return null;
+            }
+            else
+            {
+
+                var one = new AdminCustomer()
+                {
+                    ID = e.ID,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    PhoneNumber = e.PhoneNumber,
+                    EMail = e.EMail,
+                    Address = e.Address,
+                    ZipCode = e.ZipCode,
+                    City = e.Cities.CityName
+                };
                 return one;
             }
         }
@@ -281,6 +309,13 @@ namespace WebApp.DAL
             {
                 return false;
             }
+        }
+
+        public Employee searchEmployee(String uname)
+        {
+            var db = new WAPPContext();
+            int id = db.Shadow.Where(w => w.Username.Equals(uname)).Select(s => s.Employee_ID).FirstOrDefault();
+            return oneEmployee(id);
         }
 
         public bool deleteEmployee(int id)
@@ -424,34 +459,27 @@ namespace WebApp.DAL
             }
         }
 
-        public AdminViewFlight searchFlight(int id)
+        public List<AdminViewFlight> searchFlight(SearchFlight search)
         {
             var db = new WAPPContext();
-            var e = db.Flight.Find(id);
-
-            if (e == null)
+            int from = db.Airport.Where(w => w.Name.Equals(search.From)).Select(s => s.ID).FirstOrDefault();
+            int to = db.Airport.Where(w => w.Name.Equals(search.To)).Select(s => s.ID).FirstOrDefault();
+            List<AdminViewFlight> list = db.Flight.Where(w => w.Departure == from
+            && w.Destination == to
+            && w.TravelDate == search.Date).Select(e => new AdminViewFlight()
             {
-                return null;
-            }
-            else
-            {
-
-                var one = new AdminViewFlight()
-                {
-                    ID = e.ID,
-                    TravelDate = e.TravelDate,
-                    DepartureTime = e.DepartureTime,
-                    Departure = db.Airport.Where(w => w.ID == e.Departure).Select(s => s.Name).FirstOrDefault(),
-                    DestinationTime = e.DestinationTime,
-                    Destination = db.Airport.Where(w => w.ID == e.Destination).Select(s => s.Name).FirstOrDefault(),
-                    ClassType = e.ClassType,
-                    Seats = e.Seats,
-                    Airplane = db.Airplanes.Where(w => w.ID == e.Airplane.ID).Select(s => s.Name).FirstOrDefault(),
-                    Price = e.Price
-                };
-
-                return one;
-            }
+                ID = e.ID,
+                TravelDate = e.TravelDate,
+                DepartureTime = e.DepartureTime,
+                Departure = search.From,
+                DestinationTime = e.DestinationTime,
+                Destination = search.To,
+                ClassType = e.ClassType,
+                Seats = e.Seats,
+                Airplane = db.Airplanes.Where(w => w.ID == e.Airplane.ID).Select(s => s.Name).FirstOrDefault(),
+                Price = e.Price
+            }).ToList();
+            return list;
         }
 
         public bool insertFlight(AdminFlight inFlight)
@@ -462,7 +490,7 @@ namespace WebApp.DAL
                 {
                     var outFlight = new Flight();
                     outFlight.TravelDate = inFlight.TravelDate;
-                    outFlight.DepartureTime = inFlight.TravelDate;
+                    outFlight.DepartureTime = inFlight.DepartureTime;
                     outFlight.Departure = inFlight.Departure;
                     outFlight.DestinationTime = inFlight.DestinationTime;
                     outFlight.Destination = inFlight.Destination;

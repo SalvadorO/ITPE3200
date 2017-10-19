@@ -84,7 +84,19 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction("LogIn");
             }
-            return View(new AdminBLL().listEmployee());
+            return View();
+        }
+
+        public ActionResult ListAllEmployees()
+        {
+            return PartialView("_ListEmployee",new AdminBLL().listEmployee());
+        }
+
+        public ActionResult SearchEmployee(String uname)
+        {
+            var f = new AdminBLL().searchEmployee(uname);
+            if (f == null) return null;
+            return PartialView("_ListEmployee", f);
         }
 
         public ActionResult DetailEmployee(int id)
@@ -243,11 +255,17 @@ namespace WebApp.Controllers
         {
             return PartialView("_ListFlight", new AdminBLL().listAllFlights());
         }
-        public ActionResult SearchFlights(int id)
+        public ActionResult SearchFlights(SearchFlight search)
         {
-            var f = new AdminBLL().searchFlight(id);
+            return PartialView("_ListFlight", new AdminBLL().searchFlight(search));
+            
+        }
+
+        public ActionResult SearchCustomers(int id)
+        {
+            var f = new AdminBLL().searchCustomer(id);
             if (f == null) return null;
-            return PartialView("_ListFlight", f);
+            return PartialView("_ListCustomer", f);
         }
 
         public ActionResult NewFlight()

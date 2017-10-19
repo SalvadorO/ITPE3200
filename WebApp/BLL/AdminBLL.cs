@@ -61,10 +61,24 @@ namespace WebApp.BLL
         {
             return new AdminDAL().oneFlight(id);
         }
-        public List<AdminViewFlight> searchFlight(int id)
+        public List<AdminViewFlight> searchFlight(SearchFlight search)
         {
-            var list = new List<AdminViewFlight>();
-            var item = new AdminDAL().searchFlight(id);
+            return new AdminDAL().searchFlight(search);
+        }
+        public List<AdminCustomer> searchCustomer(int id)
+        {
+            
+            var list = new List<AdminCustomer>();
+            var item = new AdminDAL().searchCustomer(id);
+            if (item == null) return null;
+            list.Add(item);
+            return list;
+        }
+
+        public List<Employee> searchEmployee(String uname)
+        {
+            var list = new List<Employee>();
+            var item = new AdminDAL().searchEmployee(uname);
             if (item == null) return null;
             list.Add(item);
             return list;

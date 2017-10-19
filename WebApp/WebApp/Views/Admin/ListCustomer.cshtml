@@ -5,6 +5,8 @@
 
 <h2>ListCustomer</h2>
 <input type="button" value="Alle kontaktpersoner" class="btn btn-default" id="allContact" />
+<input type="text" placeholder="Kunde-ID" id="searchCustomerText" />
+<input type="button" value="Søk" class="btn btn-primary" id="searchCustomer" />
 
 <div id="partialListCustomer"></div>
 
@@ -22,21 +24,21 @@
                 });
         });
 
-        $("#searchFlights").click(function () {
+        $("#searchCustomer").click(function () {
             $.ajax({
-                url: "/Admin/SearchFlights",
-                data: { id: $("#searchFlightsText").val()},
+                url: "/Admin/SearchCustomers",
+                data: { id: $("#searchCustomerText").val() },
                 success: function (result) {
                     if (result == "") {
-                        $("#partialListFlight").html("<h3>Ingen treff!</h3>");
+                        $("#partialListCustomer").html("<h3>Ingen treff!</h3>");
                     } else {
-                        $("#partialListFlight").html(result);
+                        $("#partialListCustomer").html(result);
                     }
-                    },
+                },
                 error: function () {
-                        $("#partialListFlight").html("");
-                    }
-                });
+                    $("#partialListCustomer").html("");
+                }
+            });
         });
     });
 </script>

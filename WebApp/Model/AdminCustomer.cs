@@ -15,9 +15,11 @@ namespace WebApp.Model
         public int ID { get; set; }
 
         [Display(Name = "Fornavn")]
+        [Required(ErrorMessage = "Fornavn må oppgis")]
         public String FirstName { get; set; }
 
         [Display(Name = "Etternavn")]
+        [Required(ErrorMessage = "Etternavn må oppgis")]
         public String LastName { get; set; }
 
         [Display(Name = "Telefonnummer")]
@@ -27,12 +29,15 @@ namespace WebApp.Model
         public String EMail { get; set; }
 
         [Display(Name = "Adresse")]
+        [Required(ErrorMessage = "Adresse må oppgis")]
         public String Address { get; set; }
 
         [Display(Name = "Postnummer")]
+        [Required(ErrorMessage = "Postnummer må oppgis")]
         public String ZipCode { get; set; }
 
         [Display(Name = "Poststed")]
+        [Required(ErrorMessage = "Poststed må oppgis")]
         public String City { get; set; }
     }
 }
