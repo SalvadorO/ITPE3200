@@ -4,10 +4,10 @@
     ViewBag.Title = "DetailEmployee";
 }
 
-<h2>DetailEmployee</h2>
+<h2>Info om ansatt</h2>
 
 <div>
-    <h4>Employee</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -79,4 +79,12 @@
     <a href="@Url.Action("EditEmployee", "Admin", new { id=Model.ID })" class="btn btn-primary" title="Rediger">
         <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
     </a>
+    <button type="button" class="btn btn-default" id="avbrytKnapp"> Tilbake </button>
+
 </p>
+<script type="text/javascript">
+    $(document).on('click', '#avbrytKnapp', function () {
+        history.go(-1);
+    });
+
+</script>

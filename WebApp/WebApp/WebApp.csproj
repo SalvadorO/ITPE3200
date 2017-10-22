@@ -108,7 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\WebAppDatabase.mdf" />
-    <Content Include="App_Data\WebAppDatabase_log.ldf" />
+    <Content Include="App_Data\WebAppDatabase_log.ldf">
+      <DependentUpon>WebAppDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

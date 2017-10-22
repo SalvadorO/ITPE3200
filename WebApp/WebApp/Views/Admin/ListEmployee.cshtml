@@ -2,13 +2,15 @@
     ViewBag.Title = "ListEmployee";
 }
 
-<h2>ListEmployee</h2>
+<h2>Ansatte</h2>
 
 <p>
+    <input type="text" placeholder="Brukernavn" id="searchEmployeeText" />
+<input type="button" value="Søk" class="btn btn-primary" id="searchEmployee" />
+    <br /><br />
     @Html.ActionLink("Ny ansatt", "Register", "Admin", new { @class = "btn btn-primary" })
     <input type="button" value="Alle ansatte" class="btn btn-default" id="allEmployee" />
-    <input type="text" placeholder="Brukernavn" id="searchEmployeeText" />
-    <input type="button" value="Søk" class="btn btn-primary" id="searchEmployee" />
+    
 </p>
 
 <div id="partialListEmployee"></div>

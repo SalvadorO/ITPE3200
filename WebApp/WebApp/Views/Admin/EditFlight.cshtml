@@ -4,14 +4,14 @@
     ViewBag.Title = "EditFlight";
 }
 
-<h2>EditFlight</h2>
+<h2>Rediger Flyreise</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>AdminFlight</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -82,8 +82,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lagre endringer" class="btn btn-default" />
+                <input type="submit" value="Lagre endringer" class="btn btn-success" />
                 <input type="button" value="Slett flyrute" class="btn btn-danger" data-toggle="modal" data-target="#delete-Flight-Modal" />
+                <button type="button" class="btn btn-default" id="avbrytKnapp"> Tilbake </button>
 
             </div>
         </div>
@@ -112,3 +113,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).on('click', '#avbrytKnapp', function () {
+        history.go(-1);
+    });
+
+</script>
