@@ -21,3 +21,9 @@ td {
     padding-bottom: 40px;
 }
 
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+

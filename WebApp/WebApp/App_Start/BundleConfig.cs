@@ -39,6 +39,9 @@ namespace WebApp.App_Start
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css")
                 .Include("~/Content/themes/base/jquery-ui.css"));
+
+                bundles.Add(new StyleBundle("~/Content/Site2.css")
+                .Include("~/Content/Site2.css"));
         }
     }
 }
