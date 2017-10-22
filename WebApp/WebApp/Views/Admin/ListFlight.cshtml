@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "ListFlight";
+    ViewBag.Title = "Flyruter";
 }
 @if (ViewBag.FlightInsert != null)
 {
@@ -20,13 +20,22 @@
         }
     </div>
 }
-<h2>ListFlight</h2>
-@Html.ActionLink("Ny flyrute", "NewFlight", "Admin", new { @class = "btn btn-primary" })
-<input type="button" value="Alle flyruter" class="btn btn-default" id="allFlights" />
 
+<h2>Flyruter</h2>
+<div style="text-align: right; width: 100% ">
+    <button type="button" class="btn btn-default" id="allFlights" title="Alle flyruter">
+        Alle flyruter
+        <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="font-size:15px"></span>
+    </button>
+    <a href="@Url.Action("NewFlight", "Admin")" class="btn btn-primary" title="Ny flyrute">
+        Ny flyrute
+        <span class="glyphicon glyphicon-globe" aria-hidden="true" style="font-size:15px"></span>
+    </a>
+</div>
 <div>
 @{Html.RenderPartial("_SearchFlight");}
 </div>
+<br />
 <div id="partialListFlight">
     @{ Html.RenderAction("SearchFlights","Admin");}
 </div>
