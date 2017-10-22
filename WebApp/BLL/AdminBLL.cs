@@ -159,7 +159,7 @@ namespace WebApp.BLL
         {
             return new AdminDAL().editCustomer(id,inCust);
         }
-        public AdminBooking customerBooking(int id)
+        public List<AdminViewFlight> customerBooking(int id)
         {
             return new AdminDAL().customerBooking(id);
         }

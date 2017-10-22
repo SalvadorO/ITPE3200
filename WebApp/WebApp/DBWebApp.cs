@@ -259,11 +259,8 @@ namespace WebApp
                     EMail = final.customers[0].eMail,
                     Address = final.customers[0].address,
                     ZipCode = final.customers[0].zipCode,
-                    ContactPerson = true,
-                    Bookings = new List<Booking>()
-            };
-
-
+                    ContactPerson = true
+                };
                 var existingZip = db.City.Find(final.customers[0].zipCode);
 
                 if (existingZip == null)
@@ -275,45 +272,33 @@ namespace WebApp
                     };
                     contactPerson.Cities = newCity;
                 }
-                db.Customer.Add(contactPerson);
 
+                var finalBooking = new Booking()
+                {
+                    Travelers = final.booking.travelers,
+                    RoundTrip = final.booking.roundTrip,
+                    CardName = final.cardInfo.cardName,
+                    CardNr = final.cardInfo.cardNr,
+                    Code = final.cardInfo.code,
+                    ExpDate = final.cardInfo.expDateMM + "/" + final.cardInfo.expDateYY
+                };
 
+                List<Flight> flightslist = new List<Flight>();
                 foreach (var i in final.booking.chosenTravel)
                 {
-                    var outBooking = new Booking()
-                    {
-                        FlightID = i.id,
-                        Travelers = final.booking.travelers,
-                        RoundTrip = final.booking.roundTrip,
-                        CardName = final.cardInfo.cardName,
-                        CardNr = final.cardInfo.cardNr,
-                        Code = final.cardInfo.code,
-                        ExpDate = final.cardInfo.expDateMM + "/" + final.cardInfo.expDateYY
-                    };
-                    contactPerson.Bookings.Add(outBooking);
-
+                    flightslist.Add(db.Flight.Find(i.id));
                 }
-                updateSeats(final.booking.chosenTravel, db, final.booking.travelers);
-
                 if (final.booking.roundTrip)
                 {
                     foreach (var i in final.booking.chosenReturn)
                     {
-                        var inBooking = new Booking()
-                        {
-                            FlightID = i.id,
-                            Travelers = final.booking.travelers,
-                            RoundTrip = final.booking.roundTrip,
-                            CardName = final.cardInfo.cardName,
-                            CardNr = final.cardInfo.cardNr,
-                            Code = final.cardInfo.code,
-                            ExpDate = final.cardInfo.expDateMM + "/" + final.cardInfo.expDateYY
-                        };
-                        contactPerson.Bookings.Add(inBooking);
+                        flightslist.Add(db.Flight.Find(i.id));
 
                     }
-                    updateSeats(final.booking.chosenReturn, db, final.booking.travelers);
                 }
+                contactPerson.Booking = finalBooking;
+                finalBooking.Flights = flightslist;
+                db.Customer.Add(contactPerson);
 
                 if (final.booking.travelers > 1)
                 {
@@ -328,9 +313,7 @@ namespace WebApp
                             Address = final.customers[i].address,
                             ZipCode = final.customers[i].zipCode,
                             ContactPerson = false,
-                            Bookings = contactPerson.Bookings
                         };
-
                         var eZip = db.City.Find(final.customers[i].zipCode);
 
                         if (eZip == null)
@@ -342,23 +325,24 @@ namespace WebApp
                             };
                             customer.Cities = newCity;
                         }
-
+                        customer.Booking = finalBooking;
                         db.Customer.Add(customer);
 
                     }
                 }
+                updateSeats(flightslist, db, final.booking.travelers);
                 db.SaveChanges();
                 return true;
             }
-            catch(Exception error) { }
+            catch (Exception error) { }
             return false;
         }
 
-        private void updateSeats(List<ViewFlight> inList, WebAppContext db, int travelers)
+        private void updateSeats(List<Flight> inList, WebAppContext db, int travelers)
         {
-            foreach(var i in inList)
+            foreach (var i in inList)
             {
-                var update = db.Flight.Find(i.id);
+                var update = db.Flight.Find(i.ID);
                 int seats = update.Seats;
                 update.Seats = seats - travelers;
             }

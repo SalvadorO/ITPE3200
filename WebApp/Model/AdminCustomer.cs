@@ -9,8 +9,6 @@ namespace WebApp.Model
 {
     public class AdminCustomer
     {
-        public int Helpint { get; set; }
-
         [Display(Name = "ID")]
         public int ID { get; set; }
 

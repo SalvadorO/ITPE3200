@@ -218,33 +218,25 @@ namespace WebApp.DAL
             }
         }
 
-        public AdminBooking customerBooking(int id)
+        public List<AdminViewFlight> customerBooking(int id)
         {
             var db = new WAPPContext();
-            AdminBooking booking = new AdminBooking();
-            booking.Flights = new List<AdminViewFlight>();
-            var customer = db.Customer.Find(id);
-            List<int> templist = customer.Bookings.Select(s => s.FlightID).ToList();
-            foreach (var item in templist) {
-                var tempitem = db.Flight.Where(w => w.ID == item).Select(e => new AdminViewFlight()
-                {
-                    ID = e.ID,
-                    TravelDate = e.TravelDate,
-                    DepartureTime = e.DepartureTime,
-                    Departure = db.Airport.Where(w => w.ID == e.Departure).Select(s => s.Name).FirstOrDefault(),
-                    DestinationTime = e.DestinationTime,
-                    Destination = db.Airport.Where(w => w.ID == e.Destination).Select(s => s.Name).FirstOrDefault(),
-                    ClassType = e.ClassType,
-                    Airplane = e.Airplane.Name,
-                    Seats = e.Seats,
-                    Price = e.Price
-                }).FirstOrDefault();
-                if(tempitem != null)
-                {
-                    booking.Flights.Add(tempitem);
-                }
-            }
-            return booking;
+            var cp = db.Customer.Find(id);
+            List<AdminViewFlight> list = cp.Booking.Flights.Select(e => new AdminViewFlight()
+            {
+                ID = e.ID,
+                TravelDate = e.TravelDate,
+                DepartureTime = e.DepartureTime,
+                Departure = db.Airport.Where(w => w.ID == e.Departure).Select(s => s.Name).FirstOrDefault(),
+                DestinationTime = e.DestinationTime,
+                Destination = db.Airport.Where(w => w.ID == e.Destination).Select(s => s.Name).FirstOrDefault(),
+                ClassType = e.ClassType,
+                Airplane = e.Airplane.Name,
+                Seats = e.Seats,
+                Price = e.Price
+            }).ToList();
+
+            return list;
         }
 
         public List<AdminCustomer> detailCustomer(int id)
@@ -252,30 +244,20 @@ namespace WebApp.DAL
             var db = new WAPPContext();
             var CP = oneCustomer(id);
             var cp = db.Customer.Find(id);
-            List<AdminCustomer> list = new List<AdminCustomer>();
-            list.Add(CP);
-            var templist = db.Customer.Where(w =>
-             w.ContactPerson == false).Select(e => new AdminCustomer()
-             {
-                 ID = e.ID,
-                 FirstName = e.FirstName,
-                 LastName = e.LastName,
-                 PhoneNumber = e.PhoneNumber,
-                 EMail = e.EMail,
-                 Address = e.Address,
-                 ZipCode = e.ZipCode,
-                 City = e.Cities.CityName,
-                 Helpint = e.Bookings.FirstOrDefault().ID
-            }).ToList();
-
-            int contactInt = cp.Bookings.ElementAt(0).ID;
-            foreach (var item in templist)
+            List<AdminCustomer> list = db.Customer.Where(w => w.Booking.ID == cp.Booking.ID
+            && w.ContactPerson == false).Select(e => new AdminCustomer()
             {
-                if(item.Helpint == contactInt)
-                {
-                    list.Add(item);
-                }
-            }
+                ID = e.ID,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                PhoneNumber = e.PhoneNumber,
+                EMail = e.EMail,
+                Address = e.Address,
+                ZipCode = e.ZipCode,
+                City = e.Cities.CityName
+
+            }).ToList();
+            list.Insert(0, CP);
             return list;
         }
 

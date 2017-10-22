@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="AdminAirplane.cs" />
     <Compile Include="AdminAirport.cs" />
-    <Compile Include="AdminBooking.cs" />
     <Compile Include="AdminCustomer.cs" />
     <Compile Include="AdminFlight.cs" />
     <Compile Include="AdminViewFlight.cs" />
