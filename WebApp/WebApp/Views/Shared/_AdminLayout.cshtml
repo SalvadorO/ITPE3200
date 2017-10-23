@@ -26,18 +26,10 @@
                 </button>
                 @if (Session["LoggedIn"] != null && (bool)Session["LoggedIn"])
                 {
-                @Html.ActionLink("Hjem", "LogIn", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-
-
-
-                    /*   @Html.ActionLink("Ansatte", "ListEmployee", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                       @Html.ActionLink("Kunder", "ListCustomer", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                       @Html.ActionLink("Flyplasser", "ListAirport", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                       @Html.ActionLink("Flymaskiner", "ListAirplane", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                       @Html.ActionLink("Flyruter", "ListFlight", "Admin", new { area = "" }, new { @class = "navbar-brand" })*/
-
-
-
+                    <a href="@Url.Action("Login", "Admin", new { area="" })" class="navbar-brand" title="Hjem">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true" style="font-size:15px"></span>
+                        Hjem
+                    </a>
                 }
 
                 else
@@ -52,7 +44,10 @@
             <div class="navbar-right">
                 @if (Session["LoggedIn"] != null && (bool)Session["LoggedIn"])
                 {
-                    @Html.ActionLink("Logg av " + Session["Username"], "LogOut", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                    <a href="@Url.Action("LogOut", "Admin", new { area="" })" class="navbar-brand" title="Logg av">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true" style="font-size:15px"></span>
+                        Logg av @Session["Username"]
+                    </a>
                 }
             </div>
 

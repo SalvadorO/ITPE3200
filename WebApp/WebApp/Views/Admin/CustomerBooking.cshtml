@@ -1,10 +1,19 @@
 ﻿@model List<WebApp.Model.AdminViewFlight>
 
 @{
-    ViewBag.Title = "CustomerBooking";
+    ViewBag.Title = "Flyvninger";
 }
 
-<h2>Bookinger</h2>
+<button type="button" class="btn btn-default" id="avbrytKnapp" title="Tilbake">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    Tilbake
+</button>
+
+<div style="text-align:right;width:100%">
+    <input type="button" value="Endre flyvninger" class="btn btn-default" id="editFlight" />
+</div>
+
+<h2>Flyvninger</h2>
 
 <table class="table">
     <tr>
@@ -74,7 +83,35 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
+            <td>
+                <div class="editflightdiv" style="display:none">
+                    <input type="radio" id="flightradio" name="flightradio" value="@item.ID" style="height:15px;width:15px;" />
+                </div>
+            </td>
         </tr>
     }
 
 </table>
+<br /><br />
+
+<div class="editflightdiv" style="display:none">
+    @{  Html.RenderPartial("_SearchFlight", new WebApp.Model.SearchFlight());}
+</div>
+<br />
+@*
+    <div id="partialListFlight">
+        @{ Html.RenderAction("SearchFlights", "Admin");}
+    </div>
+*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#editFlight").click(function () {
+            $(".editflightdiv").fadeIn("slow");
+        });
+    });
+
+    $(document).on('click', '#avbrytKnapp', function () {
+        history.go(-1);
+    });
+</script>

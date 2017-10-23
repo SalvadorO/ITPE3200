@@ -30,7 +30,6 @@ namespace WebApp.Controllers
             }
             else
             {
-                Session["LoggedIn"] = false;
                 ViewBag.LoggedIn = false;
                 return View();
             }
@@ -38,7 +37,7 @@ namespace WebApp.Controllers
 
         public ActionResult MainPage()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -47,7 +46,7 @@ namespace WebApp.Controllers
 
         public ActionResult Register()
         {
-            /*if ((bool)Session["LoggedIn"] == false)
+            /*if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }*/
@@ -80,7 +79,7 @@ namespace WebApp.Controllers
 
         public ActionResult ListEmployee()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -98,10 +97,15 @@ namespace WebApp.Controllers
             if (f == null) return null;
             return PartialView("_ListEmployee", f);
         }
-
+        public ActionResult SearchBooking(int id)
+        {
+            var f = new AdminBLL().searchBooking(id);
+            if (f == null) return null;
+            return PartialView("ListBooking", f);
+        }
         public ActionResult DetailEmployee(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -110,7 +114,7 @@ namespace WebApp.Controllers
 
         public ActionResult EditEmployee(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -151,7 +155,7 @@ namespace WebApp.Controllers
 
         public ActionResult EditLogIn(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -185,7 +189,7 @@ namespace WebApp.Controllers
 
         public ActionResult ListCustomer()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -200,7 +204,7 @@ namespace WebApp.Controllers
 
         public ActionResult EditCustomer(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -220,6 +224,16 @@ namespace WebApp.Controllers
             return RedirectToAction("Error");
         }
 
+        public ActionResult DeleteCustomer(int id)
+        {
+            if (new AdminBLL().deleteCustomer(id))
+            {
+                return RedirectToAction("ListCustomer");
+            }
+            return RedirectToAction("Error");
+        }
+
+
         public ActionResult CustomerBooking(int id)
         {
             return View(new AdminBLL().customerBooking(id));
@@ -227,16 +241,25 @@ namespace WebApp.Controllers
 
         public ActionResult DetailCustomer(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
             return View(new AdminBLL().detailCustomer(id));
         }
 
+        public ActionResult ListBooking()
+        {
+            if (Session["LoggedIn"] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View(new AdminBLL().listBookings());
+        }
+
         public ActionResult ListFlight()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -268,9 +291,11 @@ namespace WebApp.Controllers
             return PartialView("_ListCustomer", f);
         }
 
+        
+
         public ActionResult NewFlight()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -299,7 +324,7 @@ namespace WebApp.Controllers
 
         public ActionResult EditFlight(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -331,9 +356,18 @@ namespace WebApp.Controllers
             return RedirectToAction("Error");
         }
 
+        public ActionResult Passengers(int id)
+        {
+            if (Session["LoggedIn"] == null)
+            {
+                return RedirectToAction("LogIn");
+            }
+            return View(new AdminBLL().getPassengers(id));
+        }
+
         public ActionResult ListAirplane()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -342,7 +376,7 @@ namespace WebApp.Controllers
 
         public ActionResult NewAirplane()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -363,7 +397,7 @@ namespace WebApp.Controllers
 
         public ActionResult EditAirplane(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -394,7 +428,7 @@ namespace WebApp.Controllers
 
         public ActionResult ListAirport()
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }
@@ -420,7 +454,7 @@ namespace WebApp.Controllers
 
         public ActionResult EditAirport(int id)
         {
-            if ((bool)Session["LoggedIn"] == false)
+            if (Session["LoggedIn"] == null)
             {
                 return RedirectToAction("LogIn");
             }

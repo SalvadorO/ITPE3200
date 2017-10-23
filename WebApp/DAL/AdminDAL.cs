@@ -130,6 +130,35 @@ namespace WebApp.DAL
             }
         }
 
+        public AdminBooking oneBooking(int id)
+        {
+            var db = new WAPPContext();
+            var s = db.Booking.Find(id);
+
+            if (s == null)
+            {
+                return null;
+            }
+            else
+            {
+
+                var one = new AdminBooking()
+                {
+                    ContactName = s.Customers.FirstOrDefault().FirstName + " " + s.Customers.FirstOrDefault().LastName,
+                    cID = s.Customers.FirstOrDefault().ID,
+                    ID = s.ID,
+                    RTString = s.RoundTrip.ToString(),
+                    Travelers = s.Travelers,
+                    TravelDate = s.Flights.FirstOrDefault().TravelDate
+                };
+
+                    String t = one.RTString;
+                    one.RTString = roundtripToString(t);
+
+                return one;
+            }
+        }
+
         public AdminCustomer oneCustomer(int id)
         {
             var db = new WAPPContext();
@@ -151,7 +180,8 @@ namespace WebApp.DAL
                     EMail = e.EMail,
                     Address = e.Address,
                     ZipCode = e.ZipCode,
-                    City = e.Cities.CityName
+                    City = e.Cities.CityName,
+                    ContactPerson = e.ContactPerson
                 };
 
                 return one;
@@ -179,7 +209,8 @@ namespace WebApp.DAL
                     EMail = e.EMail,
                     Address = e.Address,
                     ZipCode = e.ZipCode,
-                    City = e.Cities.CityName
+                    City = e.Cities.CityName,
+                    ContactPerson = e.ContactPerson
                 };
                 return one;
             }
@@ -208,6 +239,44 @@ namespace WebApp.DAL
                         db.City.Add(newCity);
                     }
                     editCust.ZipCode = inCust.ZipCode;
+                }
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
+        }
+
+        public bool deleteCustomer(int id)
+        {
+            var db = new WAPPContext();
+            try
+            {
+                var c = db.Customer.Find(id);
+                if (c.ContactPerson == true)
+                {
+                    foreach (var item in c.Booking.Flights)
+                    {
+                    item.Seats += c.Booking.Travelers;
+                    }
+                    int t = c.Booking.ID;
+                    var list = db.Customer.Where(w => w.Booking.ID == t).ToList();
+                    foreach(var i in list)
+                    {
+                        db.Customer.Remove(i);
+                    }
+                    db.Booking.Remove(db.Booking.Find(t));
+                }
+                else
+                {
+                    c.Booking.Travelers--;
+                    foreach (var item in c.Booking.Flights)
+                    {
+                        item.Seats++;
+                    }
+                    db.Customer.Remove(c);
                 }
                 db.SaveChanges();
                 return true;
@@ -298,6 +367,11 @@ namespace WebApp.DAL
             var db = new WAPPContext();
             int id = db.Shadow.Where(w => w.Username.Equals(uname)).Select(s => s.Employee_ID).FirstOrDefault();
             return oneEmployee(id);
+        }
+
+        public AdminBooking searchBooking(int id)
+        {
+            return oneBooking(id);
         }
 
         public bool deleteEmployee(int id)
@@ -399,6 +473,28 @@ namespace WebApp.DAL
             return all;
         }
 
+        public List<AdminCustomer> getPassengers(int id)
+        {
+            var db = new WAPPContext();
+            List<AdminCustomer> list = new List<AdminCustomer>();
+            var flight = db.Flight.Find(id);
+            foreach (var x in flight.Booking)
+            {
+                foreach(var y in x.Customers)
+                {
+                    var temp = new AdminCustomer()
+                    {
+                        ID = y.ID,
+                        FirstName = y.FirstName,
+                        LastName = y.LastName,
+                        ContactPerson = y.ContactPerson
+                    };
+                    list.Add(temp);
+                }
+            }
+            return list;
+        }
+
         public List<AdminCustomer> listContactPersons()
         {
             var db = new WAPPContext();
@@ -406,7 +502,8 @@ namespace WebApp.DAL
             {
                 ID = e.ID,
                 FirstName = e.FirstName,
-                LastName = e.LastName
+                LastName = e.LastName,
+                ContactPerson = e.ContactPerson
             }).ToList();
             return contact;
         }
@@ -716,6 +813,39 @@ namespace WebApp.DAL
             info.Add(db.Booking.Count());
             info.Add(db.Flight.Count());
             return info;
+        }
+
+        public List<AdminBooking> listBookings()
+        {
+            var db = new WAPPContext();
+            var list = db.Booking.Select(s => new AdminBooking()
+            {
+                ContactName = s.Customers.FirstOrDefault().FirstName + " " + s.Customers.FirstOrDefault().LastName,
+                cID = s.Customers.FirstOrDefault().ID,
+                ID = s.ID,
+                RTString = s.RoundTrip.ToString(),
+                Travelers = s.Travelers,
+                TravelDate = s.Flights.FirstOrDefault().TravelDate
+            }).ToList();
+            foreach (var i in list)
+            {
+                String t = i.RTString;
+                i.RTString = roundtripToString(t);
+            }
+            return list;
+        }
+
+        private String roundtripToString(String b)
+        {
+            String r = "";
+            if(b.Equals("True")) {
+                r = "Tur/Retur";
+            }
+            else
+            {
+                r = "En vei";
+            }
+            return r;
         }
     }
 }

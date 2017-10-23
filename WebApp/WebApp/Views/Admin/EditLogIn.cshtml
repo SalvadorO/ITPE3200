@@ -1,10 +1,10 @@
 ﻿@model WebApp.Model.EmployeeEditLogin
 
 @{
-    ViewBag.Title = "EditLogIn";
+    ViewBag.Title = "Endre login";
 }
 
-<h2>EditLogIn</h2>
+<h2>Endre Brukernavn og Passord</h2>
 
 @using (Html.BeginForm())
 {
@@ -33,7 +33,6 @@
                 }
             </div>
         }
-        <h4>EmployeeEditLogin</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

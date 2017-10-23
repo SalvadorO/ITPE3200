@@ -9,8 +9,10 @@ namespace WebApp.Model
 {
     public class EmployeeLogin
     {
+        [Display(Name = "Brukernavn")]
         [Required(ErrorMessage = "Brukernavn må oppgis")]
         public string Username { get; set; }
+        [Display(Name = "Passord")]
         [Required(ErrorMessage = "Passord må oppgis")]
         public string Password { get; set; }
     }

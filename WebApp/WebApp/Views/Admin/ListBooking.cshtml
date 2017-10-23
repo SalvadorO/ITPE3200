@@ -1,0 +1,100 @@
+﻿@model List<WebApp.Model.AdminBooking>
+
+@{
+    ViewBag.Title = "Bookinger";
+}
+<div id="partialListBooking">
+    <a href="@Url.Action("MainPage", "Admin", new { area="" })" class="btn btn-default" title="Hjem">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="font-size:15px"></span>
+        Tilbake
+    </a>
+    <br />
+    <div style="text-align:right;width:100%">
+        <input type="button" value="Alle Bookinger" class="btn btn-default" id="allBook" />
+    </div>
+    <h2>Bookinger</h2>
+    <br />
+    <input type="text" placeholder="Booking-ID" id="searchBookingText" />
+    <input type="button" value="Søk" class="btn btn-primary" id="searchBooking" />
+    <br /><br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].RTString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Travelers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].TravelDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ReturnDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RTString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Travelers)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TravelDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                </td>
+                <td>
+                    <a href="@Url.Action("CustomerBooking", "Admin", new { id = item.cID })" class="btn btn-default" title="Flyvninger">
+                        <span class="glyphicon glyphicon-plane" aria-hidden="true" style="font-size:15px"></span>
+                    </a> |
+                    <a href="@Url.Action("DetailCustomer", "Admin", new { id = item.cID })" class="btn btn-default" title="Detaljer">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="font-size:15px"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#searchBooking").click(function () {
+            $.ajax({
+                url: "/Admin/SearchBooking",
+                data: { id: $("#searchBookingText").val() },
+                success: function (result) {
+                    if (result == "") {
+                        $("#partialListBooking").html("<h3>Ingen treff!</h3>");
+                    } else {
+                        $("#partialListBooking").html(result);
+                    }
+                },
+                error: function () {
+                    $("#partialListBooking").html("");
+                }
+            });
+        });
+
+        $("#allBook").click(function () {
+            window.location.reload();
+        });
+    });
+</script>

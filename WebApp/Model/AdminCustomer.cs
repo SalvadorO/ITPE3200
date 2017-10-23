@@ -37,5 +37,8 @@ namespace WebApp.Model
         [Display(Name = "Poststed")]
         [Required(ErrorMessage = "Poststed må oppgis")]
         public String City { get; set; }
+
+        [Display(Name = "Kontaktperson")]
+        public bool ContactPerson { get; set; }
     }
 }

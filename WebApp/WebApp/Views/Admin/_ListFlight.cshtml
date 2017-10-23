@@ -70,6 +70,9 @@
         <td>
             <a href="@Url.Action("EditFlight", "Admin", new { id=item.ID })" class="btn btn-default" title="Rediger">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
+            </a> | 
+            <a href="@Url.Action("Passengers", "Admin", new { id=item.ID })" class="btn btn-default" title="Passasjerer">
+                <span class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:15px"></span>
             </a>
         </td>
     </tr>

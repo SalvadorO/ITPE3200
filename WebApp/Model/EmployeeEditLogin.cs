@@ -13,11 +13,11 @@ namespace WebApp.Model
         [Required(ErrorMessage = "Brukernavn må oppgis")]
         public string Username { get; set; }
 
-        [Display(Name = "Gammel passord")]
+        [Display(Name = "Gammelt passord")]
         [Required(ErrorMessage = "Gammelt passord må oppgis")]
         public string OldPassword { get; set; }
 
-        [Display(Name = "Passord")]
+        [Display(Name = "Nytt Passord")]
         [Required(ErrorMessage = "Passord må oppgis")]
         public string Password { get; set; }
 

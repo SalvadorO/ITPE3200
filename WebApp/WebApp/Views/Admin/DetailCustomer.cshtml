@@ -1,9 +1,18 @@
 ﻿@model List<WebApp.Model.AdminCustomer>
 
 @{
-    ViewBag.Title = "DetailCustomer";
+    ViewBag.Title = "Detaljer";
 }
-
+<div style="text-align: right; width:100% ">
+        <button type="button" title="Slett booking" class="btn btn-danger" data-toggle="modal" data-target="#delete-Booking-Modal">
+        Slett Booking
+        <span class="glyphicon glyphicon-trash" aria-hidden="true" style="font-size:15px"></span>
+    </button>
+</div>
+<button type="button" class="btn btn-default" id="avbrytKnapp" title="Tilbake">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    Tilbake
+</button>
 <div>
     <h4>Kontaktperson</h4>
     <hr />
@@ -67,12 +76,34 @@
         <dd>
             <a href="@Url.Action("EditCustomer", "Admin", new { id=Model[0].ID })" class="btn btn-primary" title="Rediger">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
-            </a> |
-            <a href="@Url.Action("DeleteCustomer", "Admin", new { id=Model[0].ID })" class="btn btn-danger" title="Slett">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true" style="font-size:15px"></span>
             </a>
         </dd>
     </dl>
+</div>
+
+<div class="modal fade" id="delete-Booking-Modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Slette Booking?</h3>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("DeleteCustomer", "Admin", new { id = Model[0].ID }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Slett booking" class="btn btn-danger" />
+                        <input type="button" value="Lukk" class="btn btn-default" data-dismiss="modal">
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
 @for (int i = 1; i < Model.Count; i++)
@@ -144,10 +175,40 @@
                 <a href="@Url.Action("EditCustomer", "Admin", new { id=Model[i].ID })" class="btn btn-primary" title="Rediger">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
                 </a> |
-                <a href="@Url.Action("DeleteCustomer", "Admin", new { id=Model[i].ID })" class="btn btn-danger" title="Slett">
+                <button type="button" title="Slett medreisende" class="btn btn-danger" data-toggle="modal" data-target="#delete-Customer-Modal">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true" style="font-size:15px"></span>
-                </a>
+                </button>
             </dd>
         </dl>
     </div>
+    <div class="modal fade" id="delete-Customer-Modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Slette medreisende?</h3>
+                </div>
+                <div class="modal-body">
+                    Slette @Model[i].FirstName @Model[i].LastName ?
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm("DeleteCustomer", "Admin", new { id = Model[i].ID }))
+                {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Slett" class="btn btn-danger" />
+                            <input type="button" value="Lukk" class="btn btn-default" data-dismiss="modal">
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 }
+<script type="text/javascript">
+    $(document).on('click', '#avbrytKnapp', function () {
+        history.go(-1);
+    });
+</script>

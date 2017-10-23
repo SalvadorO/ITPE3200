@@ -1,10 +1,14 @@
 ﻿@model List<WebApp.Model.AdminAirport>
 
 @{
-    ViewBag.Title = "ListAirport";
+    ViewBag.Title = "Flyplasser";
 }
-
-<h2>ListAirport</h2>
+<a href="@Url.Action("MainPage", "Admin", new { area="" })" class="btn btn-default" title="Hjem">
+    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="font-size:15px"></span>
+    Tilbake
+</a>
+<br />
+<h2>Flyplasser</h2>
 
 <p>
     @Html.ActionLink("Ny flyplass", "NewAirport", "Admin", new { emtpy = "" }, new { @class = "btn btn-primary" })

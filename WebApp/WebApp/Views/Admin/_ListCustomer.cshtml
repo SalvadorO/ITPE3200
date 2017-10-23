@@ -25,16 +25,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
+        
         <td>
-            <a href="@Url.Action("EditCustomer", "Admin", new { id=item.ID })" class="btn btn-primary" title="Rediger">
+            @if (item.ContactPerson)
+            {
+            <a href="@Url.Action("EditCustomer", "Admin", new { id = item.ID })" class="btn btn-primary" title="Rediger">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
-            </a> |
-            <a href="@Url.Action("CustomerBooking", "Admin", new { id=item.ID })" class="btn btn-default" title="Bookinger">
+            </a>
+            <a href = "@Url.Action("CustomerBooking", "Admin", new { id = item.ID })" class="btn btn-default" title="Bookinger">
                 <span class="glyphicon glyphicon-plane" aria-hidden="true" style="font-size:15px"></span>
-            </a> |
-            <a href="@Url.Action("DetailCustomer", "Admin", new { id=item.ID })" class="btn btn-default" title="Detaljer">
+            </a>
+            <a href = "@Url.Action("DetailCustomer", "Admin", new { id = item.ID })" class="btn btn-default" title="Detaljer">
                 <span class="glyphicon glyphicon-th-list" aria-hidden="true" style="font-size:15px"></span>
             </a>
+            }
         </td>
     </tr>
 }

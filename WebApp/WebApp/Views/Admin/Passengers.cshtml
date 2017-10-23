@@ -1,18 +1,18 @@
-﻿
+﻿@model List<WebApp.Model.AdminCustomer>
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = "Passasjerer";
 }
-
-<h2>Oops..Noe gikk galt :(</h2>
-
 <button type="button" class="btn btn-default" id="avbrytKnapp" title="Tilbake">
     <span class="glyphicon glyphicon-arrow-left"></span>
     Tilbake
 </button>
+<h2>Passasjerer</h2>
+<div>
+    @{Html.RenderPartial("_ListCustomer", Model);}
+</div>
 
 <script type="text/javascript">
     $(document).on('click', '#avbrytKnapp', function () {
         history.go(-1);
     });
 </script>
-

@@ -83,6 +83,15 @@ namespace WebApp.BLL
             list.Add(item);
             return list;
         }
+
+        public List<AdminBooking> searchBooking(int id)
+        {
+            var list = new List<AdminBooking>();
+            var item = new AdminDAL().searchBooking(id);
+            if (item == null) return null;
+            list.Add(item);
+            return list;
+        }
         public List<AdminAirplane> listAirplanes()
         {
             return new AdminDAL().listAirplanes();
@@ -159,6 +168,11 @@ namespace WebApp.BLL
         {
             return new AdminDAL().editCustomer(id,inCust);
         }
+
+        public bool deleteCustomer(int id)
+        {
+            return new AdminDAL().deleteCustomer(id);
+        }
         public List<AdminViewFlight> customerBooking(int id)
         {
             return new AdminDAL().customerBooking(id);
@@ -167,6 +181,16 @@ namespace WebApp.BLL
         public List<AdminCustomer> detailCustomer(int id)
         {
             return new AdminDAL().detailCustomer(id);
+        }
+
+        public List<AdminCustomer> getPassengers(int id)
+        {
+            return new AdminDAL().getPassengers(id);
+        }
+
+        public List<AdminBooking> listBookings()
+        {
+            return new AdminDAL().listBookings();
         }
     }
 }
