@@ -202,5 +202,10 @@ namespace WebApp.BLL
         {
             return new AdminDAL().listBookings();
         }
+
+        public bool changeFlight(int oldflight, int newflight, int bookingID)
+        {
+            return new AdminDAL().changeFlight(oldflight,newflight,bookingID);
+        }
     }
 }

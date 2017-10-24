@@ -302,7 +302,8 @@ namespace WebApp.DAL
                 ClassType = e.ClassType,
                 Airplane = e.Airplane.Name,
                 Seats = e.Seats,
-                Price = e.Price
+                Price = e.Price,
+                BookingID = id
             }).ToList();
 
             return list;
@@ -846,6 +847,29 @@ namespace WebApp.DAL
                 r = "En vei";
             }
             return r;
+        }
+
+        public bool changeFlight(int oldflight, int newflight, int bookingID)
+        {
+            var db = new  WAPPContext();
+            try
+            {
+                var booking = db.Booking.Find(bookingID);
+                var old = db.Flight.Find(oldflight);
+                old.Seats += booking.Travelers;
+                var nju = db.Flight.Find(newflight);
+                nju.Seats -= booking.Travelers;
+
+                var oldindex = booking.Flights.IndexOf(old);
+                booking.Flights.Remove(old);
+                booking.Flights.Insert(oldindex, nju);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception error)
+            {
+                return false;
+            }
         }
     }
 }

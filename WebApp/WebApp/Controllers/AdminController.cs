@@ -223,6 +223,10 @@ namespace WebApp.Controllers
 
         public ActionResult CustomerBooking(int id)
         {
+            if(TempData["ChangeFlight"] != null)
+            {
+                ViewBag.ChangeFlight = (bool)TempData["ChangeFlight"];
+            }
             return View(new AdminBLL().customerBooking(id));
         }
 
@@ -261,6 +265,18 @@ namespace WebApp.Controllers
         public ActionResult SearchChangeFlights(SearchFlight search)
         {
             return PartialView("_ListChangeFlight", new AdminBLL().searchFlight(search));
+        }
+
+        public void ChangeFlight(int oldflight, int newflight, int bookingID)
+        {
+             if(new AdminBLL().changeFlight(oldflight, newflight, bookingID))
+            {
+                 TempData["ChangeFlight"]= true;
+            }
+            else
+            {
+                TempData["ChangeFlight"] = false;
+            }
         }
 
         public ActionResult SearchCustomers(int id)

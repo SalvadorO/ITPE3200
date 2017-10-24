@@ -12,7 +12,19 @@
 <div style="text-align:right;width:100%">
     <input type="button" value="Endre flyvninger" class="btn btn-default" id="editFlight" />
 </div>
-
+<br />
+@if (ViewBag.ChangeFlight != null)
+{
+    <div>
+        @if (ViewBag.ChangeFlight)
+        {
+            <p class="alert alert-success">Booking endret!</p>
+        }
+        else if (!ViewBag.ChangeFlight)
+        {<p class="alert alert-danger">Det skjedde noe feil...</p> }
+    </div>
+}
+<input type="hidden" value="@Model[0].BookingID" id="bookingID" />
 <h2>Flyvninger</h2>
 
 <table class="table">
@@ -99,15 +111,21 @@
 </div>
 <br />
 
-    <div>
-        @{ Html.RenderAction("SearchChangeFlights", "Admin");}
+    <div id="partialview">
     </div>
-
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
 <script type="text/javascript">
-
     $(document).ready(function () {
         $("#editFlight").click(function () {
             $(".editflightdiv").fadeIn("slow");
+        });
+
+        $(function () {
+            $("#Date").datetimepicker({
+                viewMode: "days",
+                format: "DD/MM/YYYY"
+            });
         });
     });
 

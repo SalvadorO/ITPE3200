@@ -29,5 +29,6 @@ namespace WebApp.Model
         public int Seats { get; set; }
         [Display(Name = "Pris")]
         public int Price { get; set; }
+        public int BookingID { get; set; }
     }
 }
