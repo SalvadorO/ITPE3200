@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminDAL.cs" />
+    <Compile Include="AdminRepositoryStub.cs" />
+    <Compile Include="IAdminRepository.cs" />
     <Compile Include="WAPPContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

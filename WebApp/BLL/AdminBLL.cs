@@ -5,41 +5,51 @@ using WebApp.Model;
 
 namespace WebApp.BLL
 {
-    public class AdminBLL
+    public class AdminBLL : IAdminBLL
     {
+        private IAdminRepository _repository;
+
+        public AdminBLL()
+        {
+            _repository = new AdminDAL();
+        }
+
+        public AdminBLL(IAdminRepository stub)
+        {
+            _repository = stub;
+        }
 
         public bool EmpExists(EmployeeLogin inEmp)
         {
-            return new AdminDAL().getShadow(inEmp);
+            return  new AdminDAL().getShadow(inEmp);
         }
-        public bool insertEmp(EmployeeRegister inEmp)
+        public bool insertEmployee(EmployeeRegister inEmp)
         {
-            return new AdminDAL().insertEmployee(inEmp);
+            return _repository.insertEmployee(inEmp);
         }
         public bool editEmployee(int id, Employee inEmp)
         {
-            return new AdminDAL().editEmployee(id,inEmp);
+            return _repository.editEmployee(id,inEmp);
         }
-
         public bool deleteEmployee(int id)
         {
-            return new AdminDAL().deleteEmployee(id);
+            return _repository.deleteEmployee(id);
         }
         public List<Employee> listEmployee()
         {
-            return new AdminDAL().listEmployee();
+            return _repository.listEmployee();
         }
         public Employee oneEmployee(int id)
         {
-            return new AdminDAL().oneEmployee(id);
+            return _repository.oneEmployee(id);
         }
         public int getUsernameID(String uname)
         {
-            return new AdminDAL().getUsernameID(uname);
+            return _repository.getUsernameID(uname);
         }
         public bool usernameExist(String uname)
         {
-            return new AdminDAL().usernameExist(uname);
+            return _repository.usernameExist(uname);
         }
         public String getUsername(int id)
         {
@@ -156,22 +166,22 @@ namespace WebApp.BLL
 
         public List<AdminCustomer> listContactPersons()
         {
-            return new AdminDAL().listContactPersons();
+            return _repository.listContactPersons();
         }
 
         public AdminCustomer oneCustomer(int id)
         {
-            return new AdminDAL().oneCustomer(id);
+            return _repository.oneCustomer(id);
         }
 
         public bool editCustomer(int id, AdminCustomer inCust)
         {
-            return new AdminDAL().editCustomer(id,inCust);
+            return _repository.editCustomer(id,inCust);
         }
 
         public bool deleteCustomer(int id)
         {
-            return new AdminDAL().deleteCustomer(id);
+            return _repository.deleteCustomer(id);
         }
         public List<AdminViewFlight> customerBooking(int id)
         {
@@ -180,7 +190,7 @@ namespace WebApp.BLL
 
         public List<AdminCustomer> detailCustomer(int id)
         {
-            return new AdminDAL().detailCustomer(id);
+            return _repository.detailCustomer(id);
         }
 
         public List<AdminCustomer> getPassengers(int id)

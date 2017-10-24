@@ -7,7 +7,7 @@ using WebApp.Model;
 
 namespace WebApp.DAL
 {
-    public class AdminDAL
+    public class AdminDAL : IAdminRepository
     {
         public bool getShadow(EmployeeLogin inEmp)
         {

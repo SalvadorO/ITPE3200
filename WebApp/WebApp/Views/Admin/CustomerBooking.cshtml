@@ -95,14 +95,14 @@
 <br /><br />
 
 <div class="editflightdiv" style="display:none">
-    @{  Html.RenderPartial("_SearchFlight", new WebApp.Model.SearchFlight());}
+    @{  Html.RenderPartial("_SearchChangeFlight", new WebApp.Model.SearchFlight());}
 </div>
 <br />
-@*
-    <div id="partialListFlight">
-        @{ Html.RenderAction("SearchFlights", "Admin");}
+
+    <div>
+        @{ Html.RenderAction("SearchChangeFlights", "Admin");}
     </div>
-*@
+
 <script type="text/javascript">
 
     $(document).ready(function () {

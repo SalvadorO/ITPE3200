@@ -1,0 +1,75 @@
+﻿@model List<WebApp.Model.AdminFlight>
+
+<p>
+    <h1>NY PARTLIST</h1>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].DestinationTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Departure)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Destination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].TravelDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].ClassType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Airplane)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Seats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DestinationTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Departure)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TravelDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Airplane)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
