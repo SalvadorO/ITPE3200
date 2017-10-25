@@ -410,7 +410,8 @@ namespace WebApp.DAL
 
         public String getUsername(int id)
         {
-            return new WAPPContext().Shadow.Where(w => w.Employee_ID == id).Select(s => s.Username).FirstOrDefault();
+            return new WAPPContext().Shadow.Where(w => w.Employee_ID == id)
+                .Select(s => s.Username).FirstOrDefault();
         }
 
         public bool correctOldPassword(int id, String op)

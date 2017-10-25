@@ -21,7 +21,7 @@ namespace WebApp.BLL
 
         public bool EmpExists(EmployeeLogin inEmp)
         {
-            return  new AdminDAL().getShadow(inEmp);
+            return  _repository.getShadow(inEmp);
         }
         public bool insertEmployee(EmployeeRegister inEmp)
         {
@@ -53,33 +53,33 @@ namespace WebApp.BLL
         }
         public String getUsername(int id)
         {
-            return new AdminDAL().getUsername(id);
+            return _repository.getUsername(id);
         }
         public bool correctOldPassword(int id, String op)
         {
-            return new AdminDAL().correctOldPassword(id,op);
+            return _repository.correctOldPassword(id,op);
         }
         public bool editEmployeeLogin(int id, EmployeeEditLogin inEEL)
         {
-            return new AdminDAL().editEmployeeLogin(id,inEEL);
+            return _repository.editEmployeeLogin(id,inEEL);
         }
         public List<AdminViewFlight> listAllFlights()
         {
-            return new AdminDAL().listAllFlights();
+            return _repository.listAllFlights();
         }
         public AdminFlight oneFlight(int id)
         {
-            return new AdminDAL().oneFlight(id);
+            return _repository.oneFlight(id);
         }
         public List<AdminViewFlight> searchFlight(SearchFlight search)
         {
-            return new AdminDAL().searchFlight(search);
+            return _repository.searchFlight(search);
         }
         public List<AdminCustomer> searchCustomer(int id)
         {
             
             var list = new List<AdminCustomer>();
-            var item = new AdminDAL().searchCustomer(id);
+            var item = _repository.searchCustomer(id);
             if (item == null) return null;
             list.Add(item);
             return list;
@@ -88,7 +88,7 @@ namespace WebApp.BLL
         public List<Employee> searchEmployee(String uname)
         {
             var list = new List<Employee>();
-            var item = new AdminDAL().searchEmployee(uname);
+            var item = _repository.searchEmployee(uname);
             if (item == null) return null;
             list.Add(item);
             return list;
@@ -97,71 +97,71 @@ namespace WebApp.BLL
         public List<AdminBooking> searchBooking(int id)
         {
             var list = new List<AdminBooking>();
-            var item = new AdminDAL().searchBooking(id);
+            var item = _repository.searchBooking(id);
             if (item == null) return null;
             list.Add(item);
             return list;
         }
         public List<AdminAirplane> listAirplanes()
         {
-            return new AdminDAL().listAirplanes();
+            return _repository.listAirplanes();
         }
         public bool insertFlight(AdminFlight inFlight)
         {
-            return new AdminDAL().insertFlight(inFlight);
+            return _repository.insertFlight(inFlight);
         }
         public bool editFlight(int id, AdminFlight ef)
         {
-            return new AdminDAL().editFlight(id, ef);
+            return _repository.editFlight(id, ef);
         }
         public bool deleteFlight(int id)
         {
-            return new AdminDAL().deleteFlight(id);
+            return _repository.deleteFlight(id);
         }
         public bool insertAirplane(AdminAirplane inAir)
         {
-            return new AdminDAL().insertAirplane(inAir);
+            return _repository.insertAirplane(inAir);
         }
         public bool editAirplane(int id, AdminAirplane inAir)
         {
-            return new AdminDAL().editAirplane(id, inAir);
+            return _repository.editAirplane(id, inAir);
         }
         public List<AdminAirport> listAirports()
         {
-            return new AdminDAL().listAirports();
+            return _repository.listAirports();
         }
         public bool insertAirport(AdminAirport inAir)
         {
-            return new AdminDAL().insertAirport(inAir);
+            return _repository.insertAirport(inAir);
         }
         public bool editAirPlane(int id, AdminAirplane inAir)
         {
-            return new AdminDAL().editAirplane(id, inAir);
+            return _repository.editAirplane(id, inAir);
         }
-        public bool editAirPort(int id, AdminAirport inAir)
+        public bool editAirport(int id, AdminAirport inAir)
         {
-            return new AdminDAL().editAirport(id, inAir);
+            return _repository.editAirport(id, inAir);
         }
         public AdminAirplane oneAirplane(int id)
         {
-            return new AdminDAL().oneAirplane(id);
+            return _repository.oneAirplane(id);
         }
         public AdminAirport oneAirport(int id)
         {
-            return new AdminDAL().oneAirport(id);
+            return _repository.oneAirport(id);
         }
         public bool deleteAirplane(int id)
         {
-            return new AdminDAL().deleteAirplane(id);
+            return _repository.deleteAirplane(id);
         }
         public bool deleteAirport(int id)
         {
-            return new AdminDAL().deleteAirport(id);
+            return _repository.deleteAirport(id);
         }
 
         public List<int> getInfo()
         {
-            return new AdminDAL().getInfo();
+            return _repository.getInfo();
         }
 
         public List<AdminCustomer> listContactPersons()
@@ -185,7 +185,7 @@ namespace WebApp.BLL
         }
         public List<AdminViewFlight> customerBooking(int id)
         {
-            return new AdminDAL().customerBooking(id);
+            return _repository.customerBooking(id);
         }
 
         public List<AdminCustomer> detailCustomer(int id)
@@ -195,17 +195,17 @@ namespace WebApp.BLL
 
         public List<AdminCustomer> getPassengers(int id)
         {
-            return new AdminDAL().getPassengers(id);
+            return _repository.getPassengers(id);
         }
 
         public List<AdminBooking> listBookings()
         {
-            return new AdminDAL().listBookings();
+            return _repository.listBookings();
         }
 
         public bool changeFlight(int oldflight, int newflight, int bookingID)
         {
-            return new AdminDAL().changeFlight(oldflight,newflight,bookingID);
+            return _repository.changeFlight(oldflight,newflight,bookingID);
         }
     }
 }

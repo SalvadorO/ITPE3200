@@ -38,23 +38,33 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(EmployeeLogin loggedIn)
         {
-            if (new AdminBLL().EmpExists(loggedIn))
+            if (ModelState.IsValid)
             {
-                Session["LoggedIn"] = true;
-                ViewBag.LoggedIn = true;
-                Session["Username"] = loggedIn.Username;
-                return RedirectToAction("MainPage");
+                if (_AdminBll.EmpExists(loggedIn))
+                {
+                    if (!thisisatest)
+                    {
+                        Session["LoggedIn"] = true;
+                        ViewBag.LoggedIn = true;
+                        Session["Username"] = loggedIn.Username;
+                    }
+                    return RedirectToAction("MainPage");
+                }
+                else
+                {
+                    ViewBag.LoggedIn = false;
+                    return View();
+                }
             }
             else
             {
-                ViewBag.LoggedIn = false;
-                return View();
+                return RedirectToAction("Error");
             }
         }
 
         public ActionResult MainPage()
         {
-            return View(new AdminBLL().getInfo());
+            return View(_AdminBll.getInfo());
         }
 
         public ActionResult Register()
@@ -81,7 +91,6 @@ namespace WebApp.Controllers
                     return View();
                 }
             }
-
             return RedirectToAction("Error");
         }
 
@@ -97,19 +106,19 @@ namespace WebApp.Controllers
 
         public ActionResult SearchEmployee(String uname)
         {
-            var f = new AdminBLL().searchEmployee(uname);
+            var f = _AdminBll.searchEmployee(uname);
             if (f == null) return null;
             return PartialView("_ListEmployee", f);
         }
         public ActionResult SearchBooking(int id)
         {
-            var f = new AdminBLL().searchBooking(id);
+            var f = _AdminBll.searchBooking(id);
             if (f == null) return null;
             return PartialView("ListBooking", f);
         }
         public ActionResult DetailEmployee(int id)
         {
-            return View(new AdminBLL().oneEmployee(id));
+            return View(_AdminBll.oneEmployee(id));
         }
 
         public ActionResult EditEmployee(int id)
@@ -155,31 +164,38 @@ namespace WebApp.Controllers
         public ActionResult EditLogIn(int id)
         {
             var EEL = new EmployeeEditLogin();
-            EEL.Username = new AdminBLL().getUsername(id);
+            EEL.Username = _AdminBll.getUsername(id);
             return View(EEL);
         }
         [HttpPost]
         public ActionResult EditLogIn(int id, EmployeeEditLogin inEEL)
         {
-            var bll = new AdminBLL();
-            if(bll.correctOldPassword(id, inEEL.OldPassword))
+            if (ModelState.IsValid)
             {
-                if (bll.editEmployeeLogin(id, inEEL))
+                var bll = _AdminBll;
+                if (bll.correctOldPassword(id, inEEL.OldPassword))
                 {
-                    ViewBag.EditLogin = true;
-                    return View();
+                    if (bll.editEmployeeLogin(id, inEEL))
+                    {
+                        ViewBag.EditLogin = true;
+                        return View();
+                    }
+                    else
+                    {
+                        ViewBag.EditLogin = false;
+                        return View();
+                    }
                 }
                 else
                 {
-                    ViewBag.EditLogin = false;
-                    return View();
+                    ViewBag.OPOK = false;
                 }
+                return View();
             }
             else
             {
-                ViewBag.OPOK = false;
+                return RedirectToAction("Error");
             }
-            return View();
         }
 
         public ActionResult ListCustomer()
@@ -227,7 +243,7 @@ namespace WebApp.Controllers
             {
                 ViewBag.ChangeFlight = (bool)TempData["ChangeFlight"];
             }
-            return View(new AdminBLL().customerBooking(id));
+            return View(_AdminBll.customerBooking(id));
         }
 
         public ActionResult DetailCustomer(int id)
@@ -237,7 +253,7 @@ namespace WebApp.Controllers
 
         public ActionResult ListBooking()
         {
-            return View(new AdminBLL().listBookings());
+            return View(_AdminBll.listBookings());
         }
 
         public ActionResult ListFlight()
@@ -255,21 +271,21 @@ namespace WebApp.Controllers
         
         public ActionResult ListAllFlights()
         {
-            return PartialView("_ListFlight", new AdminBLL().listAllFlights());
+            return PartialView("_ListFlight", _AdminBll.listAllFlights());
         }
         public ActionResult SearchFlights(SearchFlight search)
         {
-            return PartialView("_ListFlight", new AdminBLL().searchFlight(search));
+            return PartialView("_ListFlight", _AdminBll.searchFlight(search));
         }
 
         public ActionResult SearchChangeFlights(SearchFlight search)
         {
-            return PartialView("_ListChangeFlight", new AdminBLL().searchFlight(search));
+            return PartialView("_ListChangeFlight", _AdminBll.searchFlight(search));
         }
 
         public void ChangeFlight(int oldflight, int newflight, int bookingID)
         {
-             if(new AdminBLL().changeFlight(oldflight, newflight, bookingID))
+             if(_AdminBll.changeFlight(oldflight, newflight, bookingID))
             {
                  TempData["ChangeFlight"]= true;
             }
@@ -281,17 +297,15 @@ namespace WebApp.Controllers
 
         public ActionResult SearchCustomers(int id)
         {
-            var f = new AdminBLL().searchCustomer(id);
+            var f = _AdminBll.searchCustomer(id);
             if (f == null) return null;
             return PartialView("_ListCustomer", f);
         }
 
-        
-
         public ActionResult NewFlight()
         {
             var f = new AdminFlight();
-            var bll = new AdminBLL();
+            var bll = _AdminBll;
             f.Airports = bll.listAirports();
             f.Airplanes = bll.listAirplanes();
             f.Airports.Insert(0,null);
@@ -304,7 +318,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(new AdminBLL().insertFlight(inFlight))
+                if(_AdminBll.insertFlight(inFlight))
                 {
                     TempData["FlightInsert"] = true;
                     return RedirectToAction("ListFlight");
@@ -315,7 +329,7 @@ namespace WebApp.Controllers
 
         public ActionResult EditFlight(int id)
         {
-            var bll = new AdminBLL();
+            var bll = _AdminBll;
             var f = bll.oneFlight(id);
             f.Airplanes = bll.listAirplanes();
             f.Airports = bll.listAirports();
@@ -326,7 +340,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (new AdminBLL().editFlight(id, inFlight)) {
+                if (_AdminBll.editFlight(id, inFlight)) {
                     TempData["FlightEdit"] = true;
                     return RedirectToAction("ListFlight");
                 }
@@ -336,7 +350,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult DeleteFlight(int id)
         {
-            if (new AdminBLL().deleteFlight(id))
+            if (_AdminBll.deleteFlight(id))
             {
                 return RedirectToAction("ListFlight");
             }
@@ -345,12 +359,12 @@ namespace WebApp.Controllers
 
         public ActionResult Passengers(int id)
         {
-            return View(new AdminBLL().getPassengers(id));
+            return View(_AdminBll.getPassengers(id));
         }
 
         public ActionResult ListAirplane()
         {
-            return View(new AdminBLL().listAirplanes());
+            return View(_AdminBll.listAirplanes());
         }
 
         public ActionResult NewAirplane()
@@ -362,9 +376,9 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(new AdminBLL().insertAirplane(inAir))
+                if(_AdminBll.insertAirplane(inAir))
                 {
-                    return RedirectToAction("ListAirPlane");
+                    return RedirectToAction("ListAirplane");
                 }
             }
             return RedirectToAction("Error");
@@ -372,14 +386,14 @@ namespace WebApp.Controllers
 
         public ActionResult EditAirplane(int id)
         {
-            return View(new AdminBLL().oneAirplane(id));
+            return View(_AdminBll.oneAirplane(id));
         }
         [HttpPost]
         public ActionResult EditAirplane(int id, AdminAirplane inAir)
         {
             if (ModelState.IsValid)
             {
-                if (new AdminBLL().editAirplane(id, inAir))
+                if (_AdminBll.editAirplane(id, inAir))
                 {
                     return RedirectToAction("ListAirplane");
                 }
@@ -390,7 +404,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult DeleteAirplane(int id)
         {
-            if(new AdminBLL().deleteAirplane(id))
+            if(_AdminBll.deleteAirplane(id))
             {
                 return RedirectToAction("ListAirplane");
             }
@@ -399,7 +413,7 @@ namespace WebApp.Controllers
 
         public ActionResult ListAirport()
         {
-            return View(new AdminBLL().listAirports());
+            return View(_AdminBll.listAirports());
         }
 
         public ActionResult NewAirport()
@@ -411,9 +425,9 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (new AdminBLL().insertAirport(inAir))
+                if (_AdminBll.insertAirport(inAir))
                 {
-                    return RedirectToAction("ListAirPort");
+                    return RedirectToAction("ListAirport");
                 }
             }
             return RedirectToAction("Error");
@@ -421,14 +435,14 @@ namespace WebApp.Controllers
 
         public ActionResult EditAirport(int id)
         {
-            return View(new AdminBLL().oneAirport(id));
+            return View(_AdminBll.oneAirport(id));
         }
         [HttpPost]
         public ActionResult EditAirport(int id, AdminAirport inAir)
         {
             if (ModelState.IsValid)
             {
-                if (new AdminBLL().editAirPort(id,inAir))
+                if (_AdminBll.editAirport(id,inAir))
                 {
                     return RedirectToAction("ListAirport");
                 }
@@ -439,7 +453,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult DeleteAirport(int id)
         {
-            if (new AdminBLL().deleteAirport(id))
+            if (_AdminBll.deleteAirport(id))
             {
                 return RedirectToAction("ListAirport");
             }

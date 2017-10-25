@@ -85,7 +85,7 @@
                     url: "/Admin/ChangeFlight",
                     data: { oldflight: $("input[name=flightradio]:checked").val(), newflight: $(this).val(), bookingID: $("#bookingID").val() },
                     success: function (result) {
-                        window.location.href = "/Admin/CustomerBooking/" + $("#bookingID").val()
+                        window.location.reload();
                     }
                 });
             }
