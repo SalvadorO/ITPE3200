@@ -239,9 +239,9 @@ namespace UnitTest
                 City = "Oslo",
                 Username = "Olanord"
             };
-            var result = (ViewResult)controller.Register(inEmp);
+            var result = (RedirectToRouteResult)controller.Register(inEmp);
 
-            Assert.AreEqual(result.ViewName, "");
+            Assert.AreEqual(result.RouteValues.Values.First(), "ListEmployee");
         }
         [TestMethod]
         public void Insert_Employee_Post_Model_Error()

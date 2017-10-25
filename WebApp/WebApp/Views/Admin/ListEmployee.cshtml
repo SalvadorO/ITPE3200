@@ -6,10 +6,21 @@
     Tilbake
 </a>
 <br />
+@if (ViewBag.NewEmployee != null)
+{
+    <br />
+    <div>
+        @if (ViewBag.NewEmployee)
+        {
+            <p class="alert alert-success">Ny ansatt lagt til!</p>
+        }
+    </div>
+    <br />
+}
 <div style="text-align:right;width:100%">
     <input type="button" value="Alle ansatte" class="btn btn-default" id="allEmployee" />
     @Html.ActionLink("Ny ansatt", "Register", "Admin", new { @class = "btn btn-primary" })
-    </div>
+</div>
 <h2>Ansatte</h2>
 <br />
 <input type="text" placeholder="Brukernavn" id="searchEmployeeText" />

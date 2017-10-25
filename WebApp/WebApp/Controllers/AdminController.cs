@@ -109,7 +109,8 @@ namespace WebApp.Controllers
                 }
                 if(bll.insertEmployee(inEmp))
                 {
-                    return View();
+                    TempData["NewEmployee"] = true;
+                    return RedirectToAction("ListEmployee");
                 }
             }
             return RedirectToAction("Error");
@@ -123,6 +124,10 @@ namespace WebApp.Controllers
                 {
                     return RedirectToAction("LogIn");
                 }
+            }
+            if (TempData["NewEmployee"] != null)
+            {
+                ViewBag.NewEmployee = (bool)TempData["NewEmployee"];
             }
             return View();
         }
