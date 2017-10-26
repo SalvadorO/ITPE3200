@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 namespace WebApp.DAL
 {
@@ -12,6 +14,90 @@ namespace WebApp.DAL
         {
             Database.CreateIfNotExists();
         }
+
+
+        public override int SaveChanges()
+        {
+
+            var changedList = ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified);
+            foreach(var x in changedList){
+                foreach (var y in GetChanges(x)) {
+                    ChangeLog.Add(y);
+                }
+            }
+            return base.SaveChanges();
+        }
+
+
+        private List<ChangeLog> GetChanges(DbEntityEntry dbEntry)
+        {
+            List<ChangeLog> result = new List<ChangeLog>();
+
+            DateTime changeTime = DateTime.UtcNow;
+
+            TableAttribute tableAttr = dbEntry.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), true).SingleOrDefault() as TableAttribute;
+
+            string tableName = tableAttr != null ? tableAttr.Name : dbEntry.Entity.GetType().Name;
+
+            string keyName = dbEntry.Entity.GetType().GetProperties().Single(p => p.GetCustomAttributes(typeof(KeyAttribute), false).Count() > 0).Name;
+
+            if (dbEntry.State == EntityState.Added)
+            {
+                foreach (string propertyName in dbEntry.CurrentValues.PropertyNames)
+                {
+                    result.Add(new ChangeLog()
+                    {
+                        DateChanged = changeTime,
+                        EntityType = "Add",
+                        TableName = tableName,
+                        RecordId = dbEntry.CurrentValues.GetValue<object>(keyName).ToString(),
+                        ColumnName = propertyName,
+                        NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString()
+                    }
+                            );
+                }
+            }
+            else if (dbEntry.State == EntityState.Deleted)
+            {
+                result.Add(new ChangeLog()
+                {
+                    DateChanged = changeTime,
+                    EntityType = "Delete",
+                    TableName = tableName,
+                    RecordId = dbEntry.OriginalValues.GetValue<object>(keyName).ToString(),
+                    ColumnName = "ALL",
+                    NewValue = dbEntry.OriginalValues.ToObject().ToString()
+                }
+                    );
+            }
+            else if (dbEntry.State == EntityState.Modified)
+            {
+                foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                {
+                    if (!object.Equals(dbEntry.OriginalValues.GetValue<object>(propertyName), dbEntry.CurrentValues.GetValue<object>(propertyName)))
+                    {
+                        result.Add(new ChangeLog()
+                        {
+                            EntityType = "Modified",
+                            DateChanged = changeTime,
+                            TableName  = tableName,
+                            RecordId = dbEntry.OriginalValues.GetValue<object>(keyName).ToString(),
+                            ColumnName = propertyName,
+                            OldValue = dbEntry.OriginalValues.GetValue<object>(propertyName) == null ? null : dbEntry.OriginalValues.GetValue<object>(propertyName).ToString(),
+                            NewValue = dbEntry.CurrentValues.GetValue<object>(propertyName) == null ? null : dbEntry.CurrentValues.GetValue<object>(propertyName).ToString()
+                        }
+                            );
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+
+
+
         public DbSet<City> City { get; set; }
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Booking> Booking { get; set; }
@@ -20,6 +106,21 @@ namespace WebApp.DAL
         public DbSet<Shadow_DB> Shadow { get; set; }
         public DbSet<Employee_DB> Employee { get; set; }
         public DbSet<Airplane> Airplanes { get; set; }
+        public DbSet<ChangeLog> ChangeLog { get; set; }
+    }
+
+
+    public class ChangeLog
+    {
+        [Key]
+        public int ID { get; set; }
+        public DateTime DateChanged { get; set; }
+        public String EntityType { get; set; }
+        public String TableName { get; set; }
+        public String RecordId { get; set; }
+        public String ColumnName { get; set; }
+        public String OldValue { get; set; }
+        public String NewValue { get; set; }
     }
 
     public class Shadow_DB

@@ -22,6 +22,21 @@ namespace WebApp.Models
         public DbSet<Shadow_DB> Shadow { get; set; }
         public DbSet<Employee_DB> Employee { get; set; }
         public DbSet<Airplane> Airplanes { get; set; }
+        public DbSet<ChangeLog> ChangeLog { get; set; }
+    }
+
+
+    public class ChangeLog
+    {
+        [Key]
+        public int ID { get; set; }
+        public DateTime DateChanged { get; set; }
+        public String EntityType { get; set; }
+        public String TableName { get; set; }
+        public String RecordId { get; set; }
+        public String ColumnName { get; set; }
+        public String OldValue { get; set; }
+        public String NewValue { get; set; }
     }
 
     public class Shadow_DB

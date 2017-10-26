@@ -76,13 +76,13 @@ namespace WebApp.Controllers
 
         public ActionResult Register()
         {
-            if (!thisisatest)
+            /*if (!thisisatest)
             {
                 if (Session["LoggedIn"] == null)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
+            }*/
             return View();
         }
 
@@ -90,13 +90,6 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(EmployeeRegister inEmp)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
-                {
-                    return RedirectToAction("LogIn");
-                }
-            }
             if (ModelState.IsValid)
             {
                 var bll = _AdminBll;
@@ -224,13 +217,6 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult EditLogIn(int id, EmployeeEditLogin inEEL)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
-                {
-                    return RedirectToAction("LogIn");
-                }
-            }
             if (ModelState.IsValid)
             {
                 var bll = _AdminBll;
