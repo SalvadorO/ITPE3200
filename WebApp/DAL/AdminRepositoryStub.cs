@@ -274,9 +274,13 @@ namespace WebApp.DAL
 
         public int getUsernameID(string uname)
         {
-            if(uname == "")
+            if(uname == "Olanord")
             {
                 return 1;
+            }
+            else if(uname == "olaNy")
+            {
+                return 2;
             }
             else
             {

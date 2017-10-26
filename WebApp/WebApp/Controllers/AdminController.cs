@@ -9,25 +9,24 @@ namespace WebApp.Controllers
     {
 
         private IAdminBLL _AdminBll;
-        private bool thisisatest;
 
         public AdminController()
         {
-            thisisatest = false;
             _AdminBll = new AdminBLL();
         }
 
         public AdminController(IAdminBLL stub)
         {
-            thisisatest = true;
             _AdminBll = stub;
         }
 
-
         public ActionResult LogIn()
         {
-            if (Session["LoggedIn"] != null 
-                && (bool)Session["LoggedIn"] == true)
+            if (Session["LoggedIn"] == null)
+            {
+                Session["LoggedIn"] = false;
+            }
+            if ((bool)Session["LoggedIn"] == true)
             {
                 return RedirectToAction("MainPage");
             }
@@ -42,12 +41,9 @@ namespace WebApp.Controllers
             {
                 if (_AdminBll.EmpExists(loggedIn))
                 {
-                    if (!thisisatest)
-                    {
                         Session["LoggedIn"] = true;
                         ViewBag.LoggedIn = true;
                         Session["Username"] = loggedIn.Username;
-                    }
                     return RedirectToAction("MainPage");
                 }
                 else
@@ -64,25 +60,21 @@ namespace WebApp.Controllers
 
         public ActionResult MainPage()
         {
-            if (!thisisatest)
-            {
-                if(Session["LoggedIn"] == null)
+                if((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             return View(_AdminBll.getInfo());
         }
 
         public ActionResult Register()
         {
-            /*if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+            /*
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }*/
+            */
             return View();
         }
 
@@ -93,12 +85,10 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var bll = _AdminBll;
-                if (!thisisatest) { 
                 if (bll.usernameExist(inEmp.Username))
                 {
                     ViewBag.UsernameExist = true;
                     return View();
-                }
                 }
                 if(bll.insertEmployee(inEmp))
                 {
@@ -111,13 +101,10 @@ namespace WebApp.Controllers
 
         public ActionResult ListEmployee()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             if (TempData["NewEmployee"] != null)
             {
                 ViewBag.NewEmployee = (bool)TempData["NewEmployee"];
@@ -144,25 +131,19 @@ namespace WebApp.Controllers
         }
         public ActionResult DetailEmployee(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             return View(_AdminBll.oneEmployee(id));
         }
 
         public ActionResult EditEmployee(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             if (TempData["SelfDelete"] != null)
             {
                 ViewBag.SelfDelete = (bool)TempData["SelfDelete"];
@@ -186,14 +167,12 @@ namespace WebApp.Controllers
         public ActionResult DeleteEmployee(int id)
         {
             var bll = _AdminBll;
-            if (!thisisatest)
-            {
+
                 if (bll.getUsernameID((String)Session["Username"]) == id)
                 {
                     TempData["SelfDelete"] = true;
                     return RedirectToAction("EditEmployee", new { id = id });
                 }
-            }
             if(bll.deleteEmployee(id))
             {
                 return RedirectToAction("ListEmployee");
@@ -203,13 +182,11 @@ namespace WebApp.Controllers
 
         public ActionResult EditLogIn(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             var EEL = new EmployeeEditLogin();
             EEL.Username = _AdminBll.getUsername(id);
             return View(EEL);
@@ -247,15 +224,11 @@ namespace WebApp.Controllers
 
         public ActionResult ListCustomer()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
-                {
-                    return RedirectToAction("LogIn");
-                }
-            }
+           if ((bool)Session["LoggedIn"] == false)
+           {
+             return RedirectToAction("LogIn");
+           }
             return View();
-
         }
 
         public ActionResult ListContactPersons()
@@ -265,13 +238,11 @@ namespace WebApp.Controllers
 
         public ActionResult EditCustomer(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             return View(_AdminBll.oneCustomer(id));
         }
 
@@ -300,13 +271,11 @@ namespace WebApp.Controllers
 
         public ActionResult CustomerBooking(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             if (TempData["ChangeFlight"] != null)
             {
                 ViewBag.ChangeFlight = (bool)TempData["ChangeFlight"];
@@ -316,37 +285,28 @@ namespace WebApp.Controllers
 
         public ActionResult DetailCustomer(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+                if ((bool)Session["LoggedIn"] == false)
                 {
                    return RedirectToAction("LogIn");
                 }
-            }
             return View(_AdminBll.detailCustomer(id));
         }
 
         public ActionResult ListBooking()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             return View(_AdminBll.listBookings());
         }
 
         public ActionResult ListFlight()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             if (TempData["FlightInsert"] != null)
             {
                 ViewBag.FlightInsert = (bool)TempData["FlightInsert"];
@@ -393,13 +353,10 @@ namespace WebApp.Controllers
 
         public ActionResult NewFlight()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             var f = new AdminFlight();
             var bll = _AdminBll;
             f.Airports = bll.listAirports();
@@ -425,13 +382,12 @@ namespace WebApp.Controllers
 
         public ActionResult EditFlight(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
+
             var bll = _AdminBll;
             var f = bll.oneFlight(id);
             f.Airplanes = bll.listAirplanes();
@@ -462,37 +418,33 @@ namespace WebApp.Controllers
 
         public ActionResult Passengers(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                    return RedirectToAction("LogIn");
                 }
-            }
+
             return View(_AdminBll.getPassengers(id));
         }
 
         public ActionResult ListAirplane()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             return View(_AdminBll.listAirplanes());
         }
 
         public ActionResult NewAirplane()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
+
             return View();
         }
         [HttpPost]
@@ -510,13 +462,12 @@ namespace WebApp.Controllers
 
         public ActionResult EditAirplane(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
+
             return View(_AdminBll.oneAirplane(id));
         }
         [HttpPost]
@@ -544,25 +495,22 @@ namespace WebApp.Controllers
 
         public ActionResult ListAirport()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                    return RedirectToAction("LogIn");
                 }
-            }
+
             return View(_AdminBll.listAirports());
         }
 
         public ActionResult NewAirport()
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
             return View();
         }
         [HttpPost]
@@ -580,13 +528,12 @@ namespace WebApp.Controllers
 
         public ActionResult EditAirport(int id)
         {
-            if (!thisisatest)
-            {
-                if (Session["LoggedIn"] == null)
+
+                if ((bool)Session["LoggedIn"] == false)
                 {
                     return RedirectToAction("LogIn");
                 }
-            }
+
             return View(_AdminBll.oneAirport(id));
         }
         [HttpPost]
@@ -614,7 +561,7 @@ namespace WebApp.Controllers
 
         public ActionResult LogOut()
         {
-            Session["LoggedIn"] = null;
+            Session["LoggedIn"] = false;
             Session["Username"] = null;
             return RedirectToAction("LogIn");
         }
