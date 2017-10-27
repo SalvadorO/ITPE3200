@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using WebApp.Model;
+using System.Web;
 
 namespace WebApp.DAL
 {
@@ -51,9 +54,10 @@ namespace WebApp.DAL
         {
             using (var db = new WAPPContext())
             {
-                try { 
-                var newEmp = new Employee_DB();
-                var newShadow = new Shadow_DB();
+                try
+                {
+                    var newEmp = new Employee_DB();
+                    var newShadow = new Shadow_DB();
                     string salt = Salt();
                     var passwordNSalt = inEmp.Password + salt;
                     byte[] passwordDB = Hash(passwordNSalt);
@@ -70,21 +74,23 @@ namespace WebApp.DAL
                     var existingZip = db.City.Find(inEmp.ZipCode);
                     if (existingZip == null)
                     {
-                    var newCity = new City()
-                    {
-                        ZipCode = inEmp.ZipCode,
-                        CityName = inEmp.City
-                    };
-                    newEmp.City = newCity;
+                        var newCity = new City()
+                        {
+                            ZipCode = inEmp.ZipCode,
+                            CityName = inEmp.City
+                        };
+                        newEmp.City = newCity;
                     }
                     db.Employee.Add(newEmp);
                     db.SaveChanges();
                     return true;
 
-                    }catch(Exception error)
-                    {
-                        return false;
-                    }
+                }
+                catch (Exception exception)
+                {
+                    LogException(exception);
+                    return false;
+                }
             }
         }
 
@@ -111,7 +117,8 @@ namespace WebApp.DAL
             {
                 return null;
             }
-            else {
+            else
+            {
 
                 var one = new Employee()
                 {
@@ -152,8 +159,8 @@ namespace WebApp.DAL
                     TravelDate = s.Flights.FirstOrDefault().TravelDate
                 };
 
-                    String t = one.RTString;
-                    one.RTString = roundtripToString(t);
+                String t = one.RTString;
+                one.RTString = roundtripToString(t);
 
                 return one;
             }
@@ -243,14 +250,16 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
 
         public bool deleteCustomer(int id)
         {
+            
             var db = new WAPPContext();
             try
             {
@@ -259,11 +268,11 @@ namespace WebApp.DAL
                 {
                     foreach (var item in c.Booking.Flights)
                     {
-                    item.Seats += c.Booking.Travelers;
+                        item.Seats += c.Booking.Travelers;
                     }
                     int t = c.Booking.ID;
                     var list = db.Customer.Where(w => w.Booking.ID == t).ToList();
-                    foreach(var i in list)
+                    foreach (var i in list)
                     {
                         db.Customer.Remove(i);
                     }
@@ -281,8 +290,9 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -342,9 +352,9 @@ namespace WebApp.DAL
                 editEmp.PhoneNumber = inEmp.PhoneNumber;
                 editEmp.EMail = inEmp.EMail;
                 editEmp.Address = inEmp.Address;
-                if(editEmp.ZipCode != inEmp.ZipCode)
+                if (editEmp.ZipCode != inEmp.ZipCode)
                 {
-                    if(db.City.FirstOrDefault(z => z.ZipCode == inEmp.ZipCode) == null)
+                    if (db.City.FirstOrDefault(z => z.ZipCode == inEmp.ZipCode) == null)
                     {
                         var newCity = new City()
                         {
@@ -353,12 +363,14 @@ namespace WebApp.DAL
                         };
                         db.City.Add(newCity);
                     }
-                editEmp.ZipCode = inEmp.ZipCode;
+                    editEmp.ZipCode = inEmp.ZipCode;
                 }
                 db.SaveChanges();
                 return true;
-            }catch(Exception error)
+            }
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -385,15 +397,16 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch(Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
 
         }
         public bool usernameExist(String uname)
         {
-            if(new WAPPContext().Shadow.Where(w => w.Username.Equals(uname)).FirstOrDefault() == null)
+            if (new WAPPContext().Shadow.Where(w => w.Username.Equals(uname)).FirstOrDefault() == null)
             {
                 return false;
             }
@@ -448,8 +461,9 @@ namespace WebApp.DAL
                     return true;
 
                 }
-                catch (Exception error)
+                catch (Exception exception)
                 {
+                    LogException(exception);
                     return false;
                 }
             }
@@ -460,16 +474,16 @@ namespace WebApp.DAL
             var db = new WAPPContext();
             List<AdminViewFlight> all = db.Flight.Select(e => new AdminViewFlight()
             {
-                 ID = e.ID,
-                 TravelDate = e.TravelDate,
-                 DepartureTime = e.DepartureTime,
-                 Departure = db.Airport.Where(w => w.ID == e.Departure).Select(s => s.Name).FirstOrDefault(),
-                 DestinationTime = e.DestinationTime,
-                 Destination = db.Airport.Where(w => w.ID == e.Destination).Select(s => s.Name).FirstOrDefault(),
-                 ClassType = e.ClassType,
-                 Airplane = e.Airplane.Name,
-                 Seats = e.Seats,
-                 Price = e.Price
+                ID = e.ID,
+                TravelDate = e.TravelDate,
+                DepartureTime = e.DepartureTime,
+                Departure = db.Airport.Where(w => w.ID == e.Departure).Select(s => s.Name).FirstOrDefault(),
+                DestinationTime = e.DestinationTime,
+                Destination = db.Airport.Where(w => w.ID == e.Destination).Select(s => s.Name).FirstOrDefault(),
+                ClassType = e.ClassType,
+                Airplane = e.Airplane.Name,
+                Seats = e.Seats,
+                Price = e.Price
             }
             ).ToList();
             return all;
@@ -482,7 +496,7 @@ namespace WebApp.DAL
             var flight = db.Flight.Find(id);
             foreach (var x in flight.Booking)
             {
-                foreach(var y in x.Customers)
+                foreach (var y in x.Customers)
                 {
                     var temp = new AdminCustomer()
                     {
@@ -583,8 +597,9 @@ namespace WebApp.DAL
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception error)
+                catch (Exception exception)
                 {
+                    LogException(exception);
                     return false;
                 }
             }
@@ -608,8 +623,9 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -623,8 +639,9 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -634,9 +651,9 @@ namespace WebApp.DAL
             var db = new WAPPContext();
             List<AdminAirplane> all = db.Airplanes.Select(e => new AdminAirplane()
             {
-                 ID = e.ID,
-                 Name = e.Name,
-                 Seats = e.Seats
+                ID = e.ID,
+                Name = e.Name,
+                Seats = e.Seats
             }
             ).ToList();
             return all;
@@ -667,8 +684,9 @@ namespace WebApp.DAL
                     db.SaveChanges();
                     return true;
                 }
-                catch(Exception error)
+                catch (Exception exception)
                 {
+                    LogException(exception);
                     return false;
                 }
             }
@@ -687,8 +705,9 @@ namespace WebApp.DAL
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception error)
+                catch (Exception exception)
                 {
+                    LogException(exception);
                     return false;
                 }
             }
@@ -705,8 +724,9 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -722,8 +742,9 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -783,8 +804,9 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -798,8 +820,9 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
             }
         }
@@ -840,7 +863,8 @@ namespace WebApp.DAL
         private String roundtripToString(String b)
         {
             String r = "";
-            if(b.Equals("True")) {
+            if (b.Equals("True"))
+            {
                 r = "Tur/Retur";
             }
             else
@@ -852,7 +876,7 @@ namespace WebApp.DAL
 
         public bool changeFlight(int oldflight, int newflight, int bookingID)
         {
-            var db = new  WAPPContext();
+            var db = new WAPPContext();
             try
             {
                 var booking = db.Booking.Find(bookingID);
@@ -867,9 +891,45 @@ namespace WebApp.DAL
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error)
+            catch (Exception exception)
             {
+                LogException(exception);
                 return false;
+            }
+        }
+
+        private static void LogException(Exception exception)
+        {
+            var logfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WAPPException.log");
+          
+          
+
+
+
+
+            Debug.WriteLine(logfile);
+            try
+            {
+
+                using (StreamWriter sw = new StreamWriter(logfile, true))
+
+                {
+                    sw.WriteLine("********** {0} **********", DateTime.Now);
+                    sw.WriteLine("Exception: " + exception.Message);
+                    sw.WriteLine("Stack Trace: " + exception.StackTrace);
+                    sw.WriteLine("");
+                    sw.WriteLine("");
+
+                }
+
+            }
+            catch (IOException ioe)
+            {
+                Debug.WriteLine(ioe.Message);
+            }
+            catch (UnauthorizedAccessException uae)
+            {
+                Debug.WriteLine(uae.Message);
             }
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
 using WebApp.Models;
@@ -334,8 +336,11 @@ namespace WebApp
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception error) { }
-            return false;
+            catch (Exception exception)
+            {
+                LogException(exception);
+                return false;
+            }
         }
 
         private void updateSeats(List<Flight> inList, WebAppContext db, int travelers)
@@ -345,6 +350,41 @@ namespace WebApp
                 var update = db.Flight.Find(i.ID);
                 int seats = update.Seats;
                 update.Seats = seats - travelers;
+            }
+        }
+
+        private static void LogException(Exception exception)
+        {
+            var logfile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WAPPException.log");
+
+
+
+
+
+
+            Debug.WriteLine(logfile);
+            try
+            {
+
+                using (StreamWriter sw = new StreamWriter(logfile, true))
+
+                {
+                    sw.WriteLine("********** {0} **********", DateTime.Now);
+                    sw.WriteLine("Exception: " + exception.Message);
+                    sw.WriteLine("Stack Trace: " + exception.StackTrace);
+                    sw.WriteLine("");
+                    sw.WriteLine("");
+
+                }
+
+            }
+            catch (IOException ioe)
+            {
+                Debug.WriteLine(ioe.Message);
+            }
+            catch (UnauthorizedAccessException uae)
+            {
+                Debug.WriteLine(uae.Message);
             }
         }
     }
