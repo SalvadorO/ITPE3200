@@ -33,7 +33,9 @@
             @Html.DisplayFor(modelItem => item.Seats)
         </td>
         <td>
-            @Html.ActionLink("Endre", "EditAirplane", new { id=item.ID }, new {@class = "btn btn-default" })
+            <a href="@Url.Action("EditAirplane", "Admin", new { id = item.ID })" class="btn btn-primary" title="Rediger">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true" style="font-size:15px"></span>
+            </a>
         </td>
     </tr>
 }
