@@ -95,9 +95,74 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Slette flyrute?</h3>
+                <h3 class="modal-title">Sikker på at du vil slette?</h3>
             </div>
             <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ID)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ID)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TravelDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TravelDate)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DepartureTime)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DepartureTime)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Departure)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Departure)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DestinationTime)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DestinationTime)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Destination)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Destination)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ClassType)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ClassType)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Airplane)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Airplane)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Price)
+                    </dd>
+                </dl>
             </div>
             <div class="modal-footer">
                 @using (Html.BeginForm("DeleteFlight", "Admin", new { id = Model.ID }))

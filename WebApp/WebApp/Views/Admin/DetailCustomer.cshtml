@@ -89,6 +89,7 @@
                 <h3 class="modal-title">Slette Booking?</h3>
             </div>
             <div class="modal-body">
+                <h4>Er du sikker på at du vil slette bookingen?</h4>
             </div>
             <div class="modal-footer">
                 @using (Html.BeginForm("DeleteCustomer", "Admin", new { id = Model[0].ID }))
@@ -186,10 +187,50 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title">Slette medreisende?</h3>
+                    <h3 class="modal-title">Sikker på at du vil slette?</h3>
                 </div>
                 <div class="modal-body">
-                    Slette @Model[i].FirstName @Model[i].LastName ?
+                    
+                    <h4>Medreisende @i</h4>
+                    
+
+                    <dl class="">
+                        <dd>
+                            <b> Fornavn:</b>
+                            @Model[i].FirstName
+                        </dd>
+                        <dd>
+                            <b> Etternavn:</b>
+                            @Model[i].LastName
+                            
+                        </dd>
+                        <dd>
+                            <b> Telefonnummer:</b>
+                            @Model[i].PhoneNumber
+
+                        </dd>
+                        <dd>
+                            <b> E-post:</b>
+                            @Model[i].EMail
+
+                        </dd>
+                        <dd>
+                            <b> Adresse:</b>
+                            @Model[i].Address
+
+                        </dd>
+                        <dd>
+                            <b> Postnummer:</b>
+                            @Model[i].ZipCode
+
+                        </dd>
+                        <dd>
+                            <b> Poststed:</b>
+                            @Model[i].City
+
+                        </dd>
+                    </dl>
+                    
                 </div>
                 <div class="modal-footer">
                     @using (Html.BeginForm("DeleteCustomer", "Admin", new { id = Model[i].ID }))

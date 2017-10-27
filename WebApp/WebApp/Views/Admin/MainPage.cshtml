@@ -17,20 +17,22 @@
             <span style="font-size:3em;" class="glyphicon glyphicon-user"></span>
             <h4>Ansatte:</h4>
             <h4> @Model[0]</h4>
-            <a href="ListEmployee" class="btn btn-info" role="button"> Se Ansatte</a>
+            <a href="ListEmployee" class="btn btn-info" role="button">Ansatte</a>
         </div>
         <div class="col-sm-4">
             <span style="font-size:3em;" class="glyphicon glyphicon-heart"></span>
-            <h4>Registrerte kunder:</h4>
+            <h4>Reisende:</h4>
             <h4> @Model[1]</h4>
-            <a href="ListCustomer" class="btn btn-info" role="button"> Se Kunder</a>
+            <a href="ListCustomer" class="btn btn-info" role="button">Reisende</a>
         </div>
+
         <div class="col-sm-4">
-            <span style="font-size:3em;" class="glyphicon glyphicon-plane"></span>
-            <h4>Flymaskiner:</h4>
-            <h4> @Model[2]</h4>
-            <a href="ListAirplane" class="btn btn-info" role="button"> Se Flymaskiner</a>
+            <span style="font-size:3em;" class="glyphicon glyphicon-list-alt"></span>
+            <h4>Bookinger:</h4>
+            <h4> @Model[4]</h4>
+            <a href="ListBooking" class="btn btn-info" role="button">Bookinger</a>
         </div>
+
     </div>
     <br/><br/><br /><br />
     <div class="row">
@@ -38,19 +40,21 @@
             <span style="font-size:3em;" class="glyphicon glyphicon-road"></span>
             <h4>Flyplasser:</h4>
             <h4> @Model[3]</h4>
-            <a href="ListAirport" class="btn btn-info" role="button"> Se Flyplasser</a>
+            <a href="ListAirport" class="btn btn-info" role="button">Flyplasser</a>
         </div>
+
         <div class="col-sm-4">
-            <span style="font-size:3em;" class="glyphicon glyphicon-list-alt"></span>
-            <h4>Antall bookinger:</h4>
-            <h4> @Model[4]</h4>
-            <a href="ListBooking" class="btn btn-info" role="button"> Se Bookinger</a>
+            <span style="font-size:3em;" class="glyphicon glyphicon-plane"></span>
+            <h4>Flymaskiner:</h4>
+            <h4> @Model[2]</h4>
+            <a href="ListAirplane" class="btn btn-info" role="button">Flymaskiner</a>
         </div>
+
         <div class="col-sm-4">
             <span style="font-size:3em;" class="glyphicon glyphicon-globe "></span>
-            <h4>Antall flyvninger:</h4>
+            <h4>Flyruter:</h4>
             <h4> @Model[5]</h4>
-            <a href="ListFlight" class="btn btn-info" role="button"> Se Flyvninger</a>
+            <a href="ListFlight" class="btn btn-info" role="button">Flyruter</a>
         </div>
     </div>
 </div>
