@@ -673,6 +673,9 @@ namespace WebApp.DAL
             if(uname == "")
             {
                 return true;
+            }else if (uname == "admin")
+            {
+                return true;
             }
             else
             {

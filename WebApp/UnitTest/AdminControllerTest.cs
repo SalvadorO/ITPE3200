@@ -54,6 +54,8 @@ namespace UnitTest
             var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
             SessionMock.InitializeController(controller);
             controller.Session["LoggedIn"] = true;
+            controller.TempData["SelfDelete"] = false;
+
 
             var actionResult = (ViewResult)controller.EditEmployee(1);
 
@@ -292,6 +294,28 @@ namespace UnitTest
             var result = (RedirectToRouteResult)controller.Register(inEmp);
 
             Assert.AreEqual(result.RouteValues.Values.First(), "ListEmployee");
+        }
+        [TestMethod]
+        public void Insert_Employee_Username_Exists()
+        {
+            var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
+
+            var inEmp = new EmployeeRegister()
+            {
+                Password = "passord",
+                ConfirmPassword = "passord",
+                FirstName = "Ola",
+                LastName = "Nordmann",
+                PhoneNumber = "12345678",
+                EMail = "Ola@mail.no",
+                Address = "Osloveien 4",
+                ZipCode = "1234",
+                City = "Oslo",
+                Username = "admin"
+            };
+            var result = (ViewResult)controller.Register(inEmp);
+
+            Assert.AreEqual(result.ViewName, "");
         }
         [TestMethod]
         public void Insert_Employee_Post_Model_Error()
@@ -2089,6 +2113,7 @@ namespace UnitTest
             var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
             SessionMock.InitializeController(controller);
             controller.Session["LoggedIn"] = true;
+            controller.TempData["NewEmployee"] = true;
 
             var actionresult = (ViewResult)controller.ListEmployee();
 
@@ -2116,6 +2141,8 @@ namespace UnitTest
             var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
             SessionMock.InitializeController(controller);
             controller.Session["LoggedIn"] = true;
+            controller.TempData["FlightInsert"] = true;
+            controller.TempData["FlightEdit"] = true;
 
             var actionresult = (ViewResult)controller.ListFlight();
 
@@ -2132,6 +2159,43 @@ namespace UnitTest
             controller.Session["LoggedIn"] = false;
 
             var actionresult = (RedirectToRouteResult)controller.ListFlight();
+
+            Assert.AreEqual(actionresult.RouteValues.Values.First(), "LogIn");
+        }
+        [TestMethod]
+        public void Login_Test_Redirect_To_Main()
+        {
+            var SessionMock = new TestControllerBuilder();
+            var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
+            SessionMock.InitializeController(controller);
+            controller.Session["LoggedIn"] = true;
+
+            var actionresult = (RedirectToRouteResult)controller.LogIn();
+
+            Assert.AreEqual(actionresult.RouteValues.Values.First(), "MainPage");
+        }
+        [TestMethod]
+        public void Login_Test_Redirect_To_Login()
+        {
+            var SessionMock = new TestControllerBuilder();
+            var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
+            SessionMock.InitializeController(controller);
+            controller.Session["LoggedIn"] = false;
+
+            var actionresult = (ViewResult)controller.LogIn();
+
+            Assert.AreEqual(actionresult.ViewName, "");
+        }
+        [TestMethod]
+        public void LogOut_Test()
+        {
+            var SessionMock = new TestControllerBuilder();
+            var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
+            SessionMock.InitializeController(controller);
+            controller.Session["LoggedIn"] = true;
+            controller.Session["Username"] = "Olanord";
+
+            var actionresult = (RedirectToRouteResult)controller.LogOut();
 
             Assert.AreEqual(actionresult.RouteValues.Values.First(), "LogIn");
         }
