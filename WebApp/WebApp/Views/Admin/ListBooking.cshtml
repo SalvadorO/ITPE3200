@@ -34,9 +34,6 @@
             <th>
                 @Html.DisplayNameFor(model => model[0].TravelDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model[0].ReturnDate)
-            </th>
             <th></th>
         </tr>
 
@@ -57,9 +54,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TravelDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReturnDate)
                 </td>
                 <td>
                     <a href="@Url.Action("CustomerBooking", "Admin", new { id = item.cID })" class="btn btn-default" title="Flyvninger">

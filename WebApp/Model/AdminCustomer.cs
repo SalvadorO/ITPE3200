@@ -23,8 +23,6 @@ namespace WebApp.Model
         public String LastName { get; set; }
 
         [Display(Name = "Telefonnummer")]
-        [Required(ErrorMessage = "Telefonnummer må oppgis")]
-        [RegularExpression(pattern: @"[0-9]{8}", ErrorMessage = "Må være 8 siffer")]
         public String PhoneNumber { get; set; }
 
         [Display(Name = "E-Post")]

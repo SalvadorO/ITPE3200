@@ -16,7 +16,6 @@ namespace WebApp.Model
 
         [Display(Name = "Gammelt passord")]
         [Required(ErrorMessage = "Gammelt passord må oppgis")]
-        [RegularExpression(pattern: @"^[A-Za-z0-9ÆØÅæøå \s]{5,}$", ErrorMessage = "minimum 5. Kan være både tall og bokstaver")]
         public string OldPassword { get; set; }
 
         [Display(Name = "Nytt Passord")]
