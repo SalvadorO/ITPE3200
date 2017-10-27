@@ -9,17 +9,19 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    int goBack = -1;
     <div class="form-horizontal">
         @if (ViewBag.EditLogin != null)
         {
         <div>
             @if (ViewBag.EditLogin)
-            {
+                    {
+                        goBack = -2;
                 <p class="alert alert-success">Brukernavn og passord endret</p>
-            }
-            else
-            {
+                    }
+                    else
+                    {
+                        goBack = -2;
                 <p class="alert alert-danger">Det skjedde noe feil...</p>
             }
         </div>
@@ -29,6 +31,7 @@
             <div>
                 @if (!ViewBag.OPOK)
                 {
+                        goBack = -2;
                     <p class="alert alert-danger">Gammelt passord er feil!</p>
                 }
             </div>
@@ -70,14 +73,14 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Lagre" class="btn btn-success" />
-                <button type="button" class="btn btn-default" id="avbrytKnapp"> Tilbake </button>
+                <button type="button" class="btn btn-default" id="avbrytKnapp" value="@goBack"> Tilbake </button>
             </div>
         </div>
     </div>
 }
 <script type="text/javascript">
     $(document).on('click', '#avbrytKnapp', function () {
-        history.go(-1);
+        history.go($(this).val());
     });
 
 </script>

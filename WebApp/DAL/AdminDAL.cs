@@ -314,7 +314,7 @@ namespace WebApp.DAL
                 Seats = e.Seats,
                 Price = e.Price,
                 BookingID = id
-            }).ToList();
+            }).OrderBy(o => o.TravelDate).ThenBy(o => o.DepartureTime).ToList();
 
             return list;
         }
