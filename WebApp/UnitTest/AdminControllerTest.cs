@@ -267,11 +267,26 @@ namespace UnitTest
         [TestMethod]
         public void Insert_Employee()
         {
+            var SessionMock = new TestControllerBuilder();
             var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
+            SessionMock.InitializeController(controller);
+            controller.Session["LoggedIn"] = true;
 
             var actionResult = (ViewResult)controller.Register();
 
             Assert.AreEqual(actionResult.ViewName, "");
+        }
+        [TestMethod]
+        public void Insert_Employee_Not_Logged_In()
+        {
+            var SessionMock = new TestControllerBuilder();
+            var controller = new AdminController(new AdminBLL(new AdminRepositoryStub()));
+            SessionMock.InitializeController(controller);
+            controller.Session["LoggedIn"] = false;
+
+            var actionResult = (RedirectToRouteResult)controller.Register();
+
+            Assert.AreEqual(actionResult.RouteValues.Values.First(), "LogIn");
         }
         [TestMethod]
         public void Insert_Employee_Post_OK()
