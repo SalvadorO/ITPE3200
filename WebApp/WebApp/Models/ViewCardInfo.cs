@@ -10,7 +10,7 @@ namespace WebApp.Models
     {
         [Display(Name = "Kortholders navn")]
         [Required(ErrorMessage = "Kortholders navn må oppgis")]
-        [RegularExpression(pattern: @"[A-Za-z\s]{3,}", ErrorMessage = "Kun bokstaver, minimum 3")]
+        [RegularExpression(pattern: @"^[A-Za-zÆØÅæøå \s]{3,}$", ErrorMessage = "Kun bokstaver, minimum 3")]
         public String cardName { get; set; }
 
         [Display(Name = "Kortnummer")]

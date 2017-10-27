@@ -36,6 +36,7 @@ namespace WebApp.Model
         public int Seats { get; set; }
         [Display(Name = "Pris")]
         [Required(ErrorMessage = "Pris må oppgis")]
+        [RegularExpression(pattern: @"^[0-9]{2,}", ErrorMessage = "Må være større enn to siffer")]
         public int Price { get; set; }
 
         public List<AdminAirport> Airports { get; set; }

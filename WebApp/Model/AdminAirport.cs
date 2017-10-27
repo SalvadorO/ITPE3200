@@ -13,9 +13,11 @@ namespace WebApp.Model
         public int ID { get; set; }
         [Display(Name = "Navn")]
         [Required(ErrorMessage = "Navn må oppgis")]
+        [RegularExpression(pattern: @"^[A-Za-zÆØÅæøå \s]{3,}$", ErrorMessage = "Kun bokstaver, minimum 3")]
         public String Name { get; set; }
         [Display(Name = "Land")]
         [Required(ErrorMessage = "Land må oppgis")]
+        [RegularExpression(pattern: @"^[A-Za-zÆØÅæøå \s]{3,}$", ErrorMessage = "Kun bokstaver, minimum 3")]
         public String Country { get; set; }
     }
 }
